@@ -12,6 +12,7 @@ from functools import wraps
 from redis import Redis
 from flask_mail import Mail, Message
 from flask_ngrok import run_with_ngrok
+import re
 
 def token_required(f):
     @wraps(f)
@@ -35,6 +36,8 @@ def token_required(f):
 app = Flask(__name__)
 secret_key = secrets.token_hex(16)
 app.config['SECRET_KEY'] = secret_key
+email_regex = r'^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$'
+phone_number_regex = r"^\d{10}$"
 
 app.config['MAIL_SERVER'] = 'sandbox.smtp.mailtrap.io'
 app.config['MAIL_PORT'] = 587
@@ -67,27 +70,42 @@ def signup():
   try:
     data = request.json
 
-    required_fields = ['fullname', 'username', 'password', 'email']
+    required_fields = ['fullname', 'username', 'password', 'email', 'phone_number']
     missing_fields = [field for field in required_fields if field not in data or not data[field]]
+    
     if missing_fields:
       return jsonify({'message': 'Missing fields', 'missing': missing_fields}), 400
     
+    if not re.match(email_regex, email, re.IGNORECASE):
+        return jsonify({"error": "Not a valid email format"}), 400
+    
+    if not re.match(phone_number_regex, phone_number):
+        return jsonify({"error": "Not a valid phone number"}), 400
+
     fullname = data['fullname']
     username = data['username']
     password = generate_password_hash(data['password'])
     email = data['email']
+    phone_number = data['phone_number']
 
     conn = get_db_connection()
     cursor = conn.cursor(buffered=True)
 
     try:
-      # Check if the username, email, or phone_number already exists
-      query = "SELECT * FROM users WHERE username = %s OR email = %s"
-      cursor.execute(query,(username, email))
-      existing_user = cursor.fetchone()
-
-      if existing_user:
-        return jsonify({'message': 'Username or email already exists'}), 400
+      query = "SELECT * FROM users WHERE username = %s"
+      cursor.execute(query,(username,))
+      if cursor.fetchone():
+        return jsonify({'message': 'Username already exists'}), 400
+      
+      query = "SELECT * FROM users WHERE email = %s"
+      cursor.execute(query,(email,))
+      if cursor.fetchone():
+        return jsonify({'message': 'email already exists'}), 400
+      
+      query = "SELECT * FROM users WHERE phone_number = %s"
+      cursor.execute(query,(phone_number,))
+      if cursor.fetchone():
+        return jsonify({'message': 'phone_number already exists'}), 400
       
       else:
         verification_token = secrets.token_hex(16)
@@ -105,8 +123,8 @@ def signup():
             conn.commit()
             
         else:
-            query = "INSERT INTO email_verify(fullname, username, password, email, token) VALUES (%s, %s, %s, %s, %s)"
-            cursor.execute(query, (fullname, username, password, email, verification_token))
+            query = "INSERT INTO email_verify(fullname, username, password, email, token, phone_number) VALUES (%s, %s, %s, %s, %s, %s)"
+            cursor.execute(query, (fullname, username, password, email, verification_token, phone_number))
             conn.commit()
         
         return jsonify({'message': f'verification link has been sent to {email}'})
@@ -159,6 +177,11 @@ def signin():
     username = data['username']
     password = data['password']
 
+    required_fields = ['username', 'password']
+    missing_fields = [field for field in required_fields if field not in data or not data[field]]
+    if missing_fields:
+      return jsonify({'message': 'Missing fields', 'missing': missing_fields}), 400
+
     conn = get_db_connection()
     cursor = conn.cursor(buffered=True)
 
@@ -183,38 +206,47 @@ def signin():
 @app.route('/user/upload_image', methods=['POST'])
 @token_required
 def upload_image():
-    if 'image' not in request.files:
-        return jsonify({'message': 'No image part'}), 400
+    if not request.files:
+        return jsonify({'message': 'No file part'}), 400
 
-    file = request.files['image']
-    if file.filename == '':
+    file = next(request.files.values(), None)
+    
+    if not file or file.filename == '':
         return jsonify({'message': 'No selected file'}), 400
+    
+    if not allowed_file(file.filename):
+        return jsonify({'message': 'jpg/jpeg/png formats are only supported'}), 400
 
     filename = secure_filename(file.filename)
     image_url = upload_to_azure_blob(file, filename)
 
-    conn = get_db_connection()
-    cursor = conn.cursor()
-
     return jsonify({'message': 'Image uploaded successfully', 'url': image_url}), 200
 
+def allowed_file(filename):
+    ALLOWED_EXTENSIONS = {'jpg', 'jpeg', 'png'}
+    return '.' in filename and \
+        filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
 def upload_to_azure_blob(file_stream, file_name):
-    
     if not AZURE_STORAGE_CONNECTION_STRING:
         raise ValueError("The Azure Storage Connection String is not set or is empty.")
 
     blob_service_client = BlobServiceClient.from_connection_string(AZURE_STORAGE_CONNECTION_STRING)
     blob_client = blob_service_client.get_blob_client(container=CONTAINER_NAME, blob=file_name)
 
+    # Use file_stream.stream.read() if just file_stream doesn't work directly
     blob_client.upload_blob(file_stream, overwrite=True)
 
     return blob_client.url
 
-@app.route('/user/forgot_password', methods=['POST'] )
+@app.route('/user/forgot_password', methods=['POST'])
 def forgot_password():
     email = request.json.get('email')
     if not email:
         return jsonify({'message':'Email is required'}), 400
+    
+    if not re.match(email_regex, email, re.IGNORECASE):
+        return jsonify({"error": "Not a valid email format"}), 400
     
     conn = get_db_connection()
     cursor = conn.cursor(buffered=True)
@@ -237,7 +269,7 @@ def forgot_password():
 
         mail.send(message)
 
-        return jsonify({'message':'password reset link has been sent to your email'})
+        return jsonify({'message':'password reset link has been sent to your email'}), 200
     
     except mysql.connector.Error as err:
         return jsonify({'message':'Database error', 'error': str(err)}), 500
@@ -267,6 +299,10 @@ def update_password():
     token=request.form.get('token')
     new_password=request.form.get('password')
     confirm_password=request.form.get('confirm_password')
+
+    if not token or not new_password or not confirm_password:
+        missing_fields = [field for field in ["token", "password", "confirm_password"] if not request.form.get(field)]
+        return jsonify({'message': f'Missing field(s): {", ".join(missing_fields)}'}), 400
     
     if new_password != confirm_password:
         return jsonify({'message': 'Passwords do not match'}), 400
@@ -283,6 +319,7 @@ def update_password():
             cursor.execute("UPDATE users SET password =%s, reset_token=NULL WHERE user_id=%s",(hashed_password, user[0]))
             conn.commit()
             return jsonify({'message':'password has been updated successfully'}), 200
+        
         else:
             return jsonify({'message':'Invalid or expired token'}), 400
     finally:
