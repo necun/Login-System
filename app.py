@@ -90,20 +90,27 @@ def signup():
         return jsonify({'message': 'Username or email already exists'}), 400
       
       else:
-
         verification_token = secrets.token_hex(16)
-        query=("INSERT INTO email_verify(fullname, username, password, email, token) VALUES(%s,%s,%s,%s,%s)")
-        cursor.execute(query, (fullname,username,password,email,verification_token))
-        conn.commit()
-        
         subject = 'Email verfication'
-        body = f"http://localhost:5000/user/verify_email/{verification_token}"
+        body = f"http://localhost:3000/user/verify_email/{verification_token}"
         sender = 'vishnuv@necun.in'
         message = Message(subject=subject, body=body, sender=sender, recipients=[email])
         mail.send(message)
 
-        return jsonify({'message': f'verification link has been sent to {email}'})
+        cursor.execute("SELECT email FROM email_verify")
+        user = cursor.fetchone()
 
+        if user:
+            cursor.execute("UPDATE email_verify SET token = %s WHERE email=%s", (verification_token, user[0]))
+            conn.commit()
+            
+        else:
+            query = "INSERT INTO email_verify(fullname, username, password, email, token) VALUES (%s, %s, %s, %s, %s)"
+            cursor.execute(query, (fullname, username, password, email, verification_token))
+            conn.commit()
+        
+        return jsonify({'message': f'verification link has been sent to {email}'})
+      
     except mysql.connector.Error as err:
         return jsonify({'message': "Failed to create user", 'error': str(err)}), 500
 
@@ -173,7 +180,8 @@ def signin():
         cursor.close()
         conn.close()
 
-@app.route('/upload_image', methods=['POST'])
+@app.route('/user/upload_image', methods=['POST'])
+@token_required
 def upload_image():
     if 'image' not in request.files:
         return jsonify({'message': 'No image part'}), 400
@@ -223,7 +231,7 @@ def forgot_password():
         conn.commit()
         
         subject = 'update your password'
-        body = f'http://localhost:5000/user/reset_password/{reset_token}'
+        body = f'http://localhost:3000/user/reset_password/{reset_token}'
         sender = 'vishnuv@necun.in'
         message = Message(subject=subject, body=body, sender=sender, recipients=[email])
 
@@ -316,4 +324,4 @@ def change_password(current_user):
         conn.close()
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, port=3000)
