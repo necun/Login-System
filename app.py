@@ -76,17 +76,17 @@ def signup():
     if missing_fields:
       return jsonify({'message': 'Missing fields', 'missing': missing_fields}), 400
     
+    fullname = data['fullname']
+    username = data['username']
+    password = generate_password_hash(data['password'])
+    email = data['email']
+    phone_number = str(data['phone_number'])
+
     if not re.match(email_regex, email, re.IGNORECASE):
         return jsonify({"error": "Not a valid email format"}), 400
     
     if not re.match(phone_number_regex, phone_number):
         return jsonify({"error": "Not a valid phone number"}), 400
-
-    fullname = data['fullname']
-    username = data['username']
-    password = generate_password_hash(data['password'])
-    email = data['email']
-    phone_number = data['phone_number']
 
     conn = get_db_connection()
     cursor = conn.cursor(buffered=True)
