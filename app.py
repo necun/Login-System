@@ -38,12 +38,12 @@ app.config['SECRET_KEY'] = secret_key
 email_regex = r'^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$'
 phone_number_regex = r"^\d{10}$"
 
-app.config['MAIL_SERVER'] = 'sandbox.smtp.mailtrap.io'
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USE_SSL'] = False
-app.config['MAIL_USERNAME'] = '57e2281193ad7e'
-app.config['MAIL_PASSWORD'] = '0206a9626fd5bb'
+app.config['MAIL_USERNAME'] = 'noreply.renote.ai@gmail.com'
+app.config['MAIL_PASSWORD'] = 'ihde zzml kkip opng'
 
 mail = Mail(app)
 
@@ -110,7 +110,7 @@ def signup():
         verification_token = secrets.token_hex(16)
         subject = 'Email verfication'
         body = f"http://localhost:3000/user/verify_email/{verification_token}"
-        sender = 'vishnuv@necun.in'
+        sender = 'noreply.renote.ai@gmail.com'
         message = Message(subject=subject, body=body, sender=sender, recipients=[email])
         mail.send(message)
 
@@ -172,15 +172,15 @@ def verify_email(token):
 @app.route('/user/signin', methods=['POST'])
 def signin():
     data = request.json 
-    
-    username = data['username']
-    password = data['password']
 
     required_fields = ['username', 'password']
     missing_fields = [field for field in required_fields if field not in data or not data[field]]
     if missing_fields:
       return jsonify({'message': 'Missing fields', 'missing': missing_fields}), 400
 
+    username = data['username']
+    password = data['password']
+    
     conn = get_db_connection()
     cursor = conn.cursor(buffered=True)
 
@@ -206,7 +206,7 @@ def signin():
 @token_required
 def upload_image(current_user):
     if not request.files:
-        return jsonify({'message': 'No file part'}), 400
+        return jsonify({'message': 'No file name found'}), 400
 
     file = next(request.files.values(), None)
     
@@ -263,7 +263,7 @@ def forgot_password():
         
         subject = 'update your password'
         body = f'http://localhost:3000/user/reset_password/{reset_token}'
-        sender = 'vishnuv@necun.in'
+        sender = 'noreply.renote.ai@gmail.com'
         message = Message(subject=subject, body=body, sender=sender, recipients=[email])
 
         mail.send(message)
