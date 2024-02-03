@@ -205,7 +205,7 @@ def signin():
 
 @app.route('/user/upload_image', methods=['POST'])
 @token_required
-def upload_image():
+def upload_image(current_user):
     if not request.files:
         return jsonify({'message': 'No file part'}), 400
 
