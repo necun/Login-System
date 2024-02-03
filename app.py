@@ -7,7 +7,6 @@ from mysql.connector import pooling
 import jwt
 import datetime
 import secrets
-import os
 from functools import wraps
 from redis import Redis
 from flask_mail import Mail, Message
@@ -127,7 +126,7 @@ def signup():
             cursor.execute(query, (fullname, username, password, email, verification_token, phone_number))
             conn.commit()
         
-        return jsonify({'message': f'verification link has been sent to {email}'})
+        return jsonify({'message': f'verification link has been sent to {email}'}), 202
       
     except mysql.connector.Error as err:
         return jsonify({'message': "Failed to create user", 'error': str(err)}), 500
@@ -161,7 +160,7 @@ def verify_email(token):
             cursor.execute(query, (email,))
             conn.commit()
 
-            return jsonify({'message': 'email verified and user created successfully'})
+            return jsonify({'message': 'email verified and user created successfully'}), 201
 
         else:
             return jsonify({'message': 'Invalid or expired token'}), 400
@@ -220,7 +219,7 @@ def upload_image(current_user):
     filename = secure_filename(file.filename)
     image_url = upload_to_azure_blob(file, filename)
 
-    return jsonify({'message': 'Image uploaded successfully', 'url': image_url}), 200
+    return jsonify({'message': 'Image uploaded successfully', 'url': image_url}), 201
 
 def allowed_file(filename):
     ALLOWED_EXTENSIONS = {'jpg', 'jpeg', 'png'}
