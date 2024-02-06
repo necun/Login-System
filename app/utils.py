@@ -20,7 +20,7 @@ app.config['MAIL_USE_SSL'] = False
 mail = Mail(app)
 
 # Regular expressions for validation
-email_regex = r'^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$'
+email_regex = r'^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,4}$'
 phone_number_regex = r"^\d{10}$"
 
 # Database and Redis configurations
@@ -30,7 +30,7 @@ conn_pool = mysql.connector.pooling.MySQLConnectionPool(
     pool_size=5,
     host='localhost',
     user='root',
-    password= 'vishnuvardhan',
+    password='vishnuvardhan',
     database='renote-login-sql-db'
 )
 

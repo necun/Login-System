@@ -24,26 +24,37 @@ def signup():
         email = data['email']
         phone_number = str(data['phone_number'])
 
+        if not fullname.isalpha():
+            return jsonify({'message': 'Full name should contain only alphabets'}), 400
+
         if not re.match(email_regex, email, re.IGNORECASE):
             return jsonify({"error": "Not a valid email"}), 400
 
         if not re.match(phone_number_regex, phone_number):
             return jsonify({"error": "Not a valid phone number"}), 400
 
-        if check_user_exists(username, email, phone_number):
-            return jsonify({'message': 'Username or email or phone number already exists'}), 400
-
-        verification_token = secrets.token_hex(16)
+        if check_username(username):
+            return jsonify({'message': 'Username already exists'}), 400
         
-        subject = 'Email Verification'
-        body = f"http://localhost:5000/user/verify_email/{verification_token}"
-        recipient = email
+        if check_email(email):
+            return jsonify({'message': 'email already exists'}), 400
+        
+        if check_phone_number(phone_number):
+            return jsonify({'message': 'phone number already exists'}), 400
+        
+        else:
 
-        send_email(subject, recipient, body)
+            verification_token = secrets.token_hex(16)
+            
+            subject = 'Email Verification'
+            body = f"http://localhost:5000/user/verify_email/{verification_token}"
+            recipient = email
 
-        update_email_verify(fullname, username, password, email, phone_number, verification_token, application_id, client_id)
+            send_email(subject, recipient, body)
 
-        return jsonify({'message': f'Verification link has been sent to {email}'}), 202
+            update_email_verify(fullname, username, password, email, phone_number, verification_token, application_id, client_id)
+
+            return jsonify({'message': f'Verification link has been sent to {email}'}), 202
 
     except Exception as e:
         return jsonify({'message': 'Internal Server Error', 'error': str(e)}), 500
@@ -80,7 +91,7 @@ def signin():
         redis_client.setex(token, 1800, username)
         return jsonify({'message': 'Login successful', 'token': token}), 200
     else:
-        return jsonify({'message': 'Invalid username or password'}), 401
+        return jsonify({'message': 'Invalid username or password'}), 400
 
 @app.route('/user/forgot_password', methods=['POST'])
 def forgot_password():
@@ -138,18 +149,21 @@ def upload_image(current_user):
     if not request.files:
         return jsonify({'message': 'No file found'}), 400
 
-    file = next(request.files.values(), None)
+    file_key = next(iter(request.files), None)
     
-    if not file or file.filename == '':
-        return jsonify({'message': 'No selected file'}), 400
+    if not file_key:
+        return jsonify({'message': 'No file name found'}), 400
+
+    file = request.files[file_key]
+
+    if file.filename == '':
+        return jsonify({'message': 'No file selected'}), 400
     
     if not allowed_file(file.filename):
         return jsonify({'message': 'jpg/jpeg/png formats are only supported'}), 400
 
     filename = secure_filename(file.filename)
     image_url = upload_to_azure_blob(file, filename)
-
-    update_user_pic_url(current_user, image_url)
 
     return jsonify({'message': 'Image uploaded successfully', 'url': image_url}), 201
 

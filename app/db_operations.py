@@ -1,10 +1,34 @@
 from utils import *
 
-def check_user_exists(username, email, phone_number):
+def check_username(username):
     conn = get_db_connection()
     cursor = conn.cursor(buffered=True)
     try:
-        cursor.execute("SELECT * FROM users WHERE username = %s OR email = %s OR phone_number = %s", (username, email, phone_number,))
+        cursor.execute("SELECT * FROM users WHERE username = %s", (username,))
+        if cursor.fetchone():
+            return True
+        return False
+    finally:
+        cursor.close()
+        conn.close()
+
+def check_email(email):
+    conn = get_db_connection()
+    cursor = conn.cursor(buffered=True)
+    try:
+        cursor.execute("SELECT * FROM users WHERE email = %s", (email,))
+        if cursor.fetchone():
+            return True
+        return False
+    finally:
+        cursor.close()
+        conn.close()
+
+def check_phone_number(phone_number):
+    conn = get_db_connection()
+    cursor = conn.cursor(buffered=True)
+    try:
+        cursor.execute("SELECT * FROM users WHERE phone_number = %s", (phone_number,))
         if cursor.fetchone():
             return True
         return False
@@ -117,16 +141,6 @@ def update_user_password(token, hashed_password):
         else:
             print("No user found with the token:", token)
             return False
-    finally:
-        cursor.close()
-        conn.close()
-
-def update_user_pic_url(username, pic_url):
-    conn = get_db_connection()
-    cursor = conn.cursor()
-    try:
-        cursor.execute("UPDATE USERS SET pic_url = %s WHERE username = %s", (pic_url, username))
-        conn.commit()
     finally:
         cursor.close()
         conn.close()
