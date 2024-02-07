@@ -1,5 +1,23 @@
-from utils import *
-from database_renote import operations 
+from flask import Flask, request, jsonify,render_template,json 
+from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.utils import secure_filename
+from azure.storage.blob import BlobServiceClient
+import mysql.connector
+from mysql.connector import pooling
+from mysql.connector import Error as MySQLError
+from mysql.connector import errorcode
+import jwt
+import datetime
+import secrets
+import os
+from functools import wraps
+from redis import Redis
+import random
+import re   
+
+from database_renote.operations import db_methods  
+
+db_instance = db_methods()
 
 class all_methods:
     def hello(self):
@@ -29,9 +47,9 @@ class all_methods:
         password = generate_password_hash(data['password'])
         email = data['email']
         phone_number = data['phone_number'] 
-        profile_pic='aaa'
-        
-        response=operations.db_methods.signup_db_operation( user_id, client_id, fullname, username, application_id, password, email)
+        profile_pic='NO_PIC'
+    
+        response=db_instance.signup_db_operation(application_id, client_id, user_id, username,  password, email , fullname, phone_number , profile_pic, 0)
         if response is not None:
             return response
         return jsonify({'message': 'User created successfully'}), 201
@@ -42,7 +60,7 @@ class all_methods:
         username = data['username']
         password = data['password']
         
-        response=operations.db_methods.signin_db_operation(username)
+        response=db_methods.signin_db_operation(username)
         if response is not None:
             return response
         
@@ -51,12 +69,12 @@ class all_methods:
         if not email:
             return jsonify({'message':'Email is required'}), 400
         
-        response=operations.db_methods.get_user_by_email(email)
+        response=db_methods.get_user_by_email(email)
         if response is not None:
             return response
     
     def reset_password_(self,token):
-        response=operations.db_methods.user_by_reset_token(token)
+        response=db_methods.user_by_reset_token(token)
         if response is not None:
             return response
         
@@ -68,6 +86,6 @@ class all_methods:
         if new_password != confirm_password:
             return jsonify({'message':'passwords do not match'}), 400
         
-        response=operations.db_methods.db_method_update_password(token,new_password)
+        response=db_methods.db_method_update_password(token,new_password)
         if response is not None:
             return response

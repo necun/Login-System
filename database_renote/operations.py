@@ -17,12 +17,12 @@ import re
 import utils 
 
 class db_methods:
-    def get_db_connection():
+    def get_db_connection(self):
         conn = {
             'host': 'localhost',
             'user': 'root',
-            'password': 'Nikhil1234$',
-            'database': 'renote_login_sql_db'
+            'password': 'mysql123',
+            'database': 'renote-login-sql-db'
         }
         conn_pool = mysql.connector.pooling.MySQLConnectionPool(pool_name="renote_login_sql_db_pool",pool_size=5,**conn)
         return conn_pool.get_connection()
@@ -69,13 +69,13 @@ class db_methods:
             cursor.close()
             conn.close()
             
-    def signup_db_operation(self,user_id,client_id,fullname,username,application_id,password,email,phone_number, profile_pic):
+    def signup_db_operation(self,application_id,client_id,user_id,username,password,email,fullname,phone_number,profile_pic,status):
         conn = self.get_db_connection()
         cursor = conn.cursor()
     
         try:
-            query = "INSERT INTO users (user_id,client_id,application_id,fullname, username, password, email) VALUES (%s,%s,%s,%s, %s, %s, %s)"
-            cursor.execute(query, (user_id,client_id,application_id,fullname, username, password, email))
+            query = "INSERT INTO users (application_id,client_id,user_id,username,password,email,fullname,phone_number,profile_pic,status) VALUES (%s,%s,%s,%s, %s, %s, %s, %s, %s, %s)"
+            cursor.execute(query, (application_id,client_id,user_id,username,password,email,fullname,phone_number,profile_pic,status))
             conn.commit() 
         except MySQLError as err:
             if err.errno == errorcode.ER_DUP_ENTRY:

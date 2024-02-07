@@ -14,6 +14,7 @@ from functools import wraps
 from redis import Redis
 import random
 import re 
+import database_renote
 
 
 class redis_config:

@@ -15,7 +15,6 @@ from redis import Redis
 import random
 import re   
 from database_renote import operations
-from methods import method
 from methods.method import all_methods  
 
 all_methods_instance = all_methods()
@@ -33,8 +32,8 @@ app.config['SECRET_KEY'] = secret_key
 conn = {
     'host': 'localhost',
     'user': 'root',
-    'password': 'Nikhil1234$',
-    'database': 'renote_login_sql_db'
+    'password': 'mysql123',
+    'database': 'renote-login-sql-db'
 }
  
 REDIS_HOST = 'localhost'
