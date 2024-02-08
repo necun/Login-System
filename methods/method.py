@@ -1,23 +1,19 @@
-from flask import Flask, request, jsonify,render_template,json 
-from werkzeug.security import generate_password_hash, check_password_hash
-from werkzeug.utils import secure_filename
+from flask import request, jsonify
+from werkzeug.security import generate_password_hash
+import random  
+from database_renote.operations import db_methods   
+from utils import redis_config
 from azure.storage.blob import BlobServiceClient
-import mysql.connector
-from mysql.connector import pooling
-from mysql.connector import Error as MySQLError
-from mysql.connector import errorcode
-import jwt
-import datetime
-import secrets
-import os
-from functools import wraps
-from redis import Redis
-import random
-import re   
+from werkzeug.utils import secure_filename
 
-from database_renote.operations import db_methods  
+utils_instance=redis_config()
 
 db_instance = db_methods()
+
+a=utils_instance.app_object
+
+AZURE_STORAGE_CONNECTION_STRING = 'DefaultEndpointsProtocol=https;AccountName=necunblobstorage;AccountKey=hgzRK0zpgs+bXf4wnfvFLEJNbSMlbTNeJBuhYHS9jcTrRTzlh0lVlT7K59U8yG0Ojh65p/c4sV97+AStOXtFWw==;EndpointSuffix=core.windows.net'
+CONTAINER_NAME = 'pictures'
 
 class all_methods:
     def hello(self):
@@ -47,20 +43,20 @@ class all_methods:
         password = generate_password_hash(data['password'])
         email = data['email']
         phone_number = data['phone_number'] 
-        profile_pic='NO_PIC'
+        profile_pic=' '
     
         response=db_instance.signup_db_operation(application_id, client_id, user_id, username,  password, email , fullname, phone_number , profile_pic, 0)
         if response is not None:
             return response
         return jsonify({'message': 'User created successfully'}), 201
     
-    def signin(self):
+    def signin(self,a):
         data = request.json
    
         username = data['username']
         password = data['password']
         
-        response=db_methods.signin_db_operation(username)
+        response=db_instance.signin_db_operation(username,password,a)
         if response is not None:
             return response
         
@@ -69,12 +65,12 @@ class all_methods:
         if not email:
             return jsonify({'message':'Email is required'}), 400
         
-        response=db_methods.get_user_by_email(email)
+        response=db_instance.get_user_by_email(email)
         if response is not None:
             return response
     
-    def reset_password_(self,token):
-        response=db_methods.user_by_reset_token(token)
+    def reset_password(self,token):
+        response=db_instance.user_by_reset_token(token)
         if response is not None:
             return response
         
@@ -86,6 +82,35 @@ class all_methods:
         if new_password != confirm_password:
             return jsonify({'message':'passwords do not match'}), 400
         
-        response=db_methods.db_method_update_password(token,new_password)
+        response=db_instance.db_method_update_password(token,new_password)
         if response is not None:
             return response
+        
+    def upload_image(self,username):
+        if 'image' not in request.files:
+            return jsonify({'message': 'No image part'}), 400
+ 
+        file = request.files['image']
+        if file.filename == '':
+            return jsonify({'message': 'No selected file'}), 400
+    
+        filename = secure_filename(file.filename)
+        image_url = self.upload_to_azure_blob(file, filename)
+        
+        response=db_instance.uploading_image_url(username , image_url)
+        if response is not None:
+            return response 
+    
+        
+    
+    def upload_to_azure_blob(self,file_stream, file_name):
+   
+        if not AZURE_STORAGE_CONNECTION_STRING:
+            raise ValueError("The Azure Storage Connection String is not set or is empty.")
+    
+        blob_service_client = BlobServiceClient.from_connection_string(AZURE_STORAGE_CONNECTION_STRING)
+        blob_client = blob_service_client.get_blob_client(container=CONTAINER_NAME, blob=file_name)
+    
+        blob_client.upload_blob(file_stream, overwrite=True)
+    
+        return blob_client.url

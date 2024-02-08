@@ -1,34 +1,30 @@
-from flask import Flask, request, jsonify,render_template,json 
+from flask import Flask, request, jsonify,render_template 
 from werkzeug.security import generate_password_hash, check_password_hash
-from werkzeug.utils import secure_filename
-from azure.storage.blob import BlobServiceClient
 import mysql.connector
-from mysql.connector import pooling
 from mysql.connector import Error as MySQLError
 from mysql.connector import errorcode
 import jwt
 import datetime
 import secrets
-import os
-from functools import wraps
 from redis import Redis
-import random
-import re 
-import utils 
+from utils import redis_config
+
+utils_instance=redis_config()
 
 class db_methods:
     def get_db_connection(self):
         conn = {
             'host': 'localhost',
             'user': 'root',
-            'password': 'mysql123',
-            'database': 'renote-login-sql-db'
+            'password': 'Nikhil1234$',
+            'database': 'renote_login_sql_db'
         }
         conn_pool = mysql.connector.pooling.MySQLConnectionPool(pool_name="renote_login_sql_db_pool",pool_size=5,**conn)
         return conn_pool.get_connection()
     
-    def signin_db_operation(self,username):
+    def signin_db_operation(self,username,password,app):
     # Database query to retrieve user information by username
+        user_password=password
         conn = self.get_db_connection()
         cursor = conn.cursor(buffered=True)
         
@@ -51,10 +47,11 @@ class db_methods:
                     'email':email,
                     'phone_number':phone_number
                     }
+            print(user_info)
             
-            redis_client=utils.redis_config.redis
+            redis_client=Redis(host='localhost', port=6379, db=0)
             
-            if user_record and check_password_hash (user_record[0], password):
+            if user_record and check_password_hash (user_record[0], user_password):
                 token = jwt.encode({'username': username,'email':email,'Application':application_id,'Clientid':client_id, 'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=30)}, app.config['SECRET_KEY']) 
                 redis_client.hmset(token, user_info) 
                 redis_client.expire(token, 1800) 
@@ -108,13 +105,13 @@ class db_methods:
             if not user:
                 return jsonify({'message':'user not found'}), 404
         
-            reset_token = secrets.token_hex(16)
+            reset_token =secrets.token_hex(16)
             print(reset_token)
     
             cursor.execute("UPDATE users SET reset_token = %s WHERE user_id=%s", (reset_token, user[0]))
             conn.commit()
     
-            reset_url = f"http://120:0:0:1:5000/reset_password/{reset_token}"
+            #reset_url = f"http://120:0:0:1:5000/reset_password/{reset_token}"
     
         #need to add email integration
             return jsonify({'message':'password reset link has been sent to your mail'})
@@ -123,13 +120,14 @@ class db_methods:
         finally:
             cursor.close()
             conn.close()
+             
             
     def user_by_reset_token(self,token):
         conn=self.get_db_connection() 
         cursor=conn.cursor(buffered=True)
- 
         try:
             cursor.execute("SELECT user_id FROM users WHERE reset_token = %s",(token,))
+            
             if cursor.fetchone():
                 return render_template('reset_password.html',token=token)
             else:
@@ -160,6 +158,24 @@ class db_methods:
         finally:
             cursor.close()
             conn.close()
+            
+    def uploading_image_url(self,username,image_url):
+        conn=self.get_db_connection()
+        cursor=conn.cursor(buffered=True)
+        try:
+            query="UPDATE users SET profile_pic=%s where username=%s"
+            cursor.execute(query,(image_url,username,))
+            conn.commit()
+            return jsonify({'message': 'Image uploaded successfully', 'url': image_url}), 200
+        except mysql.connector.Error as err:
+            print("Error:", err)
+            return jsonify({'message': 'Failed to upload image'}), 500
+        finally:
+            cursor.close()
+            conn.close()
+            
+            
+        
             
     def hello():
         print("hello world!")

@@ -15,9 +15,9 @@ from functools import wraps
 from redis import Redis
 import random
 import re 
-import methods.method
 
-methods.method.methods1.hello()
+
+
  
 app = Flask(__name__)
 secret_key = secrets.token_hex(16)
@@ -103,7 +103,7 @@ def signup_common():
     password = generate_password_hash(data['password'])
     email = data['email']
     phone_number = data['phone_number'] 
-    pic_url="aaa"
+    pic_url=" "
    
     conn = get_db_connection()
     cursor = conn.cursor()
@@ -186,7 +186,8 @@ def signin():
  
  
 @app.route('/upload_image', methods=['POST'])
-def upload_image():
+@token_required
+def upload_image(username,wwww,dsdd,dddd,www):
     if 'image' not in request.files:
         return jsonify({'message': 'No image part'}), 400
  
@@ -200,16 +201,16 @@ def upload_image():
     conn = get_db_connection()
     cursor = conn.cursor()
  
-    '''try:
-        insert_query = "INSERT INTO users (pic_url) VALUES (%s)"
-        cursor.execute(insert_query, (image_url,))
+    try:
+        insert_query = "UPDATE users SET profile_pic=%s WHERE username=%s"
+        cursor.execute(insert_query, (image_url,username))
         conn.commit()
     except mysql.connector.Error as err:
         print("Error:", err)
         return jsonify({'message': 'Failed to upload image'}), 500
     finally:
         cursor.close()
-        conn.close()'''
+        conn.close()
  
     return jsonify({'message': 'Image uploaded successfully', 'url': image_url}), 200
  
