@@ -133,7 +133,7 @@ def welcome():
 
     print("current time:-", formatted_datetime)
 
-    return 'Helow ' + formatted_datetime
+    return 'Welcome to renote.ai at : ' + formatted_datetime
 
 if __name__ == '__main__':
     app.run(debug=True)          
