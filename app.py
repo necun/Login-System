@@ -9,6 +9,7 @@ import random
 from database_renote import operations
 from methods.method import all_methods
 from utils import redis_config
+import datetime;
 
 all_methods_instance = all_methods()
 utils_instance=redis_config()
@@ -121,6 +122,18 @@ def update_password_main():
     method_response=all_methods_instance.update_password()
     if method_response is not None:
         return method_response
- 
+
+@app.route('/')
+def welcome():
+    current_datetime = datetime.datetime.now()
+
+    # Convert datetime object to string with a specific format
+    formatted_datetime = current_datetime.strftime("%Y-%m-%d %H:%M:%S")
+
+
+    print("current time:-", formatted_datetime)
+
+    return 'Helow ' + formatted_datetime
+
 if __name__ == '__main__':
     app.run(debug=True)          
