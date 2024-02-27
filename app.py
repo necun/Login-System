@@ -1,4 +1,4 @@
-from flask import Flask, request ,jsonify
+from flask import Flask, request ,jsonify,redirect , url_for
 from werkzeug.utils import secure_filename
 from azure.storage.blob import BlobServiceClient
 import jwt
@@ -9,7 +9,7 @@ import random
 from database_renote import operations
 from methods.method import all_methods
 from utils import redis_config
-import datetime;
+import datetime
 
 all_methods_instance = all_methods()
 utils_instance=redis_config()
@@ -108,6 +108,8 @@ def forgot_password_main():
     method_response=all_methods_instance.forgot_password()
     if method_response is not None:
         return method_response
+    return redirect(url_for('reset_password_main'))
+    
     
  
 @app.route('/reset_password/<token>')
@@ -136,4 +138,4 @@ def welcome():
     return 'Welcome to renote.ai at : ' + formatted_datetime
 
 if __name__ == '__main__':
-    app.run(debug=True)          
+    app.run(debug=True)

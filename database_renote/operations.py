@@ -58,7 +58,7 @@ class db_methods:
                 #redis_client.hget(token, 'username') if you want single value
                 return jsonify({'message': 'Login successful', 'token': token}), 200
             else: 
-                return jsonify({'message': 'Invalid username or password'}), 401
+                return jsonify({'message': 'Invalid username or password'}), 400
         except mysql.connector.Error as err:
             print("Database Error:", err)
             return jsonify({'message': 'Database error', 'error': str(err)}), 500

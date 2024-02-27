@@ -1,4 +1,15 @@
 from utils import *
+import mysql.connector
+
+def get_db_connection(self):
+        conn = {
+            'host': 'localhost',
+            'user': 'root',
+            'password': 'Nikhil1234$',
+            'database': 'renote_login_sql_db'
+        }
+        conn_pool = mysql.connector.pooling.MySQLConnectionPool(pool_name="renote_login_sql_db_pool",pool_size=5,**conn)
+        return conn_pool.get_connection()
 
 def check_user_exists(username, email, phone_number):
     conn = get_db_connection()

@@ -17,3 +17,5 @@ class redis_config:
     
     def token_generation():
         return secrets.token_hex(16)
+    
+    
