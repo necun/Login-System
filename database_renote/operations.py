@@ -71,9 +71,13 @@ class db_methods:
         cursor = conn.cursor()
     
         try:
-            query = "INSERT INTO users (application_id,client_id,user_id,username,password,email,fullname,phone_number,profile_pic,status) VALUES (%s,%s,%s,%s, %s, %s, %s, %s, %s, %s)"
-            cursor.execute(query, (application_id,client_id,user_id,username,password,email,fullname,phone_number,profile_pic,status))
-            conn.commit() 
+            # query0="SELECT username FROM users WHERE username=%s"
+            # cursor.execute(query0, (username,))
+            # user_record = cursor.fetchone()
+            # if not user_record:
+                query = "INSERT INTO users (application_id,client_id,user_id,username,password,email,fullname,phone_number,profile_pic,status) VALUES (%s,%s,%s,%s, %s, %s, %s, %s, %s, %s)"
+                cursor.execute(query, (application_id,client_id,user_id,username,password,email,fullname,phone_number,profile_pic,status))
+                conn.commit() 
         except MySQLError as err:
             if err.errno == errorcode.ER_DUP_ENTRY:
                 # Check if the error message contains information about which field is duplicated

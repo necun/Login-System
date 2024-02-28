@@ -5,10 +5,13 @@ from database_renote.operations import db_methods
 from utils import redis_config
 from azure.storage.blob import BlobServiceClient
 from werkzeug.utils import secure_filename
+import re
 
 utils_instance=redis_config()
 
 db_instance = db_methods()
+
+ALLOWED_EXTENSIONS = {'jpg', 'jpeg', 'png'}
 
 a=utils_instance.app_object
 
@@ -19,8 +22,24 @@ class all_methods:
     def hello(self):
         print("hellloo000000000 world")
         
+    def allowed_file(self,filename):
+        return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+        
     def generate_unique_user_id(self):
         return random.randint(10**15, (10**16)-1)
+    def validate_email(self,email):
+        email_pattern= r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+        return re.match(email_pattern,email)
+    
+    def validate_phonenumber(self,phone_number):
+        phone_number_pattern= r'^\d{10}$'
+        return re.match(phone_number_pattern,phone_number)
+    
+    def validate_fullname(self,fullname):
+        fullname_pattern=r'^[a-z A-Z]+$'
+        return re.match(fullname_pattern,fullname)
+    def password_strength_validation(self,password):
+            return len(password) > 7
     
     def signup(self):
         data = request.json
@@ -36,6 +55,8 @@ class all_methods:
             client_id = request.headers['Clientid']
         else:
             print("Required headers not found")
+            
+        
     
         user_id=self.generate_unique_user_id()      
         fullname = data['fullname']
@@ -44,7 +65,19 @@ class all_methods:
         email = data['email']
         phone_number = data['phone_number'] 
         profile_pic=' '
-    
+        
+        if not self.validate_email(email):
+            return jsonify({'message':'Invalid Email format'}), 400
+        
+        if not self.validate_phonenumber(phone_number):
+            return jsonify ({'message':'Invalid phone number'}), 400
+        
+        if not self.validate_fullname(fullname):
+            return jsonify({'message':'Full Name must contain only Alphabets'}), 400
+        
+        if not self.password_strength_validation(password):
+            return jsonify({'message':'password must contain greater than 7 letters'})
+            
         response=db_instance.signup_db_operation(application_id, client_id, user_id, username,  password, email , fullname, phone_number , profile_pic, 0)
         if response is not None:
             return response
@@ -56,14 +89,22 @@ class all_methods:
         username = data['username']
         password = data['password']
         
+        if not username:
+            return jsonify({'message':'Username is  missing'}), 400
+        
+        if not password:
+            return jsonify({'message':'Password is missing '}), 400
+        
         response=db_instance.signin_db_operation(username,password,a)
         if response is not None:
-            return response
+            return response    
         
     def forgot_password(self):
         email = request.json.get('email')
+        if self.validate_email(email):
+            return jsonify({'message':'Email invalid'}), 400
         if not email:
-            return jsonify({'message':'Email is required'}), 400
+            return jsonify({'message':'Email is required'}), 400 
         
         response=db_instance.get_user_by_email(email)
         if response is not None:
@@ -76,11 +117,13 @@ class all_methods:
         
     def update_password(self):
         token=request.form.get('token')
+        if not token:
+            return jsonify({'message':'token invalid'}), 401
         new_password=request.form.get('password')
         confirm_password=request.form.get('confirm_password')
- 
-        if new_password != confirm_password:
-            return jsonify({'message':'passwords do not match'}), 400
+        if not new_password or confirm_password:
+            if new_password != confirm_password:
+                return jsonify({'message':'passwords do not match'}), 400
         
         response=db_instance.db_method_update_password(token,new_password)
         if response is not None:
@@ -91,7 +134,7 @@ class all_methods:
             return jsonify({'message': 'No image part'}), 400
  
         file = request.files['image']
-        if file.filename == '':
+        if file.filename == '' or not self.allowed_file(file.filename):
             return jsonify({'message': 'No selected file'}), 400
     
         filename = secure_filename(file.filename)
