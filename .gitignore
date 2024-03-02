@@ -1,3 +1,6 @@
+__init__.py
+methods/__init__.py
+methods/__pycache__/
 __pycache__/
 database_renote/__pycache__/
 database_renote/__init__.py
