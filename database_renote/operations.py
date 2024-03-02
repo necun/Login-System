@@ -255,15 +255,11 @@ class db_methods:
                 "success": {
                     "status": "200",
                     "message": "Password reset link has been sent to your mail",
-                    "messageKey": "password-reset-link-sent-txt",
+                    "messageKey": "user-resetlink-sent",
                     "details": {
-                        'data':"A link to reset your password has been successfully sent to the email address provided.",
                         'reset_token':reset_token
                         },
-                    "type": "PasswordResetNotification",
-                    "code": 200405,
                     "timeStamp": dt.utcnow().strftime('%Y-%m-%d %H:%M:%S +0000'),
-                    "instance": "/v1/auth/reset-password"
                 }
             }
             return jsonify(error_response), 200
