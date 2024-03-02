@@ -31,7 +31,7 @@ class db_methods:
                 "error": {
                     "status": "400",
                     "message": "Username is missing",
-                    "messageKey": "login-invalid-user-name-txt",
+                    "messageKey": "login-invalid-user-name",
                     "details": "Username field is empty. Please provide a username.",
                     "type": "LoginException",
                     "code": 400202,
@@ -46,7 +46,7 @@ class db_methods:
                     "error": {
                         "status": "400",
                         "message": "Password is missing",
-                        "messageKey": "login-missing-password-txt",
+                        "messageKey": "login-missing-password",
                         "details": "Password field is empty. Please provide a password.",
                         "type": "LoginException",
                         "code": 400203,
@@ -70,7 +70,7 @@ class db_methods:
                     "error": {
                         "status": "404",
                         "message": "User not found",
-                        "messageKey": "login-user-not-found-txt",
+                        "messageKey": "login-user-not-found",
                         "details": "The username provided does not match any user in our database.",
                         "type": "LoginException",
                         "code": 404204,
@@ -106,14 +106,14 @@ class db_methods:
                 redis_client.hmset(token, user_info)
                 redis_client.expire(token, 1800)
                 success_response = {
-                            "success": {
-                                "status": "200",
-                                "message": "Login successful",
-                                "messageKey": "login-success-txt",
-                                "timeStamp": dt.utcnow().strftime('%Y-%m-%d %H:%M:%S +0000'),
-                                "token": token,  # Assuming 'token' is defined elsewhere in your code
-                                "instance": "/v1/auth/"  # Optional, include if relevant to your application
+                            "status" : 200,
+                            "message" : "Login successful",
+                            "messageKey" : "login-success",
+                            "timestamp" : dt.utcnow().strftime('%Y-%m-%d %H:%M:%S +0000'),
+                            "details" :{
+                                "token": str(token)
                             }
+                            
                         }
                 return jsonify(success_response), 200
             else:
@@ -121,7 +121,7 @@ class db_methods:
                     "error": {
                         "status": "400",
                         "message": "Invalid username or password",
-                        "messageKey": "login-invalid-credentials-txt",
+                        "messageKey": "login-invalid-credentials",
                         "details": "The username or password provided is incorrect. Please try again.",
                         "type": "LoginException",
                         "code": 400201,
@@ -148,7 +148,6 @@ class db_methods:
     def signup_db_operation(self, application_id, client_id, user_id, username, password, email, fullname, phone_number, profile_pic, status):
             conn = self.get_db_connection()
             cursor = conn.cursor()
-            entity_id = None
             try:
                 query = "INSERT INTO users (application_id,client_id,user_id,username,password,email,fullname,phone_number,profile_pic,status) VALUES (%s,%s,%s,%s, %s, %s, %s, %s, %s, %s)"
                 cursor.execute(query, (application_id, client_id, user_id, username, password, email, fullname, phone_number, profile_pic, status))
@@ -162,7 +161,7 @@ class db_methods:
                             "error": {
                                 "status": "409",
                                 "message": "Email already exists",
-                                "messageKey": "signup-email-exists-txt",
+                                "messageKey": "signup-email-exists",
                                 "details": "The email provided is already associated with an existing account.",
                                 "type": "SignupException",
                                 "code": 409101,
@@ -176,7 +175,7 @@ class db_methods:
                             "error": {
                                 "status": "409",
                                 "message": "Username already exists",
-                                "messageKey": "signup-username-exists-txt",
+                                "messageKey": "signup-username-exists",
                                 "details": "The username provided is already taken by another user.",
                                 "type": "SignupException",
                                 "code": 409100,
@@ -190,7 +189,7 @@ class db_methods:
                             "error": {
                                 "status": "409",
                                 "message": "Phone Number already exists",
-                                "messageKey": "signup-phone-exists-txt",
+                                "messageKey": "signup-phone-exists",
                                 "details": "The phone number provided is already associated with another account.",
                                 "type": "SignupException",
                                 "code": 409102,
@@ -204,7 +203,7 @@ class db_methods:
                             "error": {
                                 "status": "409",
                                 "message": "Duplicate entry for unique field",
-                                "messageKey": "signup-duplicate-entry-txt",
+                                "messageKey": "signup-duplicate-entry",
                                 "details": "A duplicate entry for a field intended to be unique was detected.",
                                 "type": "SignupException",
                                 "code": 409103,
@@ -239,7 +238,7 @@ class db_methods:
                     "error": {
                         "status": "404",
                         "message": "User not found",
-                        "messageKey": "error-user-not-found-txt",
+                        "messageKey": "error-user-not-found",
                         "details": "The specified user does not exist in our database.",
                         "type": "UserNotFoundException",
                         "code": 400204,
@@ -297,7 +296,7 @@ class db_methods:
                     "error": {
                         "status": "400",
                         "message": "Invalid or expired token",
-                        "messageKey": "invalid-expired-token-txt",
+                        "messageKey": "invalid-expired-token",
                         "details": "The provided token is either invalid or has expired. Please request a new one.",
                         "type": "AuthenticationException",
                         "code": 400402,
@@ -338,7 +337,7 @@ class db_methods:
                     "success": {
                         "status": "200",
                         "message": "Password has been updated successfully",
-                        "messageKey": "password-update-success-txt",
+                        "messageKey": "password-update-success",
                         "details": "Your password has been successfully updated.",
                         "type": "PasswordUpdateSuccess",
                         "code": 200400,
@@ -353,7 +352,7 @@ class db_methods:
                     "error": {
                         "status": "400",
                         "message": "Invalid or expired token",
-                        "messageKey": "invalid-expired-token-txt",
+                        "messageKey": "invalid-expired-token",
                         "details": "The provided token is either invalid or has expired. Please request a new one.",
                         "type": "TokenException",
                         "code": 400402,
@@ -381,7 +380,7 @@ class db_methods:
                 "error": {
                     "status": "200",
                     "message": "Image uploaded successfully",
-                    "messageKey": "image-upload-success-txt",
+                    "messageKey": "image-upload-success",
                     "details": "Your image has been successfully uploaded.",
                     "type": "ImageUploadSuccess",
                     "code": 200500,
@@ -397,7 +396,7 @@ class db_methods:
                 "error": {
                     "status": "500",
                     "message": "Failed to upload image",
-                    "messageKey": "image-upload-failure-txt",
+                    "messageKey": "image-upload-failure",
                     "details": "There was an error uploading your image. Please try again later.",
                     "type": "ImageUploadException",
                     "code": 500501,

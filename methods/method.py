@@ -153,7 +153,7 @@ class all_methods:
                 "error": {
                     "status": "400",
                     "message": "Password must contain more than 7 letters",
-                    "messageKey": "password-length-txt",
+                    "messageKey": "password-length",
                     "details": "The password provided is too short. It must contain more than 7 characters.",
                     "type": "ValidationException",
                     "code": 400107,
@@ -170,7 +170,7 @@ class all_methods:
         success_response = {
                 "status": "201",
                 "message": "User created successfully",
-                "messageKey": "user-created-successfully-txt",
+                "messageKey": "user-created-successfully",
                 "timeStamp": datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S +0000'),
         }
         
@@ -187,7 +187,7 @@ class all_methods:
                 "error": {
                     "status": "400",
                     "message": "Username is missing",
-                    "messageKey": "username-missing-txt",
+                    "messageKey": "username-missing",
                     "details": "The request did not include a username, which is required.",
                     "type": "ValidationException",
                     "code": 400202,
@@ -202,7 +202,7 @@ class all_methods:
                 "error": {
                     "status": "400",
                     "message": "Password is missing",
-                    "messageKey": "password-missing-txt",
+                    "messageKey": "password-missing",
                     "details": "The request did not include a password, which is required.",
                     "type": "ValidationException",
                     "code": 400203,
@@ -222,7 +222,7 @@ class all_methods:
                 "error": {
                     "status": "400",
                     "message": "Email invalid",
-                    "messageKey": "email-invalid-txt",
+                    "messageKey": "email-invalid",
                     "details": "The email address provided is not valid. Please provide a valid email address.",
                     "type": "ValidationException",
                     "code": 400302,
@@ -237,7 +237,7 @@ class all_methods:
                 "error": {
                     "status": "400",
                     "message": "Email is required",
-                    "messageKey": "email-required-txt",
+                    "messageKey": "email-required",
                     "details": "The request did not include an email address, which is required.",
                     "type": "ValidationException",
                     "code": 400304,
@@ -264,7 +264,7 @@ class all_methods:
             "error": {
                 "status": "401",
                 "message": "Token missing or invalid",
-                "messageKey": "token-missing-invalid-txt",
+                "messageKey": "token-missing-invalid",
                 "details": "The request did not include a token or included an invalid token.",
                 "type": "AuthenticationException",
                 "code": 401404,
@@ -294,7 +294,7 @@ class all_methods:
                 "error": {
                     "status": "400",
                     "message": "No image part",
-                    "messageKey": "no-image-part-txt",
+                    "messageKey": "no-image-part",
                     "details": "The request did not include an image part. Please include an image part in the request.",
                     "type": "ValidationException",
                     "code": 400600,
@@ -310,7 +310,7 @@ class all_methods:
             "error": {
                 "status": "400",
                 "message": "No selected file",
-                "messageKey": "no-selected-file-txt",
+                "messageKey": "no-selected-file",
                 "details": "No file was selected for upload. Please select a file to upload.",
                 "type": "ValidationException",
                 "code": 400601,
