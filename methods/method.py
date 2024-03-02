@@ -13,7 +13,7 @@ utils_instance=redis_config()
 
 db_instance = db_methods()
 
-ALLOWED_EXTENSIONS = {'jpg', 'jpeg', 'png'}
+ALLOWED_EXTENSIONS = {'jpg', 'jpeg', 'png', 'txt'}
 
 a=utils_instance.app_object
 
