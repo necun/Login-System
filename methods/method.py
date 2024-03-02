@@ -13,7 +13,7 @@ utils_instance=redis_config()
 
 db_instance = db_methods()
 
-ALLOWED_EXTENSIONS = {'jpg', 'jpeg', 'png', 'txt'}
+ALLOWED_EXTENSIONS = {'jpg', 'jpeg', 'png'}
 
 a=utils_instance.app_object
 
@@ -168,10 +168,10 @@ class all_methods:
         if response is not None:
             return response
         success_response = {
-            "status": "201",
-            "code": "201100",
-            "message": "User created successfully",
-            "details": {
+                "status": "201",
+                "code": "201100",
+                "message": "User created successfully",
+                "details": {
                 "messageKey": "user-created-successfully-txt",
                 "description": "The user account has been successfully created.",
                 "type": "CreationSuccess",
@@ -222,7 +222,7 @@ class all_methods:
             return response
     def forgot_password(self):
         email = request.json.get('email')
-        if self.validate_email(email):
+        if not self.validate_email(email):
             error_response = {
                 "error": {
                     "status": "400",
@@ -278,24 +278,16 @@ class all_methods:
             }
         }
             return jsonify(error_response), 401
-
+        
         new_password=request.form.get('password')
         confirm_password=request.form.get('confirm_password')
         if not new_password or confirm_password:
             if new_password != confirm_password:
-                error_response = {
-                "error": {
-                    "status": "400",
-                    "message": "Passwords do not match",
-                    "messageKey": "passwords-not-match-txt",
-                    "details": "The provided passwords do not match. Please ensure both passwords are identical.",
-                    "type": "ValidationException",
-                    "code": 400403,
-                    "timeStamp": datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S +0000'),
-                    "instance": "/v1/"  # Optional, include if relevant to your application
-                }
-            }
-            return jsonify(error_response), 400
+                return jsonify({'message':'passwords do not match'}), 400
+        
+        response=db_instance.db_method_update_password(token,new_password)
+        if response is not None:
+            return response
 
         response=db_instance.db_method_update_password(token,new_password)
         if response is not None:
