@@ -5,7 +5,7 @@ import jwt
 import secrets
 from functools import wraps
 from redis import Redis
-import random  
+import random
 from database_renote import operations
 from methods.method import all_methods
 from utils import redis_config
@@ -69,20 +69,20 @@ def generate_unique_user_id():
     return random.randint(10**15, (10**16)-1)
  
 
-@app.route('/user/signup', methods=['POST'])
+@app.route('/users/signup', methods=['POST'])
 def signup_main():
     method_response=all_methods_instance.signup()
     if method_response is not None:
-        return method_response 
+        return method_response
     return jsonify({'message':'User created successfully'}), 201
- 
-@app.route('/user/signin', methods=['POST'])
+
+@app.route('/users/signin', methods=['POST'])
 def signin_main():
     method_response=all_methods_instance.signin(app)
     if method_response is not None:
         return method_response
  
-@app.route('/upload_image', methods=['POST'])
+@app.route('/upload_images', methods=['POST'])
 @token_required
 def upload_image_main(redis_user,token_user, token_email, token_application_id, token_client_id, token):
     
@@ -101,9 +101,8 @@ def protected_route(token_user,token_email,token_application_id,token_client_id,
     redis_username = redis_client.hget(token, 'username')
     print(redis_username) 
     return jsonify({'message': 'This is a protected route accessible only with a valid token.'})
- 
- 
-@app.route('/user/forgot_password', methods=['POST'] )
+
+@app.route('/users/forgot_password', methods=['POST'] )
 def forgot_password_main():
     method_response=all_methods_instance.forgot_password()
     if method_response is not None:
@@ -111,7 +110,7 @@ def forgot_password_main():
     return redirect(url_for('reset_password_main'))
     
     
- 
+
 @app.route('/reset_password/<token>')
 def reset_password_main(token):
     method_response=all_methods_instance.reset_password(token)
