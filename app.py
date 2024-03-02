@@ -26,14 +26,14 @@ REDIS_HOST = 'localhost'
 REDIS_PORT = 6379
 REDIS_DB = 0
 redis_client = Redis(host=REDIS_HOST, port=REDIS_PORT, db=REDIS_DB)
- 
+
 
 # Azure Blob Storage Configuration
 AZURE_STORAGE_CONNECTION_STRING = 'DefaultEndpointsProtocol=https;AccountName=necunblobstorage;AccountKey=hgzRK0zpgs+bXf4wnfvFLEJNbSMlbTNeJBuhYHS9jcTrRTzlh0lVlT7K59U8yG0Ojh65p/c4sV97+AStOXtFWw==;EndpointSuffix=core.windows.net'
 CONTAINER_NAME = 'pictures'
 print("Connection String:", AZURE_STORAGE_CONNECTION_STRING)
- 
-def token_required(f): 
+
+def token_required(f):
     @wraps(f)
     def decorated(*args, **kwargs):
         print(request.headers)
@@ -41,7 +41,7 @@ def token_required(f):
         if not request.headers.get('Authorization'):
             return jsonify({'message': 'Token is missing!'}), 401
         if 'Authorization' in request.headers:
-            token = request.headers['Authorization'].split(" ")[1] 
+            token = request.headers['Authorization'].split(" ")[1]
         if not token:
             return jsonify({'message': 'Token is missing!'}), 401
         try:
@@ -62,12 +62,12 @@ def token_required(f):
         except:
             return jsonify({'message': 'Token is invalid!'}), 401
         return f(redis_username,token_user,token_email,token_application_id,token_client_id,token,*args, **kwargs)
- 
+
     return decorated
 
 def generate_unique_user_id():
     return random.randint(10**15, (10**16)-1)
- 
+
 
 @app.route('/users/signUp', methods=['POST'])
 def signup_main():
@@ -81,7 +81,7 @@ def signin_main():
     method_response=all_methods_instance.signin(app)
     if method_response is not None:
         return method_response
- 
+
 @app.route('/uploadImages', methods=['POST'])
 @token_required
 def upload_image_main(redis_user,token_user, token_email, token_application_id, token_client_id, token):
@@ -91,8 +91,7 @@ def upload_image_main(redis_user,token_user, token_email, token_application_id, 
         return method_response
     
     
- 
- 
+
 @app.route('/protected', methods=['GET'])
 @token_required
 def protected_route(token_user,token_email,token_application_id,token_client_id,token):
@@ -111,14 +110,14 @@ def forgot_password_main():
     
     
 
-@app.route('/resetPassword/<token>')
+@app.route('/i/users/resetPassword/<token>')
 def reset_password_main(token):
     method_response=all_methods_instance.reset_password(token)
     if method_response is not None:
         return method_response
     
     
-@app.route('/updatePassword', methods=['POST'])
+@app.route('/i/users/updatePassword', methods=['POST'])
 def update_password_main():
     method_response=all_methods_instance.update_password()
     if method_response is not None:

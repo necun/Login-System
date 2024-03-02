@@ -408,17 +408,5 @@ class db_methods:
 def hello():
     print("hello world!")
 
-# error_response = {
-#     "error": {
-#         "status": "400",
-#         "message": "Invalid or expired token",
-#         "messageKey": "invalid-expired-token-txt",
-#         "details": "The provided token is either invalid or has expired. Please request a new one.",
-#         "type": "TokenException",
-#         "code": 400402,
-#         "timeStamp": dt.utcnow().strftime('%Y-%m-%d %H:%M:%S +0000'),
-#         "instance": "/v1/auth/token"  # Optional, include if relevant to your application
-#     }
-# }
-# return jsonify(error_response), 400
+
 
