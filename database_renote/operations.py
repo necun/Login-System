@@ -251,8 +251,7 @@ class db_methods:
             print(reset_token)
             cursor.execute("UPDATE users SET reset_token = %s WHERE user_id=%s", (reset_token, user[0]))
             conn.commit()
-            error_response = {
-                "success": {
+            success_response = {
                     "status": "200",
                     "message": "Password reset link has been sent to your mail",
                     "messageKey": "user-resetlink-sent",
@@ -260,9 +259,8 @@ class db_methods:
                         'reset_token':reset_token
                         },
                     "timeStamp": dt.utcnow().strftime('%Y-%m-%d %H:%M:%S +0000'),
-                }
             }
-            return jsonify(error_response), 200
+            return jsonify(success_response), 200
 
         except mysql.connector.Error as err:
             code = signin_exception(err)
