@@ -13,7 +13,7 @@ utils_instance=redis_config()
 
 db_instance = db_methods()
 
-ALLOWED_EXTENSIONS = {'jpg', 'jpeg', 'png', 'txt'}
+ALLOWED_EXTENSIONS = {'jpg', 'jpeg', 'png'}
 
 a=utils_instance.app_object
 
@@ -153,7 +153,7 @@ class all_methods:
                 "error": {
                     "status": "400",
                     "message": "Password must contain more than 7 letters",
-                    "messageKey": "password-length-txt",
+                    "messageKey": "password-length",
                     "details": "The password provided is too short. It must contain more than 7 characters.",
                     "type": "ValidationException",
                     "code": 400107,
@@ -168,17 +168,12 @@ class all_methods:
         if response is not None:
             return response
         success_response = {
-            "status": "201",
-            "code": "201100",
-            "message": "User created successfully",
-            "details": {
-                "messageKey": "user-created-successfully-txt",
-                "description": "The user account has been successfully created.",
-                "type": "CreationSuccess",
+                "status": "201",
+                "message": "User created successfully",
+                "messageKey": "user-created-successfully",
                 "timeStamp": datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S +0000'),
-                "instance": "/v1/"  # Optional, include if relevant to your application
-            }
         }
+        
         return jsonify(success_response), 201
 
 
@@ -192,7 +187,7 @@ class all_methods:
                 "error": {
                     "status": "400",
                     "message": "Username is missing",
-                    "messageKey": "username-missing-txt",
+                    "messageKey": "username-missing",
                     "details": "The request did not include a username, which is required.",
                     "type": "ValidationException",
                     "code": 400202,
@@ -207,7 +202,7 @@ class all_methods:
                 "error": {
                     "status": "400",
                     "message": "Password is missing",
-                    "messageKey": "password-missing-txt",
+                    "messageKey": "password-missing",
                     "details": "The request did not include a password, which is required.",
                     "type": "ValidationException",
                     "code": 400203,
@@ -222,12 +217,12 @@ class all_methods:
             return response
     def forgot_password(self):
         email = request.json.get('email')
-        if self.validate_email(email):
+        if not self.validate_email(email):
             error_response = {
                 "error": {
                     "status": "400",
                     "message": "Email invalid",
-                    "messageKey": "email-invalid-txt",
+                    "messageKey": "email-invalid",
                     "details": "The email address provided is not valid. Please provide a valid email address.",
                     "type": "ValidationException",
                     "code": 400302,
@@ -242,7 +237,7 @@ class all_methods:
                 "error": {
                     "status": "400",
                     "message": "Email is required",
-                    "messageKey": "email-required-txt",
+                    "messageKey": "email-required",
                     "details": "The request did not include an email address, which is required.",
                     "type": "ValidationException",
                     "code": 400304,
@@ -269,7 +264,7 @@ class all_methods:
             "error": {
                 "status": "401",
                 "message": "Token missing or invalid",
-                "messageKey": "token-missing-invalid-txt",
+                "messageKey": "token-missing-invalid",
                 "details": "The request did not include a token or included an invalid token.",
                 "type": "AuthenticationException",
                 "code": 401404,
@@ -278,24 +273,16 @@ class all_methods:
             }
         }
             return jsonify(error_response), 401
-
+        
         new_password=request.form.get('password')
         confirm_password=request.form.get('confirm_password')
         if not new_password or confirm_password:
             if new_password != confirm_password:
-                error_response = {
-                "error": {
-                    "status": "400",
-                    "message": "Passwords do not match",
-                    "messageKey": "passwords-not-match-txt",
-                    "details": "The provided passwords do not match. Please ensure both passwords are identical.",
-                    "type": "ValidationException",
-                    "code": 400403,
-                    "timeStamp": datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S +0000'),
-                    "instance": "/v1/"  # Optional, include if relevant to your application
-                }
-            }
-            return jsonify(error_response), 400
+                return jsonify({'message':'passwords do not match'}), 400
+        
+        response=db_instance.db_method_update_password(token,new_password)
+        if response is not None:
+            return response
 
         response=db_instance.db_method_update_password(token,new_password)
         if response is not None:
@@ -307,7 +294,7 @@ class all_methods:
                 "error": {
                     "status": "400",
                     "message": "No image part",
-                    "messageKey": "no-image-part-txt",
+                    "messageKey": "no-image-part",
                     "details": "The request did not include an image part. Please include an image part in the request.",
                     "type": "ValidationException",
                     "code": 400600,
@@ -323,7 +310,7 @@ class all_methods:
             "error": {
                 "status": "400",
                 "message": "No selected file",
-                "messageKey": "no-selected-file-txt",
+                "messageKey": "no-selected-file",
                 "details": "No file was selected for upload. Please select a file to upload.",
                 "type": "ValidationException",
                 "code": 400601,
