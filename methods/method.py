@@ -169,16 +169,11 @@ class all_methods:
             return response
         success_response = {
                 "status": "201",
-                "code": "201100",
                 "message": "User created successfully",
-                "details": {
                 "messageKey": "user-created-successfully-txt",
-                "description": "The user account has been successfully created.",
-                "type": "CreationSuccess",
                 "timeStamp": datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S +0000'),
-                "instance": "/v1/"  # Optional, include if relevant to your application
-            }
         }
+        
         return jsonify(success_response), 201
 
 

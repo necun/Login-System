@@ -110,9 +110,6 @@ class db_methods:
                                 "status": "200",
                                 "message": "Login successful",
                                 "messageKey": "login-success-txt",
-                                "details": "The user has been successfully authenticated.",
-                                "type": "LoginSuccess",
-                                "code": 200200,
                                 "timeStamp": dt.utcnow().strftime('%Y-%m-%d %H:%M:%S +0000'),
                                 "token": token,  # Assuming 'token' is defined elsewhere in your code
                                 "instance": "/v1/auth/"  # Optional, include if relevant to your application
@@ -151,10 +148,12 @@ class db_methods:
     def signup_db_operation(self, application_id, client_id, user_id, username, password, email, fullname, phone_number, profile_pic, status):
             conn = self.get_db_connection()
             cursor = conn.cursor()
+            entity_id = None
             try:
                 query = "INSERT INTO users (application_id,client_id,user_id,username,password,email,fullname,phone_number,profile_pic,status) VALUES (%s,%s,%s,%s, %s, %s, %s, %s, %s, %s)"
                 cursor.execute(query, (application_id, client_id, user_id, username, password, email, fullname, phone_number, profile_pic, status))
                 conn.commit()
+                entity_id = cursor.lastrowid
             except MySQLError as err:
                 if err.errno == errorcode.ER_DUP_ENTRY:
                     error_msg = str(err).lower()
