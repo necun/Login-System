@@ -10,6 +10,7 @@ from database_renote import operations
 from methods.method import all_methods
 from utils import redis_config
 import datetime
+import logging
 
 all_methods_instance = all_methods()
 utils_instance=redis_config()
@@ -39,11 +40,35 @@ def token_required(f):
         print(request.headers)
         token = None
         if not request.headers.get('Authorization'):
-            return jsonify({'message': 'Token is missing!'}), 401
+            error_response = {
+                "error": {
+                    "status": "401",
+                    "message": "Invalid Headers",
+                    "messageKey": "invalid-headers",
+                    "details": "The request did not include headers or included an invalid header.",
+                    "type": "AuthenticationException",
+                    "code": 401404,
+                    "timeStamp": datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S +0000'),
+                    "instance": "/v1/"  # Optional, include if relevant to your application
+                }
+            }
+            return jsonify(error_response), 401
         if 'Authorization' in request.headers:
             token = request.headers['Authorization'].split(" ")[1]
         if not token:
-            return jsonify({'message': 'Token is missing!'}), 401
+            error_response = {
+                "error": {
+                    "status": "401",
+                    "message": "Token is missing",
+                    "messageKey": "token-missing",
+                    "details": "The request did not include a token or included an invalid token.",
+                    "type": "AuthenticationException",
+                    "code": 401405,
+                    "timeStamp": datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S +0000'),
+                    "instance": "/v1/"  # Optional, include if relevant to your application
+                }
+            }
+            return jsonify(error_response), 401
         try:
             
             data = jwt.decode(token, app.config['SECRET_KEY'], algorithms=["HS256"])
@@ -51,16 +76,40 @@ def token_required(f):
             token_email=data['email']
             token_application_id=data['Application']
             token_client_id=data['Clientid']
-            print(token_client_id)
+            logging(token_client_id)
             
             
             redis_username = redis_client.hget(token, 'username')
             
             if redis_username is None or redis_username.decode() != token_user or token_application_id != "renote" or token_client_id != "necun":
                 print(token_client_id)
-                return jsonify({'message': 'Token is invalid or expired!'}), 401
+                error_response = {
+                    "error": {
+                        "status": "401",
+                        "message": "Token is invalid or expired!",
+                        "messageKey": "token-invalid",
+                        "details": "The token is invalid or has expired.",
+                        "type": "AuthenticationException",
+                        "code": 400402,
+                        "timeStamp": datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S +0000'),
+                        "instance": "/v1/"  # Optional, include if relevant to your application
+                    }
+                }
+                return jsonify(error_response), 401
         except:
-            return jsonify({'message': 'Token is invalid!'}), 401
+            error_response ={
+                "error": {
+                    "status": "401",
+                    "message": "Token is invalid!",
+                    "messageKey": "token-invalid",
+                    "details": "The token is invalid or has expired.",
+                    "type": "AuthenticationException",
+                    "code": 400405,
+                    "timeStamp": datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S +0000'),
+                    "instance": "/v1/"  # Optional, include if relevant to your application
+                }
+            }
+            return jsonify(error_response), 401
         return f(redis_username,token_user,token_email,token_application_id,token_client_id,token,*args, **kwargs)
 
     return decorated
@@ -74,7 +123,7 @@ def signup_main():
     method_response=all_methods_instance.signup()
     if method_response is not None:
         return method_response
-    return jsonify({'message':'User created successfully'}), 201
+    #return jsonify({'message':'User created successfully'}), 201
 
 @app.route('/users/signIn', methods=['POST'])
 def signin_main():
@@ -95,10 +144,10 @@ def upload_image_main(redis_user,token_user, token_email, token_application_id, 
 @app.route('/protected', methods=['GET'])
 @token_required
 def protected_route(token_user,token_email,token_application_id,token_client_id,token):
-    print(token_user)
-    print(token_email)
+    logging(token_user)
+    logging(token_email)
     redis_username = redis_client.hget(token, 'username')
-    print(redis_username)
+    logging(redis_username)
     return jsonify({'message': 'This is a protected route accessible only with a valid token.'})
 
 @app.route('/users/forgotPassword', methods=['POST'] )
@@ -110,14 +159,14 @@ def forgot_password_main():
     
     
 
-@app.route('/i/users/resetPassword/<token>')
+@app.route('/users/resetPassword/<token>')
 def reset_password_main(token):
     method_response=all_methods_instance.reset_password(token)
     if method_response is not None:
         return method_response
     
     
-@app.route('/i/users/updatePassword', methods=['POST'])
+@app.route('/users/updatePassword', methods=['POST'])
 def update_password_main():
     method_response=all_methods_instance.update_password()
     if method_response is not None:
@@ -131,7 +180,7 @@ def welcome():
     formatted_datetime = current_datetime.strftime("%Y-%m-%d %H:%M:%S")
 
 
-    print("current time:-", formatted_datetime)
+    logging("current time:-", formatted_datetime)
 
     return 'Welcome to renote.ai at : ' + formatted_datetime
 

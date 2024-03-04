@@ -267,7 +267,7 @@ class all_methods:
                 "messageKey": "token-missing-invalid",
                 "details": "The request did not include a token or included an invalid token.",
                 "type": "AuthenticationException",
-                "code": 401404,
+                "code": 400401,
                 "timeStamp": datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S +0000'),
                 "instance": "/v1/"  # Optional, include if relevant to your application
             }
