@@ -145,14 +145,14 @@ class db_methods:
         finally:
             cursor.close()
             conn.close()
-    def signup_db_operation(self, application_id, client_id, user_id, username, password, email, fullname, phone_number, profile_pic, status):
+    def signup_db_operation(self, application_id, client_id, user_id, username, password, email, first_name,last_name, phone_number, profile_pic, status):
             conn = self.get_db_connection()
             cursor = conn.cursor()
             try:
-                query = "INSERT INTO users (application_id,client_id,user_id,username,password,email,fullname,phone_number,profile_pic,status) VALUES (%s,%s,%s,%s, %s, %s, %s, %s, %s, %s)"
-                cursor.execute(query, (application_id, client_id, user_id, username, password, email, fullname, phone_number, profile_pic, status))
+                query = "INSERT INTO users (application_id,client_id,user_id,username,password,email,First_Name,Last_Name,phone_number,profile_pic,status) VALUES (%s,%s,%s,%s, %s, %s, %s, %s, %s, %s)"
+                cursor.execute(query, (application_id, client_id, user_id, username, password, email, first_name,last_name, phone_number, profile_pic, status))
                 conn.commit()
-                entity_id = cursor.lastrowid
+                
             except MySQLError as err:
                 if err.errno == errorcode.ER_DUP_ENTRY:
                     error_msg = str(err).lower()

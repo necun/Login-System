@@ -33,15 +33,15 @@ class all_methods:
     def validate_phonenumber(self,phone_number):
         phone_number_pattern= r'^\d{10}$'
         return re.match(phone_number_pattern,phone_number)
-    def validate_fullname(self,fullname):
+    def validate_fullname(self,first_name,last_name):
         fullname_pattern=r'^[a-z A-Z]+$'
-        return re.match(fullname_pattern,fullname)
+        return re.match(fullname_pattern,first_name,last_name)
     def password_strength_validation(self,password):
             return len(password) > 7
     def signup(self):
         data = request.json
         print("Headers Received:", request.headers)
-        required_fields = ['fullname', 'username', 'password', 'email', 'phone_number']
+        required_fields = ['First_name','Last_Name', 'username', 'password', 'email', 'phone_number']
         missing_fields = [field for field in required_fields if field not in data or not data[field]]
 
         if missing_fields:
@@ -93,7 +93,8 @@ class all_methods:
             return jsonify(error_response), 400
 
         user_id=self.generate_unique_user_id()
-        fullname = data['fullname']
+        first_name = data['First_Name']
+        last_name=data['Last_Name']
         username = data['username']
         password = generate_password_hash(data['password'])
         email = data['email']
@@ -132,7 +133,7 @@ class all_methods:
             return jsonify(error_response), 400
 
 
-        if not self.validate_fullname(fullname):
+        if not self.validate_fullname(last_name,first_name):
             error_response = {
                 "error": {
                     "status": "400",
@@ -164,7 +165,7 @@ class all_methods:
             return jsonify(error_response), 400
 
 
-        response=db_instance.signup_db_operation(application_id, client_id, user_id, username,  password, email , fullname, phone_number , profile_pic, 0)
+        response=db_instance.signup_db_operation(application_id, client_id, user_id, username,  password, email , first_name,last_name, phone_number , profile_pic, 0)
         if response is not None:
             return response
         success_response = {
