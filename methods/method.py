@@ -17,8 +17,8 @@ ALLOWED_EXTENSIONS = {'jpg', 'jpeg', 'png'}
 
 a=utils_instance.app_object
 
-application_id = request.headers['Application']
-client_id = request.headers['Clientid']
+# application_id = request.headers['Application']
+# client_id = request.headers['Clientid']
 
 AZURE_STORAGE_CONNECTION_STRING = 'DefaultEndpointsProtocol=https;AccountName=necunblobstorage;AccountKey=hgzRK0zpgs+bXf4wnfvFLEJNbSMlbTNeJBuhYHS9jcTrRTzlh0lVlT7K59U8yG0Ojh65p/c4sV97+AStOXtFWw==;EndpointSuffix=core.windows.net'
 CONTAINER_NAME = 'pictures'
@@ -47,9 +47,9 @@ class all_methods:
         
     def validation_header(self):
         if 'Application' in request.headers and 'Clientid' in request.headers:
-            application_id = request.headers['Application']
-            client_id = request.headers['Clientid']
-            if application_id != 'renote' or client_id != 'necun':
+            self.application_id = request.headers['Application']
+            self.client_id = request.headers['Clientid']
+            if self.application_id != 'renote' or self.client_id != 'necun':
                 error_response = {
                         "error": {
                         "status": "400",
@@ -190,7 +190,7 @@ class all_methods:
             return jsonify(error_response), 400
 
 
-        response=db_instance.signup_db_operation(application_id, client_id, user_id, username,  password, email , First_Name,Last_Name, phone_number , profile_pic, 0)
+        response=db_instance.signup_db_operation(self.application_id, self.client_id, user_id, username,  password, email , First_Name,Last_Name, phone_number , profile_pic, 0)
         if response is not None:
             return response
         success_response = {
