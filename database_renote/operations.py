@@ -31,7 +31,7 @@ class db_methods:
                 "error": {
                     "status": "400",
                     "message": "Username is missing",
-                    "messageKey": "login-invalid-user-name",
+                    "messageKey": "user-login-invalidUsername",
                     "details": "Username field is empty. Please provide a username.",
                     "type": "LoginException",
                     "code": 400202,
@@ -70,7 +70,7 @@ class db_methods:
                     "error": {
                         "status": "404",
                         "message": "User not found",
-                        "messageKey": "login-user-not-found",
+                        "messageKey": "user-login-missingPassword",
                         "details": "The username provided does not match any user in our database.",
                         "type": "LoginException",
                         "code": 404204,
@@ -121,7 +121,7 @@ class db_methods:
                     "error": {
                         "status": "400",
                         "message": "Invalid username or password",
-                        "messageKey": "login-invalid-credentials",
+                        "messageKey": "user-login-invalidCredentials",
                         "details": "The username or password provided is incorrect. Please try again.",
                         "type": "LoginException",
                         "code": 400201,
@@ -136,9 +136,9 @@ class db_methods:
             code = signin_exception(err)  #############################
             error_response = {
                     "status": "500",
-                    "code": code,  # Use the determined code
+                    "code": code,
                     "message": "Database error",
-                    "error": str(err),  # Convert the error object to a string to include in the response
+                    "error": str(err),
                     "timestamp": datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%SZ')
                 }
             return jsonify(error_response), 500
@@ -161,7 +161,7 @@ class db_methods:
                             "error": {
                                 "status": "409",
                                 "message": "Email already exists",
-                                "messageKey": "signup-email-exists",
+                                "messageKey": "user-signup-emailExists",
                                 "details": "The email provided is already associated with an existing account.",
                                 "type": "SignupException",
                                 "code": 409101,
