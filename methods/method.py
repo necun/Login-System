@@ -33,15 +33,18 @@ class all_methods:
     def validate_phonenumber(self,phone_number):
         phone_number_pattern= r'^\d{10}$'
         return re.match(phone_number_pattern,phone_number)
-    def validate_fullname(self,first_name,last_name):
+    def validate_name(self,First_Name):
         fullname_pattern=r'^[a-z A-Z]+$'
-        return re.match(fullname_pattern,first_name,last_name)
+        return re.match(fullname_pattern,First_Name)
+    def validate_lastname(self,Last_Name):
+        fullname_pattern=r'^[a-z A-Z]+$'
+        return re.match(fullname_pattern,Last_Name)
     def password_strength_validation(self,password):
             return len(password) > 7
     def signup(self):
         data = request.json
         print("Headers Received:", request.headers)
-        required_fields = ['First_name','Last_Name', 'username', 'password', 'email', 'phone_number']
+        required_fields = ['First_Name','Last_Name', 'username', 'password', 'email', 'phone_number']
         missing_fields = [field for field in required_fields if field not in data or not data[field]]
 
         if missing_fields:
@@ -93,8 +96,8 @@ class all_methods:
             return jsonify(error_response), 400
 
         user_id=self.generate_unique_user_id()
-        first_name = data['First_Name']
-        last_name=data['Last_Name']
+        First_Name = data['First_Name']
+        Last_Name=data['Last_Name']
         username = data['username']
         password = generate_password_hash(data['password'])
         email = data['email']
@@ -133,11 +136,11 @@ class all_methods:
             return jsonify(error_response), 400
 
 
-        if not self.validate_fullname(last_name,first_name):
+        if not self.validate_name(First_Name):
             error_response = {
                 "error": {
                     "status": "400",
-                    "message": "Full Name must contain only Alphabets",
+                    "message": "First Name must contain only Alphabets",
                     "messageKey": "full-name-alphabets-only-txt",
                     "details": "The full name provided contains invalid characters. It must only include alphabets.",
                     "type": "ValidationException",
@@ -148,7 +151,20 @@ class all_methods:
             }
             return jsonify(error_response), 400
 
-
+        if not self.validate_name(Last_Name):
+            error_response = {
+                "error": {
+                    "status": "400",
+                    "message": "last Name must contain only Alphabets",
+                    "messageKey": "full-name-alphabets-only-txt",
+                    "details": "The full name provided contains invalid characters. It must only include alphabets.",
+                    "type": "ValidationException",
+                    "code": 400106,
+                    "timeStamp": datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S +0000'),
+                    "instance": "/v1/"  # Optional, include if relevant to your application
+                }
+            }
+            return jsonify(error_response), 400
         if not self.password_strength_validation(password):
             error_response = {
                 "error": {
@@ -165,7 +181,7 @@ class all_methods:
             return jsonify(error_response), 400
 
 
-        response=db_instance.signup_db_operation(application_id, client_id, user_id, username,  password, email , first_name,last_name, phone_number , profile_pic, 0)
+        response=db_instance.signup_db_operation(application_id, client_id, user_id, username,  password, email , First_Name,Last_Name, phone_number , profile_pic, 0)
         if response is not None:
             return response
         success_response = {
