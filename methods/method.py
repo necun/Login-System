@@ -172,6 +172,7 @@ class all_methods:
                 "status": "201",
                 "message": "User created successfully",
                 "messageKey": "user-created-successfully",
+                "entity_id":user_id,
                 "timeStamp": datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S +0000'),
         }
         
