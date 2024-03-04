@@ -291,9 +291,9 @@ class all_methods:
 
     def reset_password(self,token):
         
-        method_response=self.validation_header()
-        if method_response is not None:
-            return method_response
+        #method_response=self.validation_header()
+        #if method_response is not None:
+        #  return method_response
         
         response=db_instance.user_by_reset_token(token)
         if response is not None:
@@ -302,9 +302,9 @@ class all_methods:
     def update_password(self):
         token=request.form.get('token')
         
-        method_response=self.validation_header()
-        if method_response is not None:
-            return method_response
+        # method_response=self.validation_header()
+        # if method_response is not None:
+        #     return method_response
         
         if not token:
             error_response = {

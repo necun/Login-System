@@ -194,7 +194,7 @@ class db_methods:
                                 "type": "SignupException",
                                 "code": 409102,
                                 "timeStamp": dt.utcnow().strftime('%Y-%m-%d %H:%M:%S +0000'),
-                                "instance": "/v1/auth/signup"  # Optional, include if relevant to your application
+                                "instance": "/v1/auth/signup"
                             }
                         }
                         return jsonify(error_response), 409
