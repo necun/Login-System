@@ -2,6 +2,7 @@ from flask import Flask, request ,jsonify,redirect , url_for
 from werkzeug.utils import secure_filename
 from azure.storage.blob import BlobServiceClient
 import jwt
+import os
 import secrets
 from functools import wraps
 from redis import Redis
@@ -11,6 +12,11 @@ from methods.method import all_methods
 from utils import redis_config
 import datetime
 import logging
+from flask_mail import Mail , Message
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+import smtplib
+
 
 all_methods_instance = all_methods()
 utils_instance=redis_config()
@@ -18,6 +24,16 @@ utils_instance=redis_config()
 
 
 app = Flask(__name__)
+
+app.config['MAIL_SERVER'] = 'sandbox.smtp.mailtrap.io'
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USERNAME'] = '114aa8c148a466'#os.environ.get('EMAIL_USERNAME')
+app.config['MAIL_PASSWORD'] = '1adda0aa9304a8'#os.environ.get('EMAIL_password')
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USE_SSL'] = False
+mail=Mail(app)
+
 secret_key = secrets.token_hex(16)
 app.config['SECRET_KEY'] = secret_key
 
@@ -183,6 +199,39 @@ def welcome():
     logging("current time:-", formatted_datetime)
 
     return 'Welcome to renote.ai at : ' + formatted_datetime
+
+# @app.route('/send_email')
+# def send_email():
+#     msg = Message('Hello from Flask-Mail',
+#                   sender='sainikhilch@renote.ai',
+#                   recipients=['nikhilgriner23@gmail.com'])
+#     msg.body = "This is a test email sent from Flask-Mail!"
+#     mail.send(msg)
+#     return jsonify({'message':'Email sent successfully!'}), 200
+
+
+@app.route("/send-email", methods=["POST"])
+def send_email():
+    try:
+        to_email = request.form['to_email']
+        subject = request.form.get('subject', 'Your Doc is Ready - Renote.ai')
+        message = request.form.get('message', 'Please check attached Doc.')
+
+        msg = MIMEMultipart()
+        msg['From'] = 'noreply.renote.ai@gmail.com'
+        msg['To'] = to_email
+        msg['Subject'] = subject
+
+        msg.attach(MIMEText(message, 'html')) 
+
+        with smtplib.SMTP('smtp.gmail.com', 587) as server:
+            server.starttls()
+            server.login('noreply.renote.ai@gmail.com', 'ihde zzml kkip opng')
+            server.sendmail('noreply.renote.ai@gmail.com', to_email, msg.as_string())
+
+        return jsonify({"message": f"Email sent successfully to {to_email}"})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
     app.run(debug=True)
