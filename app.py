@@ -92,7 +92,7 @@ def token_required(f):
             token_email=data['email']
             token_application_id=data['Application']
             token_client_id=data['Clientid']
-            logging(token_client_id)
+            #logging(token_client_id)
             
             
             redis_username = redis_client.hget(token, 'username')
@@ -160,10 +160,10 @@ def upload_image_main(redis_user,token_user, token_email, token_application_id, 
 @app.route('/protected', methods=['GET'])
 @token_required
 def protected_route(token_user,token_email,token_application_id,token_client_id,token):
-    logging(token_user)
-    logging(token_email)
+    # logging(token_user)
+    # logging(token_email)
     redis_username = redis_client.hget(token, 'username')
-    logging(redis_username)
+    # logging(redis_username)
     return jsonify({'message': 'This is a protected route accessible only with a valid token.'})
 
 @app.route('/users/forgotPassword', methods=['POST'] )
@@ -196,7 +196,7 @@ def welcome():
     formatted_datetime = current_datetime.strftime("%Y-%m-%d %H:%M:%S")
 
 
-    logging("current time:-", formatted_datetime)
+    #logging("current time:-", formatted_datetime)
 
     return 'Welcome to renote.ai at : ' + formatted_datetime
 
@@ -238,4 +238,4 @@ def welcome():
     return jsonify({'message':'hello'}), 200
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=5000)
