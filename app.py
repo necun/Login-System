@@ -232,6 +232,10 @@ def send_email():
         return jsonify({"message": f"Email sent successfully to {to_email}"})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+    
+@app.route('/hey')
+def welcome():
+    return jsonify({'message':'hello'}), 200
 
 if __name__ == '__main__':
     app.run(debug=True)
