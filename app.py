@@ -234,8 +234,8 @@ def send_email():
         return jsonify({"error": str(e)}), 500
     
 @app.route('/hey')
-def welcome():
-    return jsonify({'message':'hello'}), 200
+def welcomeMessage():
+    return jsonify({'message':'Welcome at Renote'}), 200
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
