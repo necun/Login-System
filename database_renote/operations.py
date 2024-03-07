@@ -31,7 +31,7 @@ class db_methods:
                 "error": {
                     "status": "400",
                     "message": "Username is missing",
-                    "messageKey": "login-invalid-user-name",
+                    "messageKey": "user-login-invalidUsername",
                     "details": "Username field is empty. Please provide a username.",
                     "type": "LoginException",
                     "code": 400202,
@@ -70,7 +70,7 @@ class db_methods:
                     "error": {
                         "status": "404",
                         "message": "User not found",
-                        "messageKey": "login-user-not-found",
+                        "messageKey": "user-login-missingPassword",
                         "details": "The username provided does not match any user in our database.",
                         "type": "LoginException",
                         "code": 404204,
@@ -121,7 +121,7 @@ class db_methods:
                     "error": {
                         "status": "400",
                         "message": "Invalid username or password",
-                        "messageKey": "login-invalid-credentials",
+                        "messageKey": "user-login-invalidCredentials",
                         "details": "The username or password provided is incorrect. Please try again.",
                         "type": "LoginException",
                         "code": 400201,
@@ -136,23 +136,23 @@ class db_methods:
             code = signin_exception(err)  #############################
             error_response = {
                     "status": "500",
-                    "code": code,  # Use the determined code
+                    "code": code,
                     "message": "Database error",
-                    "error": str(err),  # Convert the error object to a string to include in the response
+                    "error": str(err),
                     "timestamp": datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%SZ')
                 }
             return jsonify(error_response), 500
         finally:
             cursor.close()
             conn.close()
-    def signup_db_operation(self, application_id, client_id, user_id, username, password, email, fullname, phone_number, profile_pic, status):
+    def signup_db_operation(self, application_id, client_id, user_id, username, password, email, First_Name,Last_Name, phone_number, profile_pic, status):
             conn = self.get_db_connection()
             cursor = conn.cursor()
             try:
-                query = "INSERT INTO users (application_id,client_id,user_id,username,password,email,fullname,phone_number,profile_pic,status) VALUES (%s,%s,%s,%s, %s, %s, %s, %s, %s, %s)"
-                cursor.execute(query, (application_id, client_id, user_id, username, password, email, fullname, phone_number, profile_pic, status))
+                query = "INSERT INTO users (application_id,client_id,user_id,username,password,email,First_Name,Last_Name,phone_number,profile_pic,status) VALUES (%s,%s,%s,%s, %s, %s, %s, %s, %s, %s,%s)"
+                cursor.execute(query, (application_id, client_id, user_id, username, password, email, First_Name,Last_Name, phone_number, profile_pic, status))
                 conn.commit()
-                entity_id = cursor.lastrowid
+                
             except MySQLError as err:
                 if err.errno == errorcode.ER_DUP_ENTRY:
                     error_msg = str(err).lower()
@@ -161,7 +161,7 @@ class db_methods:
                             "error": {
                                 "status": "409",
                                 "message": "Email already exists",
-                                "messageKey": "signup-email-exists",
+                                "messageKey": "user-signup-emailExists",
                                 "details": "The email provided is already associated with an existing account.",
                                 "type": "SignupException",
                                 "code": 409101,
@@ -194,7 +194,7 @@ class db_methods:
                                 "type": "SignupException",
                                 "code": 409102,
                                 "timeStamp": dt.utcnow().strftime('%Y-%m-%d %H:%M:%S +0000'),
-                                "instance": "/v1/auth/signup"  # Optional, include if relevant to your application
+                                "instance": "/v1/auth/signup"
                             }
                         }
                         return jsonify(error_response), 409

@@ -71,6 +71,9 @@ def reset_password_exception(e):
         "Passwords did not match" : 400403,
         "password has been upodated successfully" : 200400,
         'Email is required' : 401404,
+        'Token is missing' : 401405,
+        'Invalid Headers' : 400404,
+        'Token is invalid' : 400405,
         
         "password reset link has been sent to your mail": 200405,
         

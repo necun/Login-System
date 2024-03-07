@@ -17,6 +17,9 @@ ALLOWED_EXTENSIONS = {'jpg', 'jpeg', 'png'}
 
 a=utils_instance.app_object
 
+# application_id = request.headers['Application']
+# client_id = request.headers['Clientid']
+
 AZURE_STORAGE_CONNECTION_STRING = 'DefaultEndpointsProtocol=https;AccountName=necunblobstorage;AccountKey=hgzRK0zpgs+bXf4wnfvFLEJNbSMlbTNeJBuhYHS9jcTrRTzlh0lVlT7K59U8yG0Ojh65p/c4sV97+AStOXtFWw==;EndpointSuffix=core.windows.net'
 CONTAINER_NAME = 'pictures'
 
@@ -33,15 +36,53 @@ class all_methods:
     def validate_phonenumber(self,phone_number):
         phone_number_pattern= r'^\d{10}$'
         return re.match(phone_number_pattern,phone_number)
-    def validate_fullname(self,fullname):
+    def validate_name(self,First_Name):
         fullname_pattern=r'^[a-z A-Z]+$'
-        return re.match(fullname_pattern,fullname)
+        return re.match(fullname_pattern,First_Name)
+    def validate_lastname(self,Last_Name):
+        fullname_pattern=r'^[a-z A-Z]+$'
+        return re.match(fullname_pattern,Last_Name)
     def password_strength_validation(self,password):
             return len(password) > 7
+        
+    def validation_header(self):
+        if 'Application' in request.headers and 'Clientid' in request.headers:
+            self.application_id = request.headers['Application']
+            self.client_id = request.headers['Clientid']
+            if self.application_id != 'renote' or self.client_id != 'necun':
+                error_response = {
+                        "error": {
+                        "status": "400",
+                        "message": "Headers Invalid",
+                        "messageKey": "invalid-headers-txt",
+                        "details": "One or more of the request headers are invalid or missing.",
+                        "type": "HeaderValidationException",
+                        "code": 400104,
+                        "timeStamp": datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S +0000'),
+                        "instance": "/v1/"  # Optional, include if relevant to your application
+                    }
+                }
+                return jsonify(error_response), 400
+            
+        else:
+                error_response = {
+                    "error": {
+                        "status": "400",
+                        "message": "Required headers not found",
+                        "messageKey": "required-headers-missing-txt",
+                        "details": "The request is missing one or more required headers.",
+                        "type": "HeaderValidationException",
+                        "code": 400105,
+                        "timeStamp": datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S +0000'),
+                        "instance": "/v1/"  # Optional, include if relevant to your application
+                    }
+                }
+                return jsonify(error_response), 400
+        
     def signup(self):
         data = request.json
         print("Headers Received:", request.headers)
-        required_fields = ['fullname', 'username', 'password', 'email', 'phone_number']
+        required_fields = ['First_Name','Last_Name', 'username', 'password', 'email', 'phone_number']
         missing_fields = [field for field in required_fields if field not in data or not data[field]]
 
         if missing_fields:
@@ -59,41 +100,13 @@ class all_methods:
             }
             return jsonify(error_response), 400
 
-
-        if 'Application' in request.headers and 'Clientid' in request.headers:
-            application_id = request.headers['Application']
-            client_id = request.headers['Clientid']
-            if application_id != 'renote' or client_id != 'necun':
-                error_response = {
-                        "error": {
-                        "status": "400",
-                        "message": "Headers Invalid",
-                        "messageKey": "invalid-headers-txt",
-                        "details": "One or more of the request headers are invalid or missing.",
-                        "type": "HeaderValidationException",
-                        "code": 400104,
-                        "timeStamp": datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S +0000'),
-                        "instance": "/v1/"  # Optional, include if relevant to your application
-                    }
-                }
-                return jsonify(error_response), 400
-        else:
-            error_response = {
-                "error": {
-                    "status": "400",
-                    "message": "Required headers not found",
-                    "messageKey": "required-headers-missing-txt",
-                    "details": "The request is missing one or more required headers.",
-                    "type": "HeaderValidationException",
-                    "code": 400105,
-                    "timeStamp": datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S +0000'),
-                    "instance": "/v1/"  # Optional, include if relevant to your application
-                }
-            }
-            return jsonify(error_response), 400
+        method_response=self.validation_header()
+        if method_response is not None:
+            return method_response
 
         user_id=self.generate_unique_user_id()
-        fullname = data['fullname']
+        First_Name = data['First_Name']
+        Last_Name=data['Last_Name']
         username = data['username']
         password = generate_password_hash(data['password'])
         email = data['email']
@@ -132,11 +145,11 @@ class all_methods:
             return jsonify(error_response), 400
 
 
-        if not self.validate_fullname(fullname):
+        if not self.validate_name(First_Name):
             error_response = {
                 "error": {
                     "status": "400",
-                    "message": "Full Name must contain only Alphabets",
+                    "message": "First Name must contain only Alphabets",
                     "messageKey": "full-name-alphabets-only-txt",
                     "details": "The full name provided contains invalid characters. It must only include alphabets.",
                     "type": "ValidationException",
@@ -147,7 +160,20 @@ class all_methods:
             }
             return jsonify(error_response), 400
 
-
+        if not self.validate_name(Last_Name):
+            error_response = {
+                "error": {
+                    "status": "400",
+                    "message": "last Name must contain only Alphabets",
+                    "messageKey": "full-name-alphabets-only-txt",
+                    "details": "The full name provided contains invalid characters. It must only include alphabets.",
+                    "type": "ValidationException",
+                    "code": 400106,
+                    "timeStamp": datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S +0000'),
+                    "instance": "/v1/"  # Optional, include if relevant to your application
+                }
+            }
+            return jsonify(error_response), 400
         if not self.password_strength_validation(password):
             error_response = {
                 "error": {
@@ -164,13 +190,14 @@ class all_methods:
             return jsonify(error_response), 400
 
 
-        response=db_instance.signup_db_operation(application_id, client_id, user_id, username,  password, email , fullname, phone_number , profile_pic, 0)
+        response=db_instance.signup_db_operation(self.application_id, self.client_id, user_id, username,  password, email , First_Name,Last_Name, phone_number , profile_pic, 0)
         if response is not None:
             return response
         success_response = {
                 "status": "201",
                 "message": "User created successfully",
                 "messageKey": "user-created-successfully",
+                "entity_id":user_id,
                 "timeStamp": datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S +0000'),
         }
         
@@ -182,6 +209,11 @@ class all_methods:
 
         username = data['username']
         password = data['password']
+        
+        method_response=self.validation_header()
+        if method_response is not None:
+            return method_response
+        
         if not username:
             error_response = {
                 "error": {
@@ -217,6 +249,11 @@ class all_methods:
             return response
     def forgot_password(self):
         email = request.json.get('email')
+        
+        method_response=self.validation_header()
+        if method_response is not None:
+            return method_response
+        
         if not self.validate_email(email):
             error_response = {
                 "error": {
@@ -253,12 +290,22 @@ class all_methods:
             return response
 
     def reset_password(self,token):
+        
+        #method_response=self.validation_header()
+        #if method_response is not None:
+        #  return method_response
+        
         response=db_instance.user_by_reset_token(token)
         if response is not None:
             return response
 
     def update_password(self):
         token=request.form.get('token')
+        
+        # method_response=self.validation_header()
+        # if method_response is not None:
+        #     return method_response
+        
         if not token:
             error_response = {
             "error": {
@@ -267,7 +314,7 @@ class all_methods:
                 "messageKey": "token-missing-invalid",
                 "details": "The request did not include a token or included an invalid token.",
                 "type": "AuthenticationException",
-                "code": 401404,
+                "code": 400401,
                 "timeStamp": datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S +0000'),
                 "instance": "/v1/"  # Optional, include if relevant to your application
             }
@@ -289,6 +336,11 @@ class all_methods:
             return response
 
     def upload_image(self,username):
+        
+        method_response=self.validation_header()
+        if method_response is not None:
+            return method_response
+        
         if 'image' not in request.files:
             error_response = {
                 "error": {
