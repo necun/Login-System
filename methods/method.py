@@ -8,6 +8,8 @@ from werkzeug.utils import secure_filename
 import re
 from datetime import datetime
 from methods.customExceptions import forgot_password_exception,reset_password_exception,signin_exception,signup_exception
+import logging
+from logging.handlers import RotatingFileHandler
 
 utils_instance=redis_config()
 
@@ -17,8 +19,13 @@ ALLOWED_EXTENSIONS = {'jpg', 'jpeg', 'png'}
 
 a=utils_instance.app_object
 
-# application_id = request.headers['Application']
-# client_id = request.headers['Clientid']
+logger = logging.getLogger("my_logger")
+logger.setLevel(logging.INFO)
+log_formatter  = logging.Formatter("%(asctime)s,%(levelname)s,%(message)s")
+file_handler = RotatingFileHandler("renote_logins_logs", when='midnight', interval=1, backupCount=90)
+file_handler.setFormatter(log_formatter)
+
+logger.addHandler(file_handler)
 
 AZURE_STORAGE_CONNECTION_STRING = 'DefaultEndpointsProtocol=https;AccountName=necunblobstorage;AccountKey=hgzRK0zpgs+bXf4wnfvFLEJNbSMlbTNeJBuhYHS9jcTrRTzlh0lVlT7K59U8yG0Ojh65p/c4sV97+AStOXtFWw==;EndpointSuffix=core.windows.net'
 CONTAINER_NAME = 'pictures'
@@ -49,6 +56,7 @@ class all_methods:
         if 'Application' in request.headers and 'Clientid' in request.headers:
             self.application_id = request.headers['Application']
             self.client_id = request.headers['Clientid']
+            logger.info("headers assigned successfully in validation_header method")
             if self.application_id != 'renote' or self.client_id != 'necun':
                 error_response = {
                         "error": {
@@ -62,6 +70,7 @@ class all_methods:
                         "instance": "/v1/"  # Optional, include if relevant to your application
                     }
                 }
+                logger.error("One or more of the request headers are invalid or missing in validation_header method")
                 return jsonify(error_response), 400
             
         else:
@@ -77,13 +86,20 @@ class all_methods:
                         "instance": "/v1/"  # Optional, include if relevant to your application
                     }
                 }
+                logger.error("missing required headers in validation_header method")
                 return jsonify(error_response), 400
         
     def signup(self):
+        
+        method_response=self.validation_header()
+        if method_response is not None:
+            return method_response
+        
         data = request.json
         print("Headers Received:", request.headers)
         required_fields = ['First_Name','Last_Name', 'username', 'password', 'email', 'phone_number']
         missing_fields = [field for field in required_fields if field not in data or not data[field]]
+        
 
         if missing_fields:
             error_response = {
@@ -98,11 +114,10 @@ class all_methods:
                     "instance": "/v1/"
                 }
             }
+            logging.error(f"fields missing {missing_fields}")
             return jsonify(error_response), 400
 
-        method_response=self.validation_header()
-        if method_response is not None:
-            return method_response
+        
 
         user_id=self.generate_unique_user_id()
         First_Name = data['First_Name']
@@ -126,6 +141,7 @@ class all_methods:
                     "instance": "/v1/"  # Optional, include if relevant to your application
                 }
             }
+            logging.error("invalid email format in signup method")
             return jsonify(error_response), 400
 
 
@@ -142,6 +158,7 @@ class all_methods:
                     "instance": "/v1/"  # Optional, include if relevant to your application
                 }
             }
+            logging.error("invalid phonenumber in signup method")
             return jsonify(error_response), 400
 
 
@@ -158,6 +175,7 @@ class all_methods:
                     "instance": "/v1/"  # Optional, include if relevant to your application
                 }
             }
+            logging.error("invalid firstname in signup method")
             return jsonify(error_response), 400
 
         if not self.validate_name(Last_Name):
@@ -173,6 +191,7 @@ class all_methods:
                     "instance": "/v1/"  # Optional, include if relevant to your application
                 }
             }
+            logging.error("invalid firstname in signup method")
             return jsonify(error_response), 400
         if not self.password_strength_validation(password):
             error_response = {
@@ -187,6 +206,7 @@ class all_methods:
                     "instance": "/v1/"  # Optional, include if relevant to your application
                 }
             }
+            logging.error("Password strength exception in signup method")
             return jsonify(error_response), 400
 
 
@@ -227,6 +247,7 @@ class all_methods:
                     "instance": "/v1/"  # Optional, include if relevant to your application
                 }
             }
+            logging.error("username is missing in signin method")
             return jsonify(error_response), 400
 
         if not password:
@@ -242,6 +263,7 @@ class all_methods:
                     "instance": "/v1/"  # Optional, include if relevant to your application
                 }
             }
+            logging.error("password is missing in signin method")
             return jsonify(error_response), 400
 
         response=db_instance.signin_db_operation(username,password,a)
@@ -267,6 +289,7 @@ class all_methods:
                     "instance": "/v1/"  # Optional, include if relevant to your application
                 }
             }
+            logging.error("invalid email in forgot_password method")
             return jsonify(error_response), 400
 
         if not email:
@@ -282,6 +305,7 @@ class all_methods:
                     "instance": "/v1/"  # Optional, include if relevant to your application
                 }
             }
+            logging.error("Email is missing in forgot_password method")
             return jsonify(error_response), 400
 
 
@@ -319,18 +343,18 @@ class all_methods:
                 "instance": "/v1/"  # Optional, include if relevant to your application
             }
         }
+            logging.error("token is missing in update_password method")
             return jsonify(error_response), 401
         
         new_password=request.form.get('password')
         confirm_password=request.form.get('confirm_password')
         if not new_password or confirm_password:
+            logging.error("password missing in update_password method")
             if new_password != confirm_password:
+                logging.error("password are not matching error in update_password method")
                 return jsonify({'message':'passwords do not match'}), 400
+                
         
-        response=db_instance.db_method_update_password(token,new_password)
-        if response is not None:
-            return response
-
         response=db_instance.db_method_update_password(token,new_password)
         if response is not None:
             return response
@@ -354,6 +378,7 @@ class all_methods:
                     "instance": "/v1/upload-image"  # Optional, include if relevant to your application
                 }
             }
+            logging.error("image is missing in upload_image method")
             return jsonify(error_response), 400
 
         file = request.files['image']
@@ -370,6 +395,7 @@ class all_methods:
                 "instance": "/v1/upload-image"  # Optional, include if relevant to your application
             }
         }
+            logging.error("file is not selected error in upload_image method")
             return jsonify(error_response), 400
 
 
@@ -383,7 +409,9 @@ class all_methods:
     def upload_to_azure_blob(self,file_stream, file_name):
 
         if not AZURE_STORAGE_CONNECTION_STRING:
+            logging.error("invalid Azyre connection string in upload_to_azure_blob method")
             raise ValueError("The Azure Storage Connection String is not set or is empty.")
+            
 
         blob_service_client = BlobServiceClient.from_connection_string(AZURE_STORAGE_CONNECTION_STRING)
         blob_client = blob_service_client.get_blob_client(container=CONTAINER_NAME, blob=file_name)

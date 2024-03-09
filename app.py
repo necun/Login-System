@@ -11,16 +11,27 @@ from database_renote import operations
 from methods.method import all_methods
 from utils import redis_config
 import datetime
-import logging
 from flask_mail import Mail , Message
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import smtplib
+import logging
+from logging.handlers import RotatingFileHandler
 
 
 all_methods_instance = all_methods()
 utils_instance=redis_config()
 
+
+
+
+logger = logging.getLogger("my_logger")
+logger.setLevel(logging.INFO)
+log_formatter  = logging.Formatter("%(asctime)s,%(levelname)s,%(message)s")
+file_handler = RotatingFileHandler("renote_logins_logs", when='midnight', interval=1, backupCount=90)
+file_handler.setFormatter(log_formatter)
+
+logger.addHandler(file_handler)
 
 
 app = Flask(__name__)
@@ -68,9 +79,11 @@ def token_required(f):
                     "instance": "/v1/"  # Optional, include if relevant to your application
                 }
             }
+            logger.error("Authorization header missing")
             return jsonify(error_response), 401
         if 'Authorization' in request.headers:
             token = request.headers['Authorization'].split(" ")[1]
+            logger.info("Authorization header is present")
         if not token:
             error_response = {
                 "error": {
@@ -84,9 +97,10 @@ def token_required(f):
                     "instance": "/v1/"  # Optional, include if relevant to your application
                 }
             }
+            logger.error("Token is not provided")
             return jsonify(error_response), 401
         try:
-            
+            logger.info("Required token is passed ")
             data = jwt.decode(token, app.config['SECRET_KEY'], algorithms=["HS256"])
             token_user = data['username']# You can adjust this according to your payload
             token_email=data['email']
@@ -97,21 +111,24 @@ def token_required(f):
             
             redis_username = redis_client.hget(token, 'username')
             
-            if redis_username is None or redis_username.decode() != token_user or token_application_id != "renote" or token_client_id != "necun":
-                print(token_client_id)
-                error_response = {
-                    "error": {
-                        "status": "401",
-                        "message": "Token is invalid or expired!",
-                        "messageKey": "token-invalid",
-                        "details": "The token is invalid or has expired.",
-                        "type": "AuthenticationException",
-                        "code": 400402,
-                        "timeStamp": datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S +0000'),
-                        "instance": "/v1/"  # Optional, include if relevant to your application
+            if redis_username is None or redis_username.decode() != token_user:
+                logger.error("Error in redis username or token for validation")
+                if token_application_id != "renote" or token_client_id != "necun":
+                    print(token_client_id)
+                    logger.error("error in headers or wrongly passed headers")
+                    error_response = {
+                        "error": {
+                            "status": "401",
+                            "message": "Token is invalid or expired!",
+                            "messageKey": "token-invalid",
+                            "details": "The token is invalid or has expired.",
+                            "type": "AuthenticationException",
+                            "code": 400402,
+                            "timeStamp": datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S +0000'),
+                            "instance": "/v1/"  # Optional, include if relevant to your application
+                        }
                     }
-                }
-                return jsonify(error_response), 401
+                    return jsonify(error_response), 401
         except:
             error_response ={
                 "error": {
@@ -125,6 +142,7 @@ def token_required(f):
                     "instance": "/v1/"  # Optional, include if relevant to your application
                 }
             }
+            logger.error("token is invalid")
             return jsonify(error_response), 401
         return f(redis_username,token_user,token_email,token_application_id,token_client_id,token,*args, **kwargs)
 
