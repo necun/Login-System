@@ -5,6 +5,7 @@ def signup_exception(e):
         "Invalid phone number" : 400100,
         "Invalid Email format" : 400101,
         "Missing fields" : 400102,
+        "Firstname and Lastname should not be same": 400103,
         
         
         "Username already exists" : 409100,
@@ -55,6 +56,7 @@ def forgot_password_exception(e):
         "Invalid Email" : 400302,
         "Email missing" : 400303,
         'Email is required' : 400304,
+        
         
         'Database connection error ': 500300,
         'Data Integrity Violation' : 500301,
