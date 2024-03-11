@@ -1,5 +1,5 @@
 from flask import Flask, request ,jsonify,redirect , url_for
-from loggers.logger import logger_method
+from loggers.logger import logger_instance
 from werkzeug.utils import secure_filename
 from azure.storage.blob import BlobServiceClient
 import jwt
@@ -22,8 +22,8 @@ import smtplib
 
 all_methods_instance = all_methods()
 utils_instance=redis_config()
-logger_object= logger_method()
-logger_instance=logger_object.setup_logger()
+# loggerObj= Logger()
+# logger=loggerObj.getLogger()
 
 
 

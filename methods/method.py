@@ -1,5 +1,5 @@
 from flask import request, jsonify
-from loggers.logger import logger_method
+from loggers.logger import logger_instance
 from werkzeug.security import generate_password_hash
 import random
 from database_renote.operations import db_methods
@@ -13,8 +13,8 @@ from methods.customExceptions import forgot_password_exception,reset_password_ex
 # from logging.handlers import TimedRotatingFileHandler
 
 utils_instance=redis_config()
-logger_object= logger_method()
-logger_instance=logger_object.setup_logger()
+# logger_object= logger_class()
+# logger_instance=logger_object.setup_logger()
 db_instance = db_methods()
 
 ALLOWED_EXTENSIONS = {'jpg', 'jpeg', 'png'}
@@ -128,7 +128,7 @@ class all_methods:
         First_Name = data['First_Name']
         Last_Name=data['Last_Name']
         username = data['username']
-        password = generate_password_hash(data['password'])
+        password = generate_password_hash(data['password']) 
         email = data['email']
         phone_number = data['phone_number']
         profile_pic=' '

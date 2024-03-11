@@ -1,5 +1,5 @@
 from flask import request, jsonify, render_template
-from loggers.logger import logger_method
+from loggers.logger import logger_instance
 from werkzeug.security import generate_password_hash, check_password_hash
 import mysql.connector
 from mysql.connector import Error as MySQLError
@@ -14,8 +14,8 @@ from methods.customExceptions import forgot_password_exception, reset_password_e
 
 
 utils_instance = redis_config()
-logger_object= logger_method()
-logger_instance=logger_object.setup_logger()
+# logger_object= Logger()
+# logger_instance=logger_object.getLogger()
 # logger = logging.getLogger("my_logger")
 # logger.setLevel(logging.INFO)
 # log_formatter  = logging.Formatter("%(asctime)s,%(levelname)s,%(message)s")
