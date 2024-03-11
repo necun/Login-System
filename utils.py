@@ -1,6 +1,6 @@
 from flask import Flask 
 import secrets
-from redis import Redis
+from redis import Redis 
 
 class redis_config:
     redis_client=None

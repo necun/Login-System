@@ -1,0 +1,4 @@
+2024-03-11 09:28:32,307,INFO,connection has made to database successfully
+2024-03-11 09:28:32,456,ERROR,username already exists in signup_db_operation
+2024-03-11 09:29:19,817,INFO,connection has made to database successfully
+2024-03-11 09:29:19,881,ERROR,username already exists in signup_db_operation
