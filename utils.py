@@ -11,11 +11,13 @@ class redis_config:
         redis_client = Redis(host=REDIS_HOST, port=REDIS_PORT, db=REDIS_DB)
         return redis_client 
     
-    def app_object():
+    def app_object(self):
         app = Flask(__name__)
         return app
     
     def token_generation():
         return secrets.token_hex(16)
+    
+utils=redis_config()
     
     

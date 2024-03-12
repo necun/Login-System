@@ -11,9 +11,11 @@ from redis import Redis
 from utils import redis_config
 from datetime import datetime as dt
 from methods.customExceptions import forgot_password_exception, reset_password_exception, signin_exception, signup_exception
+from validations.validation import Validations_obj
 
 
 utils_instance = redis_config()
+app=utils_instance.app_object()
 # logger_object= Logger()
 # logger_instance=logger_object.getLogger()
 # logger = logging.getLogger("my_logger")
@@ -41,37 +43,44 @@ class db_methods:
     # Check if username or password is missing
         logger_instance.info("Sign-in operation started.")
         logger_instance.info(f"Received parameters: username={username}, password={password}")
-        if not username:
-            error_response = {
-                "error": {
-                    "status": "400",
-                    "message": "Username is missing",
-                    "messageKey": "user-login-invalidUsername",
-                    "details": "Username field is empty. Please provide a username.",
-                    "type": "LoginException",
-                    "code": 400202,
-                    "timeStamp": dt.utcnow().strftime('%Y-%m-%d %H:%M:%S +0000'),
-                    "instance": "/v1/auth/"  # Optional, include if relevant to your application
-                }
-            }
-            logger_instance.error("username is missing in signin_db_operation method")
-            return jsonify(error_response), 400
-
-        if not password:
-            error_response = {
-                    "error": {
-                        "status": "400",
-                        "message": "Password is missing",
-                        "messageKey": "login-missing-password",
-                        "details": "Password field is empty. Please provide a password.",
-                        "type": "LoginException",
-                        "code": 400203,
-                        "timeStamp": dt.utcnow().strftime('%Y-%m-%d %H:%M:%S +0000'),
-                        "instance": "/v1/auth/"  # Optional, include if relevant to your application
-                    }
-                }
-            logger_instance.error("password is missing in signin_db_operation method")
-            return jsonify(error_response), 400
+        # if not username:
+        #     error_response = {
+        #         "error": {
+        #             "status": "400",
+        #             "message": "Username is missing",
+        #             "messageKey": "user-login-invalidUsername",
+        #             "details": "Username field is empty. Please provide a username.",
+        #             "type": "LoginException",
+        #             "code": 400202,
+        #             "timeStamp": dt.utcnow().strftime('%Y-%m-%d %H:%M:%S +0000'),
+        #             "instance": "/v1/auth/"  # Optional, include if relevant to your application
+        #         }
+        #     }
+        #     logger_instance.error("username is missing in signin_db_operation method")
+        #     return jsonify(error_response), 400
+        method_response=Validations_obj.missingFieldValidation_username(username)
+        if method_response is not None:
+            return method_response
+        
+        # if not password:
+        #     error_response = {
+        #             "error": {
+        #                 "status": "400",
+        #                 "message": "Password is missing",
+        #                 "messageKey": "login-missing-password",
+        #                 "details": "Password field is empty. Please provide a password.",
+        #                 "type": "LoginException",
+        #                 "code": 400203,
+        #                 "timeStamp": dt.utcnow().strftime('%Y-%m-%d %H:%M:%S +0000'),
+        #                 "instance": "/v1/auth/"  # Optional, include if relevant to your application
+        #             }
+        #         }
+        #     logger_instance.error("password is missing in signin_db_operation method")
+        #     return jsonify(error_response), 400
+        
+        method_response1=Validations_obj.missingFieldValidation_password(password)
+        if method_response1 is not None:
+            return method_response1
         
         
         user_password = password
@@ -82,21 +91,25 @@ class db_methods:
             cursor.execute(query, (username,))
             user_record = cursor.fetchone()
 
-            if user_record is None:  # Check if the username is not found
-                error_response = {
-                    "error": {
-                        "status": "404",
-                        "message": "User not found",
-                        "messageKey": "user-login-missingPassword",
-                        "details": "The username provided does not match any user in our database.",
-                        "type": "LoginException",
-                        "code": 404204,
-                        "timeStamp": dt.utcnow().strftime('%Y-%m-%d %H:%M:%S +0000'),
-                        "instance": "/v1/auth/"  # Optional, include if relevant to your application
-                    }
-                }
-                logger_instance.error("user not found in signin_db_operation method")
-                return jsonify(error_response), 404
+            # if user_record is None:  # Check if the username is not found
+            #     error_response = {
+            #         "error": {
+            #             "status": "404",
+            #             "message": "User not found",
+            #             "messageKey": "user-login-missingPassword",
+            #             "details": "The username provided does not match any user in our database.",
+            #             "type": "LoginException",
+            #             "code": 404204,
+            #             "timeStamp": dt.utcnow().strftime('%Y-%m-%d %H:%M:%S +0000'),
+            #             "instance": "/v1/auth/"  # Optional, include if relevant to your application
+            #         }
+            #     }
+            #     logger_instance.error("user not found in signin_db_operation method")
+            #     return jsonify(error_response), 404
+            
+            method_response=Validations_obj.userRecord_validation(user_record)
+            if method_response is not None:
+                return method_response
 
             password = user_record[0]
             email = user_record[1]
@@ -115,42 +128,45 @@ class db_methods:
             }
             print(user_info)
 
-            redis_client = Redis(host='localhost', port=6379, db=0)
+            # redis_client = Redis(host='localhost', port=6379, db=0)
             logger_instance.info("connected to redis successfully in signin_db_operation")
 
-            if user_record and check_password_hash(user_record[0], user_password):
-                token = jwt.encode({'username': username, 'email': email, 'Application': self.application_id,
-                                    'Clientid': self.client_id, 'exp': dt.utcnow() + datetime.timedelta(minutes=30)},
-                                    app.config['SECRET_KEY'])
-                redis_client.hmset(token, user_info)
-                redis_client.expire(token, 1800)
-                success_response = {
-                            "status" : 200,
-                            "message" : "Login successful",
-                            "messageKey" : "login-success",
-                            "timestamp" : dt.utcnow().strftime('%Y-%m-%d %H:%M:%S +0000'),
-                            "details" :{
-                                "token": str(token)
-                            }
+            # if user_record and check_password_hash(user_record[0], user_password):
+            #     token = jwt.encode({'username': username, 'email': email, 'Application': self.application_id,
+            #                         'Clientid': self.client_id, 'exp': dt.utcnow() + datetime.timedelta(minutes=30)},
+            #                         app.config['SECRET_KEY'])
+            #     redis_client.hmset(token, user_info)
+            #     redis_client.expire(token, 1800)
+            #     success_response = {
+            #                 "status" : 200,
+            #                 "message" : "Login successful",
+            #                 "messageKey" : "login-success",
+            #                 "timestamp" : dt.utcnow().strftime('%Y-%m-%d %H:%M:%S +0000'),
+            #                 "details" :{
+            #                     "token": str(token)
+            #                 }
                             
-                        }
-                logger_instance.info("user logged In successfully in signin_db_operation")
-                return jsonify(success_response), 200
-            else:
-                error_response = {
-                    "error": {
-                        "status": "400",
-                        "message": "Invalid username or password",
-                        "messageKey": "user-login-invalidCredentials",
-                        "details": "The username or password provided is incorrect. Please try again.",
-                        "type": "LoginException",
-                        "code": 400201,
-                        "timeStamp": dt.utcnow().strftime('%Y-%m-%d %H:%M:%S +0000'),
-                        "instance": "/v1/auth/"  # Optional, include if relevant to your application
-                    }
-                }
-                logger_instance.info("Invalid username or password in signin_db_operation")
-                return jsonify(error_response), 400
+            #             }
+            #     logger_instance.info("user logged In successfully in signin_db_operation")
+            #     return jsonify(success_response), 200
+            # else:
+            #     error_response = {
+            #         "error": {
+            #             "status": "400",
+            #             "message": "Invalid username or password",
+            #             "messageKey": "user-login-invalidCredentials",
+            #             "details": "The username or password provided is incorrect. Please try again.",
+            #             "type": "LoginException",
+            #             "code": 400201,
+            #             "timeStamp": dt.utcnow().strftime('%Y-%m-%d %H:%M:%S +0000'),
+            #             "instance": "/v1/auth/"  # Optional, include if relevant to your application
+            #         }
+            #     }
+            #     logger_instance.info("Invalid username or password in signin_db_operation")
+            #     return jsonify(error_response), 400
+            method_response2=Validations_obj.userValidationAndTokenGeneration(user_record,user_password,email,user_info,username,self.application_id,self.client_id,app)
+            if method_response2 is not None:
+                return method_response2
 
         except mysql.connector.Error as err:
             print("Database Error:", err)
@@ -265,23 +281,28 @@ class db_methods:
         try:
             cursor.execute("SELECT user_id FROM users WHERE email = %s", (email,))
             user = cursor.fetchone()
-            if not user:
-                error_response = {
-                    "error": {
-                        "status": "404",
-                        "message": "User not found",
-                        "messageKey": "error-user-not-found",
-                        "details": "The specified user does not exist in our database.",
-                        "type": "UserNotFoundException",
-                        "code": 400204,
-                        "timeStamp": dt.utcnow().strftime('%Y-%m-%d %H:%M:%S +0000'),
-                        "instance": "/v1/auth/"  # Optional, include if relevant to your application
-                    }
-                }
-                logger_instance.error("User not found in get_user_by_email")
-                return jsonify(error_response), 404
+            # if not user:
+            #     error_response = {
+            #         "error": {
+            #             "status": "404",
+            #             "message": "User not found",
+            #             "messageKey": "error-user-not-found",
+            #             "details": "The specified user does not exist in our database.",
+            #             "type": "UserNotFoundException",
+            #             "code": 400204,
+            #             "timeStamp": dt.utcnow().strftime('%Y-%m-%d %H:%M:%S +0000'),
+            #             "instance": "/v1/auth/"  # Optional, include if relevant to your application
+            #         }
+            #     }
+            #     logger_instance.error("User not found in get_user_by_email")
+            #     return jsonify(error_response), 404
+            method_response=Validations_obj.userNotFound_validation(user)
+            if method_response is not None:
+                return method_response
+            
+            
             reset_token = secrets.token_hex(16)
-            print(reset_token)
+            
             cursor.execute("UPDATE users SET reset_token = %s WHERE user_id=%s", (reset_token, user[0]))
             conn.commit()
             success_response = {

@@ -13,7 +13,7 @@ def signup_exception(e):
         "Phone Number already exists" : 409102,
         "Duplicate entry for unique field":409103,
         'Missing fields':400103,
-        'Headers Invalid':409104,
+        'Headers Invalid':400109,
         "Required headers not found":400105,
         'Full Name must contain only Alphabets':400106,
         'password must contain greater than 7 letters': 400107,
