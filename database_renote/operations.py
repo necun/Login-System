@@ -5,6 +5,7 @@ import mysql.connector
 from mysql.connector import Error as MySQLError
 from mysql.connector import errorcode, pooling
 import jwt
+import re
 import datetime
 import secrets
 from redis import Redis
@@ -185,95 +186,95 @@ class db_methods:
             conn.close()
             logger_instance.info("Database connection has closed in signin_db_operation")
     def signup_db_operation(self, application_id, client_id, user_id, username, password, email, First_Name,Last_Name, phone_number, profile_pic, status):
-            conn = self.get_db_connection()
-            cursor = conn.cursor()
-            logger_instance.info("Sign-up operation started.")
-            logger_instance.info(f"Received parameters: application_id={application_id}, client_id={client_id}, user_id={user_id}, username={username}, password={password}, email={email}, First_Name={First_Name}, Last_Name={Last_Name}, phone_number={phone_number}, profile_pic={profile_pic}, status={status}")
-            try:
-                query = "INSERT INTO users (application_id,client_id,user_id,username,password,email,First_Name,Last_Name,phone_number,profile_pic,status) VALUES (%s,%s,%s,%s, %s, %s, %s, %s, %s, %s,%s)"
-                cursor.execute(query, (application_id, client_id, user_id, username, password, email, First_Name,Last_Name, phone_number, profile_pic, status))
-                conn.commit()
-                logger_instance.info("user created successfully in signup_db_operation")
-                
-            except MySQLError as err:
-                if err.errno == errorcode.ER_DUP_ENTRY:
-                    error_msg = str(err).lower()
-                    if "email" in error_msg:
-                        error_response = {
-                            "error": {
-                                "status": "409",
-                                "message": "Email already exists",
-                                "messageKey": "user-signup-emailExists",
-                                "details": "The email provided is already associated with an existing account.",
-                                "type": "SignupException",
-                                "code": 409101,
-                                "timeStamp": dt.utcnow().strftime('%Y-%m-%d %H:%M:%S +0000'),
-                                "instance": "/v1/auth/signup"  # Optional, include if relevant to your application
-                            }
-                        }
-                        logger_instance.error("email already exists in signup_db_operation")
-                        return jsonify(error_response), 409
-                    elif "username" in error_msg:
-                        error_response = {
-                            "error": {
-                                "status": "409",
-                                "message": "Username already exists",
-                                "messageKey": "signup-username-exists",
-                                "details": "The username provided is already taken by another user.",
-                                "type": "SignupException",
-                                "code": 409100,
-                                "timeStamp": dt.utcnow().strftime('%Y-%m-%d %H:%M:%S +0000'),
-                                "instance": "/v1/auth/signup"  # Optional, include if relevant to your application
-                            }
-                        }
-                        logger_instance.error("username already exists in signup_db_operation")
-                        return jsonify(error_response), 409
-                    elif "phone_number" in error_msg:
-                        error_response = {
-                            "error": {
-                                "status": "409",
-                                "message": "Phone Number already exists",
-                                "messageKey": "signup-phone-exists",
-                                "details": "The phone number provided is already associated with another account.",
-                                "type": "SignupException",
-                                "code": 409102,
-                                "timeStamp": dt.utcnow().strftime('%Y-%m-%d %H:%M:%S +0000'),
-                                "instance": "/v1/auth/signup"
-                            }
-                        }
-                        logger_instance.error("phone_number already exists in signup_db_operation")
-                        return jsonify(error_response), 409
-                    else:
-                        error_response = {
-                            "error": {
-                                "status": "409",
-                                "message": "Duplicate entry for unique field",
-                                "messageKey": "signup-duplicate-entry",
-                                "details": "A duplicate entry for a field intended to be unique was detected.",
-                                "type": "SignupException",
-                                "code": 409103,
-                                "timeStamp": dt.utcnow().strftime('%Y-%m-%d %H:%M:%S +0000'),
-                                "instance": "/v1/auth/signup"  # Optional, include if relevant to your application
-                            }
-                        }
-                        logger_instance.error("signup-duplicate-entry in signup_db_operation")
-                        return jsonify(error_response), 409
-                else:
-                    print("Database Error:", err)
-                    code = signup_exception(err)
+        conn = self.get_db_connection()
+        cursor = conn.cursor()
+        logger_instance.info("Sign-up operation started.")
+        logger_instance.info(f"Received parameters: application_id={application_id}, client_id={client_id}, user_id={user_id}, username={username}, password={password}, email={email}, First_Name={First_Name}, Last_Name={Last_Name}, phone_number={phone_number}, profile_pic={profile_pic}, status={status}")
+        try:
+            query = "INSERT INTO users (application_id,client_id,user_id,username,password,email,First_Name,Last_Name,phone_number,profile_pic,status) VALUES (%s,%s,%s,%s, %s, %s, %s, %s, %s, %s,%s)"
+            cursor.execute(query, (application_id, client_id, user_id, username, password, email, First_Name,Last_Name, phone_number, profile_pic, status))
+            conn.commit()
+            logger_instance.info("user created successfully in signup_db_operation")
+            
+        except MySQLError as err:
+            if err.errno == errorcode.ER_DUP_ENTRY:
+                error_msg = str(err).lower()
+                if "email" in error_msg:
                     error_response = {
-                    "status": "500",
-                    "code": str(code),
-                    "message": "Failed to create user due to a database error",
-                    "error": str(err),
-                    "timestamp": datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%SZ')
-                }
-                    logger_instance.error(f"Error during sign-up operation: {str(err)}")
-                    return jsonify(error_response), 500
-            finally:
-                cursor.close()
-                conn.close()
-                logger_instance.info("Database connection has closed in signin_db_operation")
+                        "error": {
+                            "status": "409",
+                            "message": "Email already exists",
+                            "messageKey": "user-signup-emailExists",
+                            "details": "The email provided is already associated with an existing account.",
+                            "type": "SignupException",
+                            "code": 409101,
+                            "timeStamp": dt.utcnow().strftime('%Y-%m-%d %H:%M:%S +0000'),
+                            "instance": "/v1/auth/signup"  # Optional, include if relevant to your application
+                        }
+                    }
+                    logger_instance.error("email already exists in signup_db_operation")
+                    return jsonify(error_response), 409
+                elif "username" in error_msg:
+                    error_response = {
+                        "error": {
+                            "status": "409",
+                            "message": "Username already exists",
+                            "messageKey": "signup-username-exists",
+                            "details": "The username provided is already taken by another user.",
+                            "type": "SignupException",
+                            "code": 409100,
+                            "timeStamp": dt.utcnow().strftime('%Y-%m-%d %H:%M:%S +0000'),
+                            "instance": "/v1/auth/signup"  # Optional, include if relevant to your application
+                        }
+                    }
+                    logger_instance.error("username already exists in signup_db_operation")
+                    return jsonify(error_response), 409
+                elif "phone_number" in error_msg:
+                    error_response = {
+                        "error": {
+                            "status": "409",
+                            "message": "Phone Number already exists",
+                            "messageKey": "signup-phone-exists",
+                            "details": "The phone number provided is already associated with another account.",
+                            "type": "SignupException",
+                            "code": 409102,
+                            "timeStamp": dt.utcnow().strftime('%Y-%m-%d %H:%M:%S +0000'),
+                            "instance": "/v1/auth/signup"
+                        }
+                    }
+                    logger_instance.error("phone_number already exists in signup_db_operation")
+                    return jsonify(error_response), 409
+                else:
+                    error_response = {
+                        "error": {
+                            "status": "409",
+                            "message": "Duplicate entry for unique field",
+                            "messageKey": "signup-duplicate-entry",
+                            "details": "A duplicate entry for a field intended to be unique was detected.",
+                            "type": "SignupException",
+                            "code": 409103,
+                            "timeStamp": dt.utcnow().strftime('%Y-%m-%d %H:%M:%S +0000'),
+                            "instance": "/v1/auth/signup"  # Optional, include if relevant to your application
+                        }
+                    }
+                    logger_instance.error("signup-duplicate-entry in signup_db_operation")
+                    return jsonify(error_response), 409
+            else:
+                print("Database Error:", err)
+                code = signup_exception(err)
+                error_response = {
+                "status": "500",
+                "code": str(code),
+                "message": "Failed to create user due to a database error",
+                "error": str(err),
+                "timestamp": datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%SZ')
+            }
+                logger_instance.error(f"Error during sign-up operation: {str(err)}")
+                return jsonify(error_response), 500
+        finally:
+            cursor.close()
+            conn.close()
+            logger_instance.info("Database connection has closed in signin_db_operation")
 
     def get_user_by_email(self, email):
         conn = self.get_db_connection()
