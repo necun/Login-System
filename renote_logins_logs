@@ -100,3 +100,107 @@
 2024-03-12 11:23:08,938,INFO,connected to redis successfully in signin_db_operation
 2024-03-12 11:23:09,207,INFO,user logged In successfully in signin_db_operation
 2024-03-12 11:23:09,210,INFO,Database connection has closed in signin_db_operation
+2024-03-12 12:12:22,977,INFO,Received sign-in request
+2024-03-12 12:12:22,977,INFO,Sign-in operation started.
+2024-03-12 12:12:22,977,INFO,Received parameters: username=sample, password=sample@313
+2024-03-12 12:12:24,998,INFO,connection has made to database successfully
+2024-03-12 12:12:25,007,INFO,connected to redis successfully in signin_db_operation
+2024-03-12 12:12:25,158,INFO,Database connection has closed in signin_db_operation
+2024-03-12 12:13:13,513,INFO,Received sign-in request
+2024-03-12 12:13:13,513,INFO,Sign-in operation started.
+2024-03-12 12:13:13,513,INFO,Received parameters: username=sample, password=sample@313
+2024-03-12 12:13:15,165,INFO,connection has made to database successfully
+2024-03-12 12:13:15,167,INFO,connected to redis successfully in signin_db_operation
+2024-03-12 12:13:15,266,INFO,Database connection has closed in signin_db_operation
+2024-03-12 12:13:46,980,INFO,Received sign-in request
+2024-03-12 12:13:46,980,INFO,Sign-in operation started.
+2024-03-12 12:13:46,980,INFO,Received parameters: username=sample, password=sample@313
+2024-03-12 12:13:49,563,INFO,connection has made to database successfully
+2024-03-12 12:13:49,564,INFO,connected to redis successfully in signin_db_operation
+2024-03-12 12:13:49,669,INFO,Database connection has closed in signin_db_operation
+2024-03-12 12:15:21,091,INFO,Received sign-in request
+2024-03-12 12:15:21,091,INFO,Sign-in operation started.
+2024-03-12 12:15:21,091,INFO,Received parameters: username=sample, password=sample@313
+2024-03-12 12:15:24,111,INFO,connection has made to database successfully
+2024-03-12 12:15:24,114,INFO,connected to redis successfully in signin_db_operation
+2024-03-12 12:15:24,362,INFO,Database connection has closed in signin_db_operation
+2024-03-12 12:16:54,039,INFO,Received sign-in request
+2024-03-12 12:16:54,039,INFO,Sign-in operation started.
+2024-03-12 12:16:54,039,INFO,Received parameters: username=sample, password=sample@313
+2024-03-12 12:16:57,522,INFO,connection has made to database successfully
+2024-03-12 12:16:57,524,INFO,connected to redis successfully in signin_db_operation
+2024-03-12 12:16:57,631,INFO,Database connection has closed in signin_db_operation
+2024-03-12 12:18:57,283,INFO,Received sign-in request
+2024-03-12 12:18:57,284,INFO,Sign-in operation started.
+2024-03-12 12:18:57,284,INFO,Received parameters: username=sample, password=sample@313
+2024-03-12 12:19:03,032,INFO,connection has made to database successfully
+2024-03-12 12:19:03,037,INFO,connected to redis successfully in signin_db_operation
+2024-03-12 12:19:03,340,INFO,Database connection has closed in signin_db_operation
+2024-03-12 12:19:34,387,INFO,Received sign-in request
+2024-03-12 12:19:34,388,INFO,Sign-in operation started.
+2024-03-12 12:19:34,388,INFO,Received parameters: username=sample, password=sample@313
+2024-03-12 12:19:40,037,INFO,connection has made to database successfully
+2024-03-12 12:19:40,041,INFO,connected to redis successfully in signin_db_operation
+2024-03-12 12:19:40,349,INFO,Database connection has closed in signin_db_operation
+2024-03-12 12:20:59,482,INFO,Received sign-in request
+2024-03-12 12:20:59,483,INFO,Sign-in operation started.
+2024-03-12 12:20:59,483,INFO,Received parameters: username=sample, password=sample@313
+2024-03-12 12:21:03,101,INFO,connection has made to database successfully
+2024-03-12 12:21:03,104,INFO,connected to redis successfully in signin_db_operation
+2024-03-12 12:21:05,282,INFO,user logged In successfully in signin_db_operation
+2024-03-12 12:21:05,285,INFO,Database connection has closed in signin_db_operation
+2024-03-12 12:21:58,271,INFO,Received forgot password request
+2024-03-12 12:22:05,936,INFO,connection has made to database successfully
+2024-03-12 12:22:05,948,INFO,Password reset link has been sent to your mail in get_user_by_email
+2024-03-12 12:22:05,950,INFO,Database connection has closed in signin_db_operation
+2024-03-12 12:22:31,760,INFO,Received reset password request
+2024-03-12 12:22:39,196,INFO,connection has made to database successfully
+2024-03-12 12:22:39,199,INFO,reset password html page opened successfully
+2024-03-12 12:22:39,223,INFO,Database connection has closed in signin_db_operation
+2024-03-12 12:22:53,843,INFO,Received reset password request
+2024-03-12 12:23:01,150,INFO,connection has made to database successfully
+2024-03-12 12:23:01,152,INFO,reset password html page opened successfully
+2024-03-12 12:23:01,154,INFO,Database connection has closed in signin_db_operation
+2024-03-12 12:23:14,019,INFO,Received update password request
+2024-03-12 12:23:14,020,ERROR,Password strength exception 
+2024-03-12 12:23:26,358,INFO,Received reset password request
+2024-03-12 12:23:29,088,INFO,connection has made to database successfully
+2024-03-12 12:23:29,089,INFO,reset password html page opened successfully
+2024-03-12 12:23:29,090,INFO,Database connection has closed in signin_db_operation
+2024-03-12 12:23:40,158,INFO,Received update password request
+2024-03-12 12:23:40,160,INFO,password validation is done in update_password
+2024-03-12 12:23:40,160,ERROR,password are not matching error in update_password method
+2024-03-12 12:23:54,861,INFO,Received update password request
+2024-03-12 12:23:54,861,INFO,password validation is done in update_password
+2024-03-12 12:23:54,861,ERROR,password are not matching error in update_password method
+2024-03-12 12:24:08,223,INFO,Received update password request
+2024-03-12 12:24:08,224,INFO,password validation is done in update_password
+2024-03-12 12:24:11,252,INFO,connection has made to database successfully
+2024-03-12 12:24:11,361,INFO,Password has been updated successfully in db_method_update_password
+2024-03-12 12:24:11,362,INFO,Database connection has closed in signin_db_operation
+2024-03-12 12:33:46,954,INFO,Received sign-up request
+2024-03-12 12:33:54,589,INFO,connection has made to database successfully
+2024-03-12 12:33:54,591,INFO,Sign-up operation started.
+2024-03-12 12:33:54,591,INFO,Received parameters: application_id=renote, client_id=necun, user_id=9545850692181793, username=Rizwan, password=scrypt:32768:8:1$pn0DAf81QAWC5rRM$b43c187d2ae254e4aeceb2895abc357185bcc1990b8805b451c961d0b54d8fd708dec8105f9b7d4420abfad644b6ee322b184f81ae6ff7db94d2975207b60d9e, email=Rizwane@gmail.com, First_Name=Rizwan, Last_Name=Mohammed, phone_number=7901035672, profile_pic= , status=0
+2024-03-12 12:33:54,599,INFO,user created successfully in signup_db_operation
+2024-03-12 12:33:54,601,INFO,Database connection has closed in signin_db_operation
+2024-03-12 12:33:54,615,INFO,user created successfully in signup method
+2024-03-12 12:34:13,288,INFO,Received sign-in request
+2024-03-12 12:34:13,288,INFO,Sign-in operation started.
+2024-03-12 12:34:13,288,INFO,Received parameters: username=Rizwan, password=Rizwan@313
+2024-03-12 12:34:20,620,INFO,connection has made to database successfully
+2024-03-12 12:34:20,623,INFO,connected to redis successfully in signin_db_operation
+2024-03-12 12:34:22,879,INFO,user logged In successfully in signin_db_operation
+2024-03-12 12:34:22,881,INFO,Database connection has closed in signin_db_operation
+2024-03-12 12:34:35,915,INFO,Received forgot password request
+2024-03-12 12:34:43,290,INFO,connection has made to database successfully
+2024-03-12 12:34:43,291,ERROR,User not found in get_user_by_email
+2024-03-12 12:34:43,292,INFO,Database connection has closed in signin_db_operation
+2024-03-12 12:34:57,297,INFO,Received forgot password request
+2024-03-12 12:35:04,869,INFO,connection has made to database successfully
+2024-03-12 12:35:04,872,ERROR,User not found in get_user_by_email
+2024-03-12 12:35:04,874,INFO,Database connection has closed in signin_db_operation
+2024-03-12 12:35:29,838,INFO,Received forgot password request
+2024-03-12 12:35:37,239,INFO,connection has made to database successfully
+2024-03-12 12:35:37,251,INFO,Password reset link has been sent to your mail in get_user_by_email
+2024-03-12 12:35:37,254,INFO,Database connection has closed in signin_db_operation

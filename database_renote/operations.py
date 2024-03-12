@@ -32,8 +32,8 @@ class db_methods:
         conn = {
             'host': 'localhost',
             'user': 'root',
-            'password': 'Nikhil1234$',
-            'database': 'renote_login_sql_db'
+            'password': 'root',
+            'database': 'renote-login-sql-db'
         }
         conn_pool = mysql.connector.pooling.MySQLConnectionPool(pool_name="renote-login-sql-db-pool", pool_size=5, **conn)
         logger_instance.info("connection has made to database successfully")
