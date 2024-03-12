@@ -129,11 +129,11 @@ class all_methods:
         First_Name = data['First_Name']
         Last_Name=data['Last_Name']
         username = data['username']
-        password = generate_password_hash(data['password']) 
+        password = data['password']
         email = data['email']
         phone_number = data['phone_number']
         profile_pic=' '
-        
+        logger_instance.warning(password)
         # if First_Name == Last_Name:
         #     error_response={
         #         "error": {
@@ -254,8 +254,10 @@ class all_methods:
         method_response7=Validations_obj.passwordStrengthValidation(password)
         if method_response7 is not None:
             return method_response7
+        
+        Password=generate_password_hash(password)
 
-        response=db_instance.signup_db_operation(self.application_id, self.client_id, user_id, username,  password, email , First_Name,Last_Name, phone_number , profile_pic, 0)
+        response=db_instance.signup_db_operation(self.application_id, self.client_id, user_id, username, Password, email , First_Name,Last_Name, phone_number , profile_pic, 0)
         if response is not None:
             return response
         success_response = {

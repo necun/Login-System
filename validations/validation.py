@@ -44,7 +44,7 @@ class Validations:
     
     def validation_passwordStrength(self,password):
         password_validation_pattern = r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+{}|:<>?~-]).{8,}$'
-        return bool(re.match(password_validation_pattern, password))
+        return re.match(password_validation_pattern, password)
     
     def validateHeaders_Authorization(self):
         if not request.headers.get('Authorization'):
@@ -243,6 +243,7 @@ class Validations:
             return jsonify(error_response), 400
         
     def passwordStrengthValidation(self,password):
+        logger_instance.warning("password validation started")
         if not self.validation_passwordStrength(password):
             error_response = {
                 "error": {

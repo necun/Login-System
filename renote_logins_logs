@@ -100,3 +100,284 @@
 2024-03-12 11:23:08,938,INFO,connected to redis successfully in signin_db_operation
 2024-03-12 11:23:09,207,INFO,user logged In successfully in signin_db_operation
 2024-03-12 11:23:09,210,INFO,Database connection has closed in signin_db_operation
+2024-03-12 15:18:51,017,INFO,Received sign-up request
+2024-03-12 15:18:51,532,INFO,connection has made to database successfully
+2024-03-12 15:18:51,533,INFO,Sign-up operation started.
+2024-03-12 15:18:51,534,INFO,Received parameters: application_id=renote, client_id=necun, user_id=5381956756321071, username=nikhil123, password=scrypt:32768:8:1$ERCpFGelULFs7lEM$5f0864cb7dd6cea8fa2d2b04acda1f241ba7300fd99d2854eed60745fc58260c820112d3ab44a8f6c1f42ef07f4545afa7bdc99c4f42e5171438f74b1f9bd5ac, email=nikhilsai@gmail.com, First_Name=sai, Last_Name=nikhil, phone_number=9087678901, profile_pic= , status=0
+2024-03-12 15:18:51,548,INFO,user created successfully in signup_db_operation
+2024-03-12 15:18:51,551,INFO,Database connection has closed in signin_db_operation
+2024-03-12 15:18:51,553,INFO,user created successfully in signup method
+2024-03-12 15:21:23,712,INFO,Received sign-up request
+2024-03-12 15:21:23,884,INFO,connection has made to database successfully
+2024-03-12 15:21:23,886,INFO,Sign-up operation started.
+2024-03-12 15:21:23,887,INFO,Received parameters: application_id=renote, client_id=necun, user_id=4135308104773373, username=nikhil123, password=scrypt:32768:8:1$b7gbEmx60xM61pWQ$185e968232728277629ba09da859661ab72bfa0ef996138ced3037d977b00892f2c479d04e6d473b7a349939a323e184b06bdf811a8ee711b7a0fda9fb790f1f, email=nikhilsai@gmail.com, First_Name=sai, Last_Name=nikhil, phone_number=9087678901, profile_pic= , status=0
+2024-03-12 15:21:23,889,ERROR,username already exists in signup_db_operation
+2024-03-12 15:21:23,896,INFO,Database connection has closed in signin_db_operation
+2024-03-12 15:21:41,980,INFO,Received sign-up request
+2024-03-12 15:21:42,163,INFO,connection has made to database successfully
+2024-03-12 15:21:42,164,INFO,Sign-up operation started.
+2024-03-12 15:21:42,165,INFO,Received parameters: application_id=renote, client_id=necun, user_id=9876825704132048, username=nikhil1223, password=scrypt:32768:8:1$yeDeXko8zHp9rcXr$2b89b8e0eb6ddf88e3344c1eb6d9528b91aff0ab979bb3a2450ff17be4bd21b14828125144cbc554b3154538edd5631399851819515562779a04c812efd81f30, email=nikhillsai@gmail.com, First_Name=saii, Last_Name=nikhill, phone_number=9097678901, profile_pic= , status=0
+2024-03-12 15:21:42,173,INFO,user created successfully in signup_db_operation
+2024-03-12 15:21:42,174,INFO,Database connection has closed in signin_db_operation
+2024-03-12 15:21:42,175,INFO,user created successfully in signup method
+2024-03-12 15:23:04,770,INFO,Received sign-up request
+2024-03-12 15:23:04,992,INFO,connection has made to database successfully
+2024-03-12 15:23:04,993,INFO,Sign-up operation started.
+2024-03-12 15:23:04,994,INFO,Received parameters: application_id=renote, client_id=necun, user_id=1928578158635693, username=nilkhil1223, password=scrypt:32768:8:1$rYzwnC9IOD83GDdz$0e7c1c574d3c31ea54647eea0971f7c9c479c1eba8ae59e76a1251c58f4086578433351c3c3657f82b672fb788f323d2541fa547e3b333a319021c23225765bc, email=nikhlillsai@gmail.com, First_Name=saiii, Last_Name=nikhilll, phone_number=9897678901, profile_pic= , status=0
+2024-03-12 15:23:05,008,INFO,user created successfully in signup_db_operation
+2024-03-12 15:23:05,011,INFO,Database connection has closed in signin_db_operation
+2024-03-12 15:23:05,013,INFO,user created successfully in signup method
+2024-03-12 15:27:15,593,INFO,Received sign-up request
+2024-03-12 15:27:15,841,INFO,connection has made to database successfully
+2024-03-12 15:27:15,843,INFO,Sign-up operation started.
+2024-03-12 15:27:15,843,INFO,Received parameters: application_id=renote, client_id=necun, user_id=6553067560319491, username=nilkmhil1223, password=scrypt:32768:8:1$0gPDU76zyF3I1EWo$f2372cadbeef20f94cf9bbf6876e2c0eff612573b3b176ea321163fa98ba60f9db087594146510ad47258194d835216a66bfa7d588676ecc8ef1991b31684630, email=nikhlillmsai@gmail.com, First_Name=sailii, Last_Name=nikhmilll, phone_number=90897678901, profile_pic= , status=0
+2024-03-12 15:27:15,861,INFO,user created successfully in signup_db_operation
+2024-03-12 15:27:15,864,INFO,Database connection has closed in signin_db_operation
+2024-03-12 15:27:15,867,INFO,user created successfully in signup method
+2024-03-12 15:31:20,225,INFO,Received sign-up request
+2024-03-12 15:31:20,517,INFO,connection has made to database successfully
+2024-03-12 15:31:20,519,INFO,Sign-up operation started.
+2024-03-12 15:31:20,519,INFO,Received parameters: application_id=renote, client_id=necun, user_id=7087400404762765, username=nilkmhil122, password=scrypt:32768:8:1$Swj7fJYh0GjYqXow$7385cc54af134d22773302b073273d34dd76bc9337353673079addbf7eacb48740f23115d64b1ceae66322c73b49f0565c19d7c859c7e5c9a402b9da98a20df8, email=nikhlillmsi@gmail.com, First_Name=saili, Last_Name=nikhmill, phone_number=9087678901, profile_pic= , status=0
+2024-03-12 15:31:20,522,ERROR,phone_number already exists in signup_db_operation
+2024-03-12 15:31:20,536,INFO,Database connection has closed in signin_db_operation
+2024-03-12 15:31:26,636,INFO,Received sign-up request
+2024-03-12 15:31:26,801,INFO,connection has made to database successfully
+2024-03-12 15:31:26,801,INFO,Sign-up operation started.
+2024-03-12 15:31:26,801,INFO,Received parameters: application_id=renote, client_id=necun, user_id=2518219502430759, username=nilkmhil122, password=scrypt:32768:8:1$eaRv3GPcKq9YGYQl$1f3836096c9bf547adc2e3feb9e392500441d2b053fcd50457a2f6691b67e8e6188bba759c2ac0011a629e918588e939ef47364ff475be34d1347bfc3dacf449, email=nikhlillmsi@gmail.com, First_Name=saili, Last_Name=nikhmill, phone_number=90876780901, profile_pic= , status=0
+2024-03-12 15:31:26,805,INFO,user created successfully in signup_db_operation
+2024-03-12 15:31:26,805,INFO,Database connection has closed in signin_db_operation
+2024-03-12 15:31:26,806,INFO,user created successfully in signup method
+2024-03-12 15:33:26,543,INFO,Received sign-up request
+2024-03-12 15:33:26,753,INFO,connection has made to database successfully
+2024-03-12 15:33:26,754,INFO,Sign-up operation started.
+2024-03-12 15:33:26,754,INFO,Received parameters: application_id=renote, client_id=necun, user_id=6806062875959129, username=nilkmil122, password=scrypt:32768:8:1$oODj14XMKCEYHWP7$4722359cef787e695c9360e1573f5681609687e262e43b1c6adf2ac925d07355dff6bd912bda1c2079d56618274e5e5beb7d68301c72c0fd1fe4cb9a72b59817, email=nikhlillmi@gmail.com, First_Name=sali, Last_Name=nikhmil, phone_number=95876780901, profile_pic= , status=0
+2024-03-12 15:33:26,768,INFO,user created successfully in signup_db_operation
+2024-03-12 15:33:26,769,INFO,Database connection has closed in signin_db_operation
+2024-03-12 15:33:26,771,INFO,user created successfully in signup method
+2024-03-12 15:39:00,317,INFO,Received sign-up request
+2024-03-12 15:39:00,319,ERROR,fields missing ['phone_number']
+2024-03-12 15:42:03,814,INFO,Received sign-up request
+2024-03-12 15:42:04,108,INFO,connection has made to database successfully
+2024-03-12 15:42:04,110,INFO,Sign-up operation started.
+2024-03-12 15:42:04,111,INFO,Received parameters: application_id=renote, client_id=necun, user_id=9204632182596736, username=nilkmil122, password=scrypt:32768:8:1$vZuyKwDqBzG8QDih$a8af74a41d28d7a77290e8cd67184f31c3eaf13823b347e008c3f8a257db84160e630bb48730defaf130c810ac90b9315a31c97978073963a3dda8472a680878, email=nikhlillmi@gmail.com, First_Name=sali, Last_Name=nikhmil, phone_number=9987699087, profile_pic= , status=0
+2024-03-12 15:42:04,113,ERROR,username already exists in signup_db_operation
+2024-03-12 15:42:04,126,INFO,Database connection has closed in signin_db_operation
+2024-03-12 15:42:18,548,INFO,Received sign-up request
+2024-03-12 15:42:18,857,INFO,connection has made to database successfully
+2024-03-12 15:42:18,858,INFO,Sign-up operation started.
+2024-03-12 15:42:18,859,INFO,Received parameters: application_id=renote, client_id=necun, user_id=3952865883385960, username=nislkmil122, password=scrypt:32768:8:1$qsOJ5ve6ZXuFrdj7$c2834b7808626bb53b3399198bbac0095759eac6f9310b2b8611e8a17955de342286b07909aada26a522c9e5f62278b186f6b3f7f3ef04a177e25763eab144f5, email=nikhlissllmi@gmail.com, First_Name=ssali, Last_Name=niskhmil, phone_number=9987699087, profile_pic= , status=0
+2024-03-12 15:42:18,874,INFO,user created successfully in signup_db_operation
+2024-03-12 15:42:18,878,INFO,Database connection has closed in signin_db_operation
+2024-03-12 15:42:18,880,INFO,user created successfully in signup method
+2024-03-12 15:44:36,818,INFO,Received sign-up request
+2024-03-12 15:44:37,080,INFO,connection has made to database successfully
+2024-03-12 15:44:37,081,INFO,Sign-up operation started.
+2024-03-12 15:44:37,081,INFO,Received parameters: application_id=renote, client_id=necun, user_id=5514960635767043, username=nisll122, password=scrypt:32768:8:1$vogRvu03PqC8cIcY$522b03d3ca77d0ce6c63d60d75a63c969fcd8e2fc9a0f99bcbbcdf7d3f1b6bc4ef52bb4a299db07ed6b065e578b5561d7399028731d6b6027cd2a271ba445bf4, email=nikhlissl@gmail.com, First_Name=ali, Last_Name=nkhmil, phone_number=99876990987, profile_pic= , status=0
+2024-03-12 15:44:37,094,INFO,user created successfully in signup_db_operation
+2024-03-12 15:44:37,095,INFO,Database connection has closed in signin_db_operation
+2024-03-12 15:44:37,096,INFO,user created successfully in signup method
+2024-03-12 15:54:02,376,INFO,Received sign-up request
+2024-03-12 15:54:02,588,INFO,connection has made to database successfully
+2024-03-12 15:54:02,589,INFO,Sign-up operation started.
+2024-03-12 15:54:02,589,INFO,Received parameters: application_id=renote, client_id=necun, user_id=2508167402078708, username=nisll12s2, password=scrypt:32768:8:1$sy2OBWO0JzSVG8Im$80650ed0652ae34b05c3dca95e99717f9edc3587305078aee629974b37f435952c55b2bcc7c91d9fe997b539a75acaab5b8721abe64cc9622039a2c5716dea2d, email=nikhlissls@gmail.com, First_Name=alsi, Last_Name=nkhmsil, phone_number=99806990987, profile_pic= , status=0
+2024-03-12 15:54:02,601,INFO,user created successfully in signup_db_operation
+2024-03-12 15:54:02,602,INFO,Database connection has closed in signin_db_operation
+2024-03-12 15:54:02,603,INFO,user created successfully in signup method
+2024-03-12 15:54:28,622,INFO,Received sign-up request
+2024-03-12 15:54:28,879,INFO,connection has made to database successfully
+2024-03-12 15:54:28,880,INFO,Sign-up operation started.
+2024-03-12 15:54:28,880,INFO,Received parameters: application_id=renote, client_id=necun, user_id=6900142943197248, username=nisll12s2, password=scrypt:32768:8:1$Qq70igaGmMXmW6Et$24fc5a9acf7527577ce1b841db27bb09bd5124bc0e5e79346ec23600a283bc238605306eba4e9c2d2919e8343d342543f5f507cb20713a5367f4441c3e2d2e7a, email=nikhlissls@gmail.com, First_Name=ali, Last_Name=nkhmsil, phone_number=99806990987, profile_pic= , status=0
+2024-03-12 15:54:28,881,ERROR,username already exists in signup_db_operation
+2024-03-12 15:54:28,885,INFO,Database connection has closed in signin_db_operation
+2024-03-12 15:54:36,578,INFO,Received sign-up request
+2024-03-12 15:54:36,829,INFO,connection has made to database successfully
+2024-03-12 15:54:36,831,INFO,Sign-up operation started.
+2024-03-12 15:54:36,831,INFO,Received parameters: application_id=renote, client_id=necun, user_id=9394351020539689, username=nisll122, password=scrypt:32768:8:1$qd6xWZYDrJhoAQpa$f24cba5d69fb1143414c46aae6c8fa02e14006a30fb1baa21bfc2ed24be3415533536a030dadd70681505e5b7157b1fbc89c58b848aa2cb7a78839b993b55de7, email=nikhlissls@gmail.com, First_Name=ali, Last_Name=nkhmsil, phone_number=99806990987, profile_pic= , status=0
+2024-03-12 15:54:36,834,ERROR,username already exists in signup_db_operation
+2024-03-12 15:54:36,847,INFO,Database connection has closed in signin_db_operation
+2024-03-12 15:54:46,902,INFO,Received sign-up request
+2024-03-12 15:54:47,109,INFO,connection has made to database successfully
+2024-03-12 15:54:47,110,INFO,Sign-up operation started.
+2024-03-12 15:54:47,111,INFO,Received parameters: application_id=renote, client_id=necun, user_id=8144051987881231, username=nisll12ll2, password=scrypt:32768:8:1$8eBzUyq2xaQNoPF4$3db752d1d8e25f1c81a33bc13c4a2b289761e821dffd15500082d8c8384f05d0c604b763115be33dd6ac1d42e46f1c9e33a6ebf58d7385b965f484c7c3cc6f33, email=nikhlissl@gmail.com, First_Name=ali, Last_Name=nkhmsil, phone_number=99806990987, profile_pic= , status=0
+2024-03-12 15:54:47,113,ERROR,email already exists in signup_db_operation
+2024-03-12 15:54:47,118,INFO,Database connection has closed in signin_db_operation
+2024-03-12 15:54:56,164,INFO,Received sign-up request
+2024-03-12 15:54:56,428,INFO,connection has made to database successfully
+2024-03-12 15:54:56,430,INFO,Sign-up operation started.
+2024-03-12 15:54:56,439,INFO,Received parameters: application_id=renote, client_id=necun, user_id=2791772112459980, username=nisll12ll2, password=scrypt:32768:8:1$0OaXgH9CkaQWREh3$71c5ec5e13763e736fd4a838169249bb7109613cfad2110ab4ab1f586a805bf4f0598c0763374e67f5d7b60fee65ae732a481bcf54df474ada1bd4ec99282036, email=nikhlisl@gmail.com, First_Name=ali, Last_Name=nkhmsil, phone_number=99806990987, profile_pic= , status=0
+2024-03-12 15:54:56,443,ERROR,phone_number already exists in signup_db_operation
+2024-03-12 15:54:56,446,INFO,Database connection has closed in signin_db_operation
+2024-03-12 15:55:00,653,INFO,Received sign-up request
+2024-03-12 15:55:00,860,INFO,connection has made to database successfully
+2024-03-12 15:55:00,860,INFO,Sign-up operation started.
+2024-03-12 15:55:00,860,INFO,Received parameters: application_id=renote, client_id=necun, user_id=2278007486043673, username=nisll12ll2, password=scrypt:32768:8:1$1OFl0ZvfrW2pJ7wP$d807a736d820a9a386b776a25cec0e46e3682e34c99e7f9cd1a2ff4c02046e95b22ccfe1b1da37e13e082866311b633df650a027daf8e5b28b8fa1cef50cfde9, email=nikhlisl@gmail.com, First_Name=ali, Last_Name=nkhmsil, phone_number=9986990987, profile_pic= , status=0
+2024-03-12 15:55:00,872,INFO,user created successfully in signup_db_operation
+2024-03-12 15:55:00,874,INFO,Database connection has closed in signin_db_operation
+2024-03-12 15:55:00,876,INFO,user created successfully in signup method
+2024-03-12 16:05:53,634,INFO,Received sign-up request
+2024-03-12 16:05:53,914,INFO,connection has made to database successfully
+2024-03-12 16:05:53,915,INFO,Sign-up operation started.
+2024-03-12 16:05:53,915,INFO,Received parameters: application_id=renote, client_id=necun, user_id=1108374414759301, username=nislls12ll2, password=scrypt:32768:8:1$lOU4QT2wIaXfIqh3$62947b6ee95128c91f2a081140437b150cdba9da6d8484dfc7bba8decb6cac24bdbee5ec6909513e683660b4d3a52c1001b519a26f08c23394b7e4f4c443a6dc, email=nikhlissl@gmail.com, First_Name=s, Last_Name=nkshmsil, phone_number=99186990987, profile_pic= , status=0
+2024-03-12 16:05:53,916,ERROR,email already exists in signup_db_operation
+2024-03-12 16:05:53,931,INFO,Database connection has closed in signin_db_operation
+2024-03-12 16:06:01,646,INFO,Received sign-up request
+2024-03-12 16:06:01,894,INFO,connection has made to database successfully
+2024-03-12 16:06:01,896,INFO,Sign-up operation started.
+2024-03-12 16:06:01,897,INFO,Received parameters: application_id=renote, client_id=necun, user_id=5590506402957107, username=nislls12ll2, password=scrypt:32768:8:1$2n5nYHCBCuowbYk2$056745f2e8a03ad0c6f440a4eacb8f31d59a588a9b8eeafc62715da0cf985cb1a89e62d68a6f6636e7158ab6b4ddddf1efd8403b0dd6e82b12b01ffdac426b18, email=nikhlissl@gmwil.com, First_Name=s, Last_Name=nkshmsil, phone_number=99186990987, profile_pic= , status=0
+2024-03-12 16:06:01,913,INFO,user created successfully in signup_db_operation
+2024-03-12 16:06:01,916,INFO,Database connection has closed in signin_db_operation
+2024-03-12 16:06:01,919,INFO,user created successfully in signup method
+2024-03-12 16:07:42,247,INFO,Received sign-up request
+2024-03-12 16:07:42,403,ERROR,firstname and lastname are same in signup method
+2024-03-12 16:16:58,069,INFO,Received sign-up request
+2024-03-12 16:16:58,292,INFO,connection has made to database successfully
+2024-03-12 16:16:58,294,INFO,Sign-up operation started.
+2024-03-12 16:16:58,295,INFO,Received parameters: application_id=renote, client_id=necun, user_id=5016666156428718, username=nislls12ll2, password=scrypt:32768:8:1$RNS6Hu9J15JgnnVX$c01447ca321d217d0fa36f775ddb1d05420effc1d30895e1e57b133042f0b1516bf2831d5cbe01ac45e76d0d73138956c922f627bb0cb97b127c66228c707395, email=nikhlissl@gmwil.com, First_Name=s, Last_Name=sl, phone_number=99186990987, profile_pic= , status=0
+2024-03-12 16:16:58,297,ERROR,username already exists in signup_db_operation
+2024-03-12 16:16:58,313,INFO,Database connection has closed in signin_db_operation
+2024-03-12 16:17:04,791,INFO,Received sign-up request
+2024-03-12 16:17:04,984,INFO,connection has made to database successfully
+2024-03-12 16:17:04,985,INFO,Sign-up operation started.
+2024-03-12 16:17:04,986,INFO,Received parameters: application_id=renote, client_id=necun, user_id=6598987535246796, username=n2ll2, password=scrypt:32768:8:1$E8qX8cOD6m5tkgaW$14d996eecc84eb3cab944c18526f70bae50ae94ef32a404183187e2f8340d2c0cc6a245f623afe06b50a5060d006552e09fd76f872afe906f2f7537620884647, email=nikhlissl@gmwil.com, First_Name=s, Last_Name=sl, phone_number=99186990987, profile_pic= , status=0
+2024-03-12 16:17:04,987,ERROR,email already exists in signup_db_operation
+2024-03-12 16:17:04,994,INFO,Database connection has closed in signin_db_operation
+2024-03-12 16:17:09,440,INFO,Received sign-up request
+2024-03-12 16:17:09,616,INFO,connection has made to database successfully
+2024-03-12 16:17:09,617,INFO,Sign-up operation started.
+2024-03-12 16:17:09,617,INFO,Received parameters: application_id=renote, client_id=necun, user_id=6362057268081539, username=n2ll2, password=scrypt:32768:8:1$YKOjjuO7KEtFBILb$caff9b165abbb39026e58068bbb25c14660fe4a38be057dfc1933177130d396e6db8b8bc1d13c56063aa9dfc3f98535157465a6a2cfeafa444b95a9035d1ebc1, email=nikhlissl@wil.com, First_Name=s, Last_Name=sl, phone_number=99186990987, profile_pic= , status=0
+2024-03-12 16:17:09,618,ERROR,phone_number already exists in signup_db_operation
+2024-03-12 16:17:09,623,INFO,Database connection has closed in signin_db_operation
+2024-03-12 16:17:14,489,INFO,Received sign-up request
+2024-03-12 16:17:14,748,INFO,connection has made to database successfully
+2024-03-12 16:17:14,748,INFO,Sign-up operation started.
+2024-03-12 16:17:14,748,INFO,Received parameters: application_id=renote, client_id=necun, user_id=4520385073359278, username=n2ll2, password=scrypt:32768:8:1$Tp6WavOqar9xlCxF$c890cbea9012c527f688339739eb960cedba7b0d784521f57e4eafd180a1cd687d5bd967166d9ed6febd00ed42a3f4a165cb6d9817d121313ea87f96122e5e13, email=nikhlissl@wil.com, First_Name=s, Last_Name=sl, phone_number=99186900987, profile_pic= , status=0
+2024-03-12 16:17:14,757,INFO,user created successfully in signup_db_operation
+2024-03-12 16:17:14,758,INFO,Database connection has closed in signin_db_operation
+2024-03-12 16:17:14,760,INFO,user created successfully in signup method
+2024-03-12 16:18:55,071,INFO,Received sign-up request
+2024-03-12 16:18:55,242,INFO,connection has made to database successfully
+2024-03-12 16:18:55,242,INFO,Sign-up operation started.
+2024-03-12 16:18:55,243,INFO,Received parameters: application_id=renote, client_id=necun, user_id=3332613674196371, username=n2ll2, password=scrypt:32768:8:1$Gb4Rm0u8oKeBkQc9$72725df3341012b82e320d657d2ba03f277a3df65067c165a65cae43523b5e6f1191c411561d6e891f975840a0e7c74c806e69f5f38c8eeac3319caa12c0abc2, email=nikhlissl@wil.com, First_Name=s, Last_Name=sl, phone_number=99186900987, profile_pic= , status=0
+2024-03-12 16:18:55,244,ERROR,username already exists in signup_db_operation
+2024-03-12 16:18:55,254,INFO,Database connection has closed in signin_db_operation
+2024-03-12 16:19:16,853,INFO,Received sign-up request
+2024-03-12 16:19:17,034,INFO,connection has made to database successfully
+2024-03-12 16:19:17,034,INFO,Sign-up operation started.
+2024-03-12 16:19:17,035,INFO,Received parameters: application_id=renote, client_id=necun, user_id=9003836438680326, username=ll2, password=scrypt:32768:8:1$8LSojRwpoAhSmHML$30d3d17fbc13deac9d4be91de2c9241207ec20d23d02e0fe84269c81e28aae59cac81b3c0be473cce29b3487dd3f0540b579a8d9553f23929788e970ec4d5366, email=nikssl@wil.com, First_Name=sll, Last_Name=sl, phone_number=99186000987, profile_pic= , status=0
+2024-03-12 16:19:17,046,INFO,user created successfully in signup_db_operation
+2024-03-12 16:19:17,049,INFO,Database connection has closed in signin_db_operation
+2024-03-12 16:19:17,051,INFO,user created successfully in signup method
+2024-03-12 16:20:55,855,INFO,Received sign-up request
+2024-03-12 16:20:56,074,INFO,connection has made to database successfully
+2024-03-12 16:20:56,075,INFO,Sign-up operation started.
+2024-03-12 16:20:56,076,INFO,Received parameters: application_id=renote, client_id=necun, user_id=2136582381134533, username=llm2, password=scrypt:32768:8:1$8nUUrRPkCY1JcJlP$8e20b1b14d94eb91262edf38b0f9b0bc0be4f446ece200b3b6cd11697daf50b34e48922123a4c75ca1c90e09b79119a6c13f1b99562feb991f12e86a72cda3fe, email=nikssl@wil.om, First_Name=sll, Last_Name=sl, phone_number=99180000987, profile_pic= , status=0
+2024-03-12 16:20:56,085,INFO,user created successfully in signup_db_operation
+2024-03-12 16:20:56,086,INFO,Database connection has closed in signin_db_operation
+2024-03-12 16:20:56,087,INFO,user created successfully in signup method
+2024-03-12 16:33:23,346,INFO,Received sign-up request
+2024-03-12 16:33:23,347,WARNING,ni
+2024-03-12 16:33:23,347,WARNING,iuytrdfghjkiuytfrdcfvghjhygtfrdsxdcfvhjhygtfdsxcvbghnjhgf
+2024-03-12 16:33:23,625,INFO,connection has made to database successfully
+2024-03-12 16:33:23,627,INFO,Sign-up operation started.
+2024-03-12 16:33:23,628,INFO,Received parameters: application_id=renote, client_id=necun, user_id=8108681239563377, username=llkkm2, password=scrypt:32768:8:1$n7ohdSZojDklySXH$c166ce53ddc686fa999217dbf5fcd2a25c55b13bbf0cb88449e042e5c30962e847794538518bec359010edc42928fc4d5f5606f819384f5bb9fe62b039071b41, email=nikssl@wl.om, First_Name=sll, Last_Name=slkk, phone_number=90180000987, profile_pic= , status=0
+2024-03-12 16:33:23,649,INFO,user created successfully in signup_db_operation
+2024-03-12 16:33:23,652,INFO,Database connection has closed in signin_db_operation
+2024-03-12 16:33:23,654,INFO,user created successfully in signup method
+2024-03-12 16:33:33,871,INFO,Received sign-up request
+2024-03-12 16:33:33,872,WARNING,ni
+2024-03-12 16:33:33,872,WARNING,iuytrdfghjkiuytfrdcfvghjhygtfrdsxdcfvhjhygtfdsxcvbghnjhgf
+2024-03-12 16:33:34,077,INFO,connection has made to database successfully
+2024-03-12 16:33:34,079,INFO,Sign-up operation started.
+2024-03-12 16:33:34,080,INFO,Received parameters: application_id=renote, client_id=necun, user_id=6690139758215060, username=llkkm2, password=scrypt:32768:8:1$rRfdjxxdEi8ychxV$941534429e105df19de40b18d414cfee124f0be785f2dbaec5977a10bc04a433cceb2ad960dac71823702051eab879f962e15ee60b34f232a24335e832e7638e, email=nikssl@wl.om, First_Name=sll, Last_Name=slkk, phone_number=99180000987, profile_pic= , status=0
+2024-03-12 16:33:34,081,ERROR,username already exists in signup_db_operation
+2024-03-12 16:33:34,097,INFO,Database connection has closed in signin_db_operation
+2024-03-12 16:33:40,971,INFO,Received sign-up request
+2024-03-12 16:33:40,972,WARNING,ni
+2024-03-12 16:33:40,972,WARNING,iuytrdfghjkiuytfrdcfvghjhygtfrdsxdcfvhjhygtfdsxcvbghnjhgf
+2024-03-12 16:33:41,203,INFO,connection has made to database successfully
+2024-03-12 16:33:41,204,INFO,Sign-up operation started.
+2024-03-12 16:33:41,204,INFO,Received parameters: application_id=renote, client_id=necun, user_id=8433802044071598, username=llkjkkm2, password=scrypt:32768:8:1$nqMBcVhLBpL1LjHR$ad984b24b42e664b778b6e7028daed4ea9f7345661fc46f420163f2f64e68a370c64aafbb54d662ca8f61e28469b9b6e417360422746a59c4006893bcd13d1b4, email=nikssl@wl.om, First_Name=sll, Last_Name=slkk, phone_number=99180000987, profile_pic= , status=0
+2024-03-12 16:33:41,205,ERROR,email already exists in signup_db_operation
+2024-03-12 16:33:41,219,INFO,Database connection has closed in signin_db_operation
+2024-03-12 16:33:47,202,INFO,Received sign-up request
+2024-03-12 16:33:47,203,WARNING,ni
+2024-03-12 16:33:47,204,WARNING,iuytrdfghjkiuytfrdcfvghjhygtfrdsxdcfvhjhygtfdsxcvbghnjhgf
+2024-03-12 16:33:47,468,INFO,connection has made to database successfully
+2024-03-12 16:33:47,469,INFO,Sign-up operation started.
+2024-03-12 16:33:47,469,INFO,Received parameters: application_id=renote, client_id=necun, user_id=8533910762427552, username=llkjkkm2, password=scrypt:32768:8:1$zI0vgOKkdkAzUOsD$6fd10dbc9dac048b3c503cf93da4d819fbf6f6ebd878a4382d0d4d0ab51e87f7cf176aff407367226194348991bf9dce00e91666f235576c96c0c80d68fdcba0, email=nikjhgfssl@wl.om, First_Name=sll, Last_Name=slkk, phone_number=99180000987, profile_pic= , status=0
+2024-03-12 16:33:47,472,ERROR,phone_number already exists in signup_db_operation
+2024-03-12 16:33:47,477,INFO,Database connection has closed in signin_db_operation
+2024-03-12 16:34:19,099,INFO,Received sign-up request
+2024-03-12 16:34:19,100,WARNING,ni
+2024-03-12 16:34:19,100,WARNING,iuytrdfghjkiuytfrdcfvghjhygtfrdsxdcfvhjhygtfdsxcvbghnjhgf
+2024-03-12 16:34:19,334,INFO,connection has made to database successfully
+2024-03-12 16:34:19,335,INFO,Sign-up operation started.
+2024-03-12 16:34:19,335,INFO,Received parameters: application_id=renote, client_id=necun, user_id=1844988045147251, username=llkjkkm2, password=scrypt:32768:8:1$bOiz3WeJuuOGFHt5$e0fbabeb0f0091f72da94b4d0b093d9908d7c4143c39f0acf37100653a0bd3f0881d0d370d7d1a2e544be8db60924e851d06b754deae2bdd23a9fbddfdb59c3b, email=nikjhgfssl@wl.om, First_Name=sll, Last_Name=slkk, phone_number=99180000987, profile_pic= , status=0
+2024-03-12 16:34:19,335,ERROR,phone_number already exists in signup_db_operation
+2024-03-12 16:34:19,349,INFO,Database connection has closed in signin_db_operation
+2024-03-12 16:34:27,371,INFO,Received sign-up request
+2024-03-12 16:34:27,371,WARNING,ni
+2024-03-12 16:34:27,371,WARNING,iuytrdfghjkiuytfrdcfvghjhygtfrdsxdcfvhjhygtfdsxcvbghnjhgf
+2024-03-12 16:34:27,565,INFO,connection has made to database successfully
+2024-03-12 16:34:27,566,INFO,Sign-up operation started.
+2024-03-12 16:34:27,566,INFO,Received parameters: application_id=renote, client_id=necun, user_id=4370171317013772, username=llkjkkm2, password=scrypt:32768:8:1$HEYZGb2qfBAsdj3h$dae087b9c93bf50ad9485396ae58cfed49b864f61eb9b3143c059137c851d0b65673fa2a7a8c2058acc88d561b408f667bb6e1252e1e5fd1fa26575dbaedf2f4, email=nikjhgfssl@wl.om, First_Name=sll, Last_Name=slkk, phone_number=9080000987, profile_pic= , status=0
+2024-03-12 16:34:27,577,INFO,user created successfully in signup_db_operation
+2024-03-12 16:34:27,578,INFO,Database connection has closed in signin_db_operation
+2024-03-12 16:34:27,579,INFO,user created successfully in signup method
+2024-03-12 16:39:16,163,INFO,Received sign-up request
+2024-03-12 16:39:16,165,WARNING,ni
+2024-03-12 16:39:16,165,WARNING,iuytrdfghjkiuytfrdcfvghjhygtfrdsxdcfvhjhygtfdsxcvbghnjhgf
+2024-03-12 16:39:16,461,INFO,connection has made to database successfully
+2024-03-12 16:39:16,463,INFO,Sign-up operation started.
+2024-03-12 16:39:16,463,INFO,Received parameters: application_id=renote, client_id=necun, user_id=5979852112364885, username=llkjkkm2, password=scrypt:32768:8:1$3jwOiFG1laV5V6Vo$6212db45c4f7145a28c10173d72090ba9232263c78b086a4341993411da896b204b780b887e96e16ed4654e8b018c380c8bd963824e9c1f1a36f663ea8b8b744, email=nikjhgfssl@wl.om, First_Name=sll, Last_Name=slkk, phone_number=9080000987, profile_pic= , status=0
+2024-03-12 16:39:16,464,ERROR,username already exists in signup_db_operation
+2024-03-12 16:39:16,480,INFO,Database connection has closed in signin_db_operation
+2024-03-12 16:39:47,683,INFO,Received sign-up request
+2024-03-12 16:39:47,683,WARNING,ni
+2024-03-12 16:39:47,684,WARNING,iuytrdfghjkiuytfrdcfvghjhygtfrdsxdcfvhjhygtfdsxcvbghnjhgf
+2024-03-12 16:39:47,886,INFO,connection has made to database successfully
+2024-03-12 16:39:47,887,INFO,Sign-up operation started.
+2024-03-12 16:39:47,887,INFO,Received parameters: application_id=renote, client_id=necun, user_id=9868167077548123, username=llzxkjkkm2, password=scrypt:32768:8:1$RzdCX23n4JjUIM3Z$dc4a54172b42a0c0ae7ff405195708c520c8dd970303c1622664c5d94de545c269265ab36e86b32f2dac3633490897e0e519bfea5ac1b3f3c94174d310431c3f, email=nikjhgfssl@wl.om, First_Name=sll, Last_Name=slkk, phone_number=9080000987, profile_pic= , status=0
+2024-03-12 16:39:47,888,ERROR,email already exists in signup_db_operation
+2024-03-12 16:39:47,904,INFO,Database connection has closed in signin_db_operation
+2024-03-12 16:39:54,089,INFO,Received sign-up request
+2024-03-12 16:39:54,089,WARNING,ni
+2024-03-12 16:39:54,090,WARNING,iuytrdfghjkiuytfrdcfvghjhygtfrdsxdcfvhjhygtfdsxcvbghnjhgf
+2024-03-12 16:39:54,322,INFO,connection has made to database successfully
+2024-03-12 16:39:54,323,INFO,Sign-up operation started.
+2024-03-12 16:39:54,323,INFO,Received parameters: application_id=renote, client_id=necun, user_id=2903255143138369, username=llzxkjkkm2, password=scrypt:32768:8:1$ulJTvH0ohkCE7HE0$f4d51899d8a256585d0b3b1977642592c7cba681088e9167f735f73888337285b40c97c657cc7ec879059673a1a84638d4a30f90fb16bcba979a9dc1032384b2, email=nikjhgfssl@awl.om, First_Name=sll, Last_Name=slkk, phone_number=9080000987, profile_pic= , status=0
+2024-03-12 16:39:54,325,ERROR,phone_number already exists in signup_db_operation
+2024-03-12 16:39:54,339,INFO,Database connection has closed in signin_db_operation
+2024-03-12 16:40:01,456,INFO,Received sign-up request
+2024-03-12 16:40:01,456,WARNING,ni
+2024-03-12 16:40:01,456,WARNING,iuytrdfghjkiuytfrdcfvghjhygtfrdsxdcfvhjhygtfdsxcvbghnjhgf
+2024-03-12 16:40:01,728,INFO,connection has made to database successfully
+2024-03-12 16:40:01,729,INFO,Sign-up operation started.
+2024-03-12 16:40:01,729,INFO,Received parameters: application_id=renote, client_id=necun, user_id=1404094677486945, username=llzxkjkkm2, password=scrypt:32768:8:1$QW1NjRvDwmu8lzoK$997890332cc390e12c78814ed7bd2b6aaf8bd5a246defcda1c1702955ff22b74d0283308b703e84291bd37a8c2db74ccf656614b319ce8911dbe579414e160b9, email=nikjhgfssl@awl.om, First_Name=sll, Last_Name=slkk, phone_number=9000000987, profile_pic= , status=0
+2024-03-12 16:40:01,745,INFO,user created successfully in signup_db_operation
+2024-03-12 16:40:01,748,INFO,Database connection has closed in signin_db_operation
+2024-03-12 16:40:01,750,INFO,user created successfully in signup method
+2024-03-12 16:42:37,959,INFO,Received sign-up request
+2024-03-12 16:42:37,961,WARNING,nill
+2024-03-12 16:42:37,962,WARNING,iuytrdfghjkiuytfrdcfvghjhygtfrdsxdcfvhjhygtfdsxcvbghnjhgf
+2024-03-12 16:42:37,963,INFO,iuytrdfghjkiuytfrdcfvghjhygtfrdsxdcfvhjhygtfdsxcvbghnjhgf888888888
+2024-03-12 16:42:37,963,ERROR,Password strength exception in signup method
+2024-03-12 16:42:52,920,INFO,Received sign-up request
+2024-03-12 16:42:52,921,WARNING,nill
+2024-03-12 16:42:52,922,WARNING,iuytrdfghjkiuytfrdcfvghjhygtfrdsxdcfvhjhygtfdsxcvbghnjhgf
+2024-03-12 16:42:52,922,INFO,iuytrdfghjkiuytfrdcfvghjhygtfrdsxdcfvhjhygtfdsxcvbghnjhgf888888888
+2024-03-12 16:42:52,922,ERROR,Password strength exception in signup method
+2024-03-12 16:43:14,548,INFO,Received sign-up request
+2024-03-12 16:43:14,549,WARNING,nilA@1
+2024-03-12 16:43:14,549,WARNING,iuytrdfghjkiuytfrdcfvghjhygtfrdsxdcfvhjhygtfdsxcvbghnjhgf
+2024-03-12 16:43:14,549,INFO,iuytrdfghjkiuytfrdcfvghjhygtfrdsxdcfvhjhygtfdsxcvbghnjhgf888888888
+2024-03-12 16:43:14,549,ERROR,Password strength exception in signup method
+2024-03-12 16:43:20,338,INFO,Received sign-up request
+2024-03-12 16:43:20,338,WARNING,nilA@1sssss
+2024-03-12 16:43:20,339,WARNING,iuytrdfghjkiuytfrdcfvghjhygtfrdsxdcfvhjhygtfdsxcvbghnjhgf
+2024-03-12 16:43:20,800,INFO,connection has made to database successfully
+2024-03-12 16:43:20,801,INFO,Sign-up operation started.
+2024-03-12 16:43:20,801,INFO,Received parameters: application_id=renote, client_id=necun, user_id=6682600116198030, username=xkjkkm2, password=scrypt:32768:8:1$KU14oV0xJouG0dlB$75791842cbfef03215c7b3c88b63abe9b5d0095cd99b30a7e8911863895215449abd934cafa9a0e12394e6a4ab7e9d271b8f9639614596328a1e931cd62a431b, email=fssl@awl.om, First_Name=sll, Last_Name=slkk, phone_number=9000000087, profile_pic= , status=0
+2024-03-12 16:43:20,816,INFO,user created successfully in signup_db_operation
+2024-03-12 16:43:20,820,INFO,Database connection has closed in signin_db_operation
+2024-03-12 16:43:20,823,INFO,user created successfully in signup method
