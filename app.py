@@ -1,27 +1,43 @@
 from flask import Flask, request ,jsonify,redirect , url_for
 from loggers.logger import logger_instance
+from werkzeug.utils import secure_filename
+from azure.storage.blob import BlobServiceClient
 import jwt
 import os
 import secrets
 from functools import wraps
 from redis import Redis
+import random
+from database_renote import operations
 from methods.method import all_methods
 from utils import redis_config
-from datetime import datetime 
+import datetime
 from flask_mail import Mail , Message
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import smtplib
-from validations.validation import Validations_obj
+# import logging
 
-#object for all_methods class in methods.py 
+
+
 all_methods_instance = all_methods()
-
-#object for redis_config class in utils.py
 utils_instance=redis_config()
+# loggerObj= Logger()
+# logger=loggerObj.getLogger()
 
-#object for Validations class in validation.py
-#Validations_obj=Validations()
+
+
+
+
+# logger = logging.getLogger("my_logger")
+# logger.setLevel(logging.INFO)
+# log_formatter  = logging.Formatter("%(asctime)s,%(levelname)s,%(message)s")
+# file_handler = TimedRotatingFileHandler("renote_logins_logs", when='midnight', interval=1, backupCount=90)
+
+# file_handler.setFormatter(log_formatter)
+# file_handler.setLevel(logging.ERROR)
+# logger.addHandler(file_handler)
+
 
 app = Flask(__name__)
 
@@ -36,6 +52,7 @@ mail=Mail(app)
 
 secret_key = secrets.token_hex(16)
 app.config['SECRET_KEY'] = secret_key
+
 
 
 REDIS_HOST = 'localhost'
@@ -54,50 +71,40 @@ def token_required(f):
     def decorated(*args, **kwargs):
         logger_instance.info("Checking authorization token...")
         token = None
-        # if not request.headers.get('Authorization'):
-        #     logger_instance.error("Authorization header missing")
-        #     error_response = {
-        #         "error": {
-        #             "status": "401",
-        #             "message": "Invalid Headers",
-        #             "messageKey": "invalid-headers",
-        #             "details": "The request did not include headers or included an invalid header.",
-        #             "type": "AuthenticationException",
-        #             "code": 401404,
-        #             "timeStamp": datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S +0000'),
-        #             "instance": "/v1/"  # Optional, include if relevant to your application
-        #         }
-        #     }
-        #     logger_instance.error("Authorization header missing")
-        #     return jsonify(error_response), 401
-        method_response1=Validations_obj.validateHeaders_Authorization()
-        if method_response1 is not None:
-            return method_response1
-        
-        
+        if not request.headers.get('Authorization'):
+            logger_instance.error("Authorization header missing")
+            error_response = {
+                "error": {
+                    "status": "401",
+                    "message": "Invalid Headers",
+                    "messageKey": "invalid-headers",
+                    "details": "The request did not include headers or included an invalid header.",
+                    "type": "AuthenticationException",
+                    "code": 401404,
+                    "timeStamp": datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S +0000'),
+                    "instance": "/v1/"  # Optional, include if relevant to your application
+                }
+            }
+            logger_instance.error("Authorization header missing")
+            return jsonify(error_response), 401
         if 'Authorization' in request.headers:
             token = request.headers['Authorization'].split(" ")[1]
             logger_instance.info("Authorization header is present")
-        # if not token:
-        #     error_response = {
-        #         "error": {
-        #             "status": "401",
-        #             "message": "Token is missing",
-        #             "messageKey": "token-missing",
-        #             "details": "The request did not include a token or included an invalid token.",
-        #             "type": "AuthenticationException",
-        #             "code": 401405,
-        #             "timeStamp": datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S +0000'),
-        #             "instance": "/v1/"  # Optional, include if relevant to your application
-        #         }
-        #     }
-        #     logger_instance.error("Token is not provided")
-        #     return jsonify(error_response), 401
-        
-        method_response2=Validations_obj.tokenMissing(token)
-        if method_response2 is not None:
-            return method_response2
-        
+        if not token:
+            error_response = {
+                "error": {
+                    "status": "401",
+                    "message": "Token is missing",
+                    "messageKey": "token-missing",
+                    "details": "The request did not include a token or included an invalid token.",
+                    "type": "AuthenticationException",
+                    "code": 401405,
+                    "timeStamp": datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S +0000'),
+                    "instance": "/v1/"  # Optional, include if relevant to your application
+                }
+            }
+            logger_instance.error("Token is not provided")
+            return jsonify(error_response), 401
         try:
             logger_instance.info("Required token is passed ")
             data = jwt.decode(token, app.config['SECRET_KEY'], algorithms=["HS256"])
@@ -105,30 +112,28 @@ def token_required(f):
             token_email=data['email']
             token_application_id=data['Application']
             token_client_id=data['Clientid']
+            #logging(token_client_id)
+            
             
             redis_username = redis_client.hget(token, 'username')
             
-            # if redis_username is None or redis_username.decode() != token_user:
-            #     logger_instance.error("Error in redis username or token for validation")
-            #     if token_application_id != "renote" or token_client_id != "necun":
-            #         logger_instance.error("error in headers or wrongly passed headers")
-            #         error_response = {
-            #             "error": {
-            #                 "status": "401",
-            #                 "message": "Token is invalid or expired!",
-            #                 "messageKey": "token-invalid",
-            #                 "details": "The token is invalid or has expired.",
-            #                 "type": "AuthenticationException",
-            #                 "code": 400402,
-            #                 "timeStamp": datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S +0000'),
-            #                 "instance": "/v1/"  # Optional, include if relevant to your application
-            #             }
-            #         }
-            #         return jsonify(error_response), 401
-                
-            method_response3=Validations_obj.redisCheck_headersCheck(redis_username,token_user,token_client_id,token_application_id)
-            if method_response3 is not None:
-                return method_response3    
+            if redis_username is None or redis_username.decode() != token_user:
+                logger_instance.error("Error in redis username or token for validation")
+                if token_application_id != "renote" or token_client_id != "necun":
+                    logger_instance.error("error in headers or wrongly passed headers")
+                    error_response = {
+                        "error": {
+                            "status": "401",
+                            "message": "Token is invalid or expired!",
+                            "messageKey": "token-invalid",
+                            "details": "The token is invalid or has expired.",
+                            "type": "AuthenticationException",
+                            "code": 400402,
+                            "timeStamp": datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S +0000'),
+                            "instance": "/v1/"  # Optional, include if relevant to your application
+                        }
+                    }
+                    return jsonify(error_response), 401
         except:
             error_response ={
                 "error": {
@@ -147,6 +152,9 @@ def token_required(f):
         return f(redis_username,token_user,token_email,token_application_id,token_client_id,token,*args, **kwargs)
 
     return decorated
+
+def generate_unique_user_id():
+    return random.randint(10**15, (10**16)-1)
 
 
 @app.route('/users/signUp', methods=['POST'])

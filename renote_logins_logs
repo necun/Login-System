@@ -1,81 +1,31 @@
-2024-03-12 09:58:47,152,INFO,Received sign-in request
-2024-03-12 09:58:47,156,INFO,Sign-in operation started.
-2024-03-12 09:58:47,157,INFO,Received parameters: username=sai5123, password=Sa1123
-2024-03-12 09:58:47,399,INFO,connection has made to database successfully
-2024-03-12 09:58:47,404,INFO,connected to redis successfully in signin_db_operation
-2024-03-12 09:58:49,716,INFO,user logged In successfully in signin_db_operation
-2024-03-12 09:58:49,718,INFO,Database connection has closed in signin_db_operation
-2024-03-12 09:59:48,997,INFO,Received forgot password request
-2024-03-12 09:59:49,067,INFO,connection has made to database successfully
-2024-03-12 09:59:49,075,INFO,Password reset link has been sent to your mail in get_user_by_email
-2024-03-12 09:59:49,077,INFO,Database connection has closed in signin_db_operation
-2024-03-12 10:00:13,576,INFO,Received reset password request
-2024-03-12 10:00:13,577,ERROR,missing required headers in validation_header method
-2024-03-12 10:00:37,818,INFO,Received reset password request
-2024-03-12 10:00:37,884,INFO,connection has made to database successfully
-2024-03-12 10:00:37,886,INFO,reset password html page opened successfully
-2024-03-12 10:00:37,903,INFO,Database connection has closed in signin_db_operation
-2024-03-12 10:00:43,176,INFO,Received reset password request
-2024-03-12 10:00:43,176,ERROR,missing required headers in validation_header method
-2024-03-12 10:00:44,970,INFO,Received reset password request
-2024-03-12 10:00:44,970,ERROR,missing required headers in validation_header method
-2024-03-12 10:00:45,742,INFO,Received reset password request
-2024-03-12 10:00:45,743,ERROR,missing required headers in validation_header method
-2024-03-12 10:00:58,937,INFO,Received reset password request
-2024-03-12 10:00:58,939,ERROR,missing required headers in validation_header method
-2024-03-12 10:01:53,449,INFO,Received reset password request
-2024-03-12 10:01:53,449,ERROR,missing required headers in validation_header method
-2024-03-12 10:01:54,627,INFO,Received reset password request
-2024-03-12 10:01:54,628,ERROR,missing required headers in validation_header method
-2024-03-12 10:02:03,231,INFO,Received reset password request
-2024-03-12 10:02:03,365,INFO,connection has made to database successfully
-2024-03-12 10:02:03,367,INFO,reset password html page opened successfully
-2024-03-12 10:02:03,372,INFO,Database connection has closed in signin_db_operation
-2024-03-12 10:02:17,389,INFO,Received update password request
-2024-03-12 10:02:17,467,INFO,connection has made to database successfully
-2024-03-12 10:02:17,734,INFO,Password has been updated successfully in db_method_update_password
-2024-03-12 10:02:17,736,INFO,Database connection has closed in signin_db_operation
-2024-03-12 10:08:03,286,INFO,Received reset password request
-2024-03-12 10:08:03,361,INFO,connection has made to database successfully
-2024-03-12 10:08:03,363,ERROR,Invalid or expired token in user_by_reset_token
-2024-03-12 10:08:03,365,INFO,Database connection has closed in signin_db_operation
-2024-03-12 10:08:09,974,INFO,Received reset password request
-2024-03-12 10:08:10,038,INFO,connection has made to database successfully
-2024-03-12 10:08:10,040,ERROR,Invalid or expired token in user_by_reset_token
-2024-03-12 10:08:10,042,INFO,Database connection has closed in signin_db_operation
-2024-03-12 10:08:14,609,INFO,Received reset password request
-2024-03-12 10:08:14,674,INFO,connection has made to database successfully
-2024-03-12 10:08:14,677,ERROR,Invalid or expired token in user_by_reset_token
-2024-03-12 10:08:14,678,INFO,Database connection has closed in signin_db_operation
-2024-03-12 10:09:13,446,INFO,Received sign-in request
-2024-03-12 10:09:13,447,INFO,Sign-in operation started.
-2024-03-12 10:09:13,447,INFO,Received parameters: username=prasad1234, password=prasad123
-2024-03-12 10:09:13,703,INFO,connection has made to database successfully
-2024-03-12 10:09:13,705,ERROR,user not found in signin_db_operation method
-2024-03-12 10:09:13,706,INFO,Database connection has closed in signin_db_operation
-2024-03-12 10:09:56,074,INFO,Received sign-in request
-2024-03-12 10:09:56,074,INFO,Sign-in operation started.
-2024-03-12 10:09:56,075,INFO,Received parameters: username=sai5123, password=Sa1123
-2024-03-12 10:09:56,128,INFO,connection has made to database successfully
-2024-03-12 10:09:56,131,INFO,connected to redis successfully in signin_db_operation
-2024-03-12 10:09:58,366,INFO,user logged In successfully in signin_db_operation
-2024-03-12 10:09:58,369,INFO,Database connection has closed in signin_db_operation
-2024-03-12 10:10:36,291,INFO,Received forgot password request
-2024-03-12 10:10:36,339,INFO,connection has made to database successfully
-2024-03-12 10:10:36,352,INFO,Password reset link has been sent to your mail in get_user_by_email
-2024-03-12 10:10:36,354,INFO,Database connection has closed in signin_db_operation
-2024-03-12 10:11:14,235,INFO,Received reset password request
-2024-03-12 10:11:14,305,INFO,connection has made to database successfully
-2024-03-12 10:11:14,308,INFO,reset password html page opened successfully
-2024-03-12 10:11:14,314,INFO,Database connection has closed in signin_db_operation
-2024-03-12 10:11:21,867,INFO,Received update password request
-2024-03-12 10:11:21,869,ERROR,Password strength exception 
-2024-03-12 10:11:40,997,INFO,Received update password request
-2024-03-12 10:11:40,999,ERROR,Password strength exception 
-2024-03-12 10:11:59,671,INFO,Received update password request
-2024-03-12 10:11:59,672,INFO,password validation is done in update_password
-2024-03-12 10:11:59,741,INFO,connection has made to database successfully
-2024-03-12 10:12:00,004,INFO,Password has been updated successfully in db_method_update_password
-2024-03-12 10:12:00,007,INFO,Database connection has closed in signin_db_operation
-2024-03-12 10:13:15,007,INFO,Received update password request
-2024-03-12 10:13:15,008,ERROR,Password strength exception 
+2024-03-11 09:28:32,307,INFO,connection has made to database successfully
+2024-03-11 09:28:32,456,ERROR,username already exists in signup_db_operation
+2024-03-11 09:29:19,817,INFO,connection has made to database successfully
+2024-03-11 09:29:19,881,ERROR,username already exists in signup_db_operation
+2024-03-11 11:51:30,237,INFO,Received sign-up request
+2024-03-11 11:51:30,368,ERROR,firstname and lastname are same in signup method
+2024-03-11 11:51:34,573,INFO,Received sign-up request
+2024-03-11 11:51:34,825,INFO,connection has made to database successfully
+2024-03-11 11:51:34,826,INFO,Sign-up operation started.
+2024-03-11 11:51:34,826,INFO,Received parameters: application_id=renote, client_id=necun, user_id=1363697186616475, username=sai12cd3, password=scrypt:32768:8:1$kZam605TCn6iituN$b8cee70caf935a15938d2223585442e2631ba68c87d9ac65e7cd701b650e8f8cd88a6b6be1d0f7c40d67d70a51d0f7b8537c4ebdd9c2d3f9e9c17a9ad28804b5, email=sai@j.cem, First_Name=sai, Last_Name=sais, phone_number=7679874990, profile_pic= , status=0
+2024-03-11 11:51:34,828,ERROR,username already exists in signup_db_operation
+2024-03-11 11:51:34,836,INFO,Database connection has closed in signin_db_operation
+2024-03-11 11:51:43,301,INFO,Received sign-up request
+2024-03-11 11:51:43,484,INFO,connection has made to database successfully
+2024-03-11 11:51:43,484,INFO,Sign-up operation started.
+2024-03-11 11:51:43,485,INFO,Received parameters: application_id=renote, client_id=necun, user_id=6337748042736530, username=sai12c3, password=scrypt:32768:8:1$OlTn5TumWe7a4fCf$e5da6f2f7579d5004ed769f4497e70a86a308bad60eca725022dae8791206ce091855860efc5c9c260e2da9f8aa7576ada37cb8b0fd5487e18c9f6e8fb4484d0, email=sai@j.cem, First_Name=sai, Last_Name=sais, phone_number=7679874990, profile_pic= , status=0
+2024-03-11 11:51:43,486,ERROR,email already exists in signup_db_operation
+2024-03-11 11:51:43,499,INFO,Database connection has closed in signin_db_operation
+2024-03-11 11:51:49,338,INFO,Received sign-up request
+2024-03-11 11:51:49,507,INFO,connection has made to database successfully
+2024-03-11 11:51:49,507,INFO,Sign-up operation started.
+2024-03-11 11:51:49,507,INFO,Received parameters: application_id=renote, client_id=necun, user_id=7287364444217016, username=sai12c3, password=scrypt:32768:8:1$KyAc2EMSVvzlk97e$80e1ec2eab6c5a38db68e953ae5f1a1cc1b0744be97b35714cc501998c731eba259ca2b291d411bff53a88bcb5ba27e3cdbd8cbd9bbbef7a3c9013651381b2fa, email=sai@jv.cem, First_Name=sai, Last_Name=sais, phone_number=7679874990, profile_pic= , status=0
+2024-03-11 11:51:49,508,ERROR,phone_number already exists in signup_db_operation
+2024-03-11 11:51:49,521,INFO,Database connection has closed in signin_db_operation
+2024-03-11 11:51:55,178,INFO,Received sign-up request
+2024-03-11 11:51:55,351,INFO,connection has made to database successfully
+2024-03-11 11:51:55,352,INFO,Sign-up operation started.
+2024-03-11 11:51:55,352,INFO,Received parameters: application_id=renote, client_id=necun, user_id=2808287480855032, username=sai12c3, password=scrypt:32768:8:1$GYYfMxm2o589uymm$a9a23760f7ba05cb2b3b34915ec800fca3b6000b0923e83e30a58170c9e8b4193b5e56319304b997cead5174deef560088f1427d0e7abf007ca2e9b27644781b, email=sai@jv.cem, First_Name=sai, Last_Name=sais, phone_number=76798174990, profile_pic= , status=0
+2024-03-11 11:51:55,360,INFO,user created successfully in signup_db_operation
+2024-03-11 11:51:55,361,INFO,Database connection has closed in signin_db_operation
+2024-03-11 11:51:55,362,INFO,user created successfully in signup method
