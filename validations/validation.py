@@ -44,7 +44,7 @@ class Validations:
     
     def validation_passwordStrength(self,password):
         password_validation_pattern = r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+{}|:<>?~-]).{8,}$'
-        return re.match(password_validation_pattern, password)
+        return bool(re.match(password_validation_pattern, password))
     
     def validateHeaders_Authorization(self):
         if not request.headers.get('Authorization'):
@@ -243,7 +243,7 @@ class Validations:
             return jsonify(error_response), 400
         
     def passwordStrengthValidation(self,password):
-        logger_instance.error("password validation started    kiughuyfcfghjufdcvghjuhgfcx")
+        logger_instance.error("password validation started")
         if not self.validation_passwordStrength(password):
             error_response = {
                 "error": {
@@ -257,7 +257,7 @@ class Validations:
                     "instance": "/v1/"  # Optional, include if relevant to your application
                 }
             }
-            logger_instance.error("Password strength exception in signup method kiuyghojhgcvhjk111111111111")
+            logger_instance.error("Password strength exception in signup method ")
             return jsonify(error_response), 400
     
     def not_newPassword_confirmPassword(self,new_password,confirm_password):
