@@ -511,3 +511,24 @@
 2024-03-13 12:50:11,314,INFO,connection has made to database successfully
 2024-03-13 12:50:12,539,INFO,Password has been updated successfully in db_method_update_password
 2024-03-13 12:50:13,659,INFO,Database connection has closed in signin_db_operation
+2024-03-13 13:12:12,290,INFO,Received forgot password request
+2024-03-13 13:12:22,422,INFO,connection has made to database successfully
+2024-03-13 13:12:23,567,INFO,Password reset link has been sent to your mail in get_user_by_email
+2024-03-13 13:12:24,754,INFO,Database connection has closed in signin_db_operation
+2024-03-13 13:12:43,497,INFO,Received reset password request
+2024-03-13 13:12:50,249,INFO,Received reset password request
+2024-03-13 13:12:53,809,INFO,connection has made to database successfully
+2024-03-13 13:13:03,960,INFO,connection has made to database successfully
+2024-03-13 13:13:04,617,INFO,reset password html page opened successfully
+2024-03-13 13:13:05,064,INFO,reset password html page opened successfully
+2024-03-13 13:13:05,949,INFO,Database connection has closed in signin_db_operation
+2024-03-13 13:13:06,703,INFO,Database connection has closed in signin_db_operation
+2024-03-13 13:13:15,175,INFO,Received update password request
+2024-03-13 13:13:15,176,ERROR,password missing in update_password method
+2024-03-13 13:13:28,067,INFO,Received update password request
+2024-03-13 13:13:28,067,ERROR,password missing in update_password method
+2024-03-13 13:13:40,855,INFO,Received update password request
+2024-03-13 13:13:40,857,ERROR,password missing in update_password method
+2024-03-13 13:13:51,042,INFO,connection has made to database successfully
+2024-03-13 13:13:52,214,INFO,Password has been updated successfully in db_method_update_password
+2024-03-13 13:13:53,326,INFO,Database connection has closed in signin_db_operation
