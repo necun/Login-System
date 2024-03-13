@@ -5,3 +5,4 @@ __pycache__/
 database_renote/__pycache__/
 database_renote/__init__.py
 loginenv
+renote_logins_log*
