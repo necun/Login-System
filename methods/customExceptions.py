@@ -16,7 +16,7 @@ def signup_exception(e):
         'Headers Invalid':400109,
         "Required headers not found":400105,
         'Full Name must contain only Alphabets':400106,
-        'password must contain greater than 7 letters': 400107,
+        'The password provided is not strong enough': 400107,
         
         
         'Database connection error ': 500100,

@@ -243,7 +243,7 @@ class Validations:
             return jsonify(error_response), 400
         
     def passwordStrengthValidation(self,password):
-        logger_instance.warning("password validation started")
+        logger_instance.error("password validation started    kiughuyfcfghjufdcvghjuhgfcx")
         if not self.validation_passwordStrength(password):
             error_response = {
                 "error": {
@@ -257,7 +257,7 @@ class Validations:
                     "instance": "/v1/"  # Optional, include if relevant to your application
                 }
             }
-            logger_instance.error("Password strength exception in signup method")
+            logger_instance.error("Password strength exception in signup method kiuyghojhgcvhjk111111111111")
             return jsonify(error_response), 400
     
     def not_newPassword_confirmPassword(self,new_password,confirm_password):
@@ -265,7 +265,6 @@ class Validations:
             logger_instance.error("password missing in update_password method")
             return jsonify({'message':'please enter new password AND CONFIRM PASSWORD'}), 400   
     def newPassword_confirmPassword_validation(self,new_password,confirm_password):
-        
         if self.validation_passwordStrength(new_password) and self.validation_passwordStrength(confirm_password) is True:
             logger_instance.info("password validation is done in update_password")
             if new_password != confirm_password:

@@ -10,7 +10,6 @@ class Logger:
         # Define log formatter
         logFormatter = logging.Formatter("%(asctime)s,%(levelname)s,%(message)s")
 
-        print("ssssssssssssss")
         # Configure file handler
         fileHandler = TimedRotatingFileHandler("renote_logins_logs", when='midnight', interval=1, backupCount=90)
         fileHandler.setFormatter(logFormatter)

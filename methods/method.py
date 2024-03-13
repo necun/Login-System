@@ -251,11 +251,24 @@ class all_methods:
         #     logger_instance.error("Password strength exception in signup method")
         #     return jsonify(error_response), 400
         
-        method_response7=Validations_obj.passwordStrengthValidation(password)
-        if method_response7 is not None:
-            return method_response7
-        
-        Password=generate_password_hash(password)
+        method_response7=Validations_obj.validation_passwordStrength(password)
+        if method_response7 is not True:
+            error_response = {
+                "error": {
+                    "status": "400",
+                    "message": "Password must contain a Uppercase,Lowercase,Number and a special character",
+                    "messageKey": "password-strength",
+                    "details": "The password provided is not strong enough. ",
+                    "type": "ValidationException",
+                    "code": 400107,
+                    "timeStamp": datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S +0000'),
+                    "instance": "/v1/"  # Optional, include if relevant to your application
+                }
+            }
+            logger_instance.error("Password strength exception in signup method kiuyghojhgcvhjk111111111111")
+            return jsonify(error_response), 400
+        else:
+            Password=generate_password_hash(password)
 
         response=db_instance.signup_db_operation(self.application_id, self.client_id, user_id, username, Password, email , First_Name,Last_Name, phone_number , profile_pic, 0)
         if response is not None:
