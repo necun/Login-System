@@ -395,4 +395,3 @@ class Validations:
         
 #object for Validations  class in validation.py
 Validations_obj=Validations()
->>>>>>> login-testing
