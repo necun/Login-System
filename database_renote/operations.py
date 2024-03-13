@@ -30,7 +30,7 @@ app=utils_instance.app_object()
 class db_methods:
     def get_db_connection(self):
         conn = {
-            'host': 'localhost',
+            'host': '34.238.171.190',
             'user': 'root',
             'password': 'root',
             'database': 'renote-login-sql-db'

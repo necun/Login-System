@@ -1,6 +1,6 @@
 from flask import  request ,jsonify
 from loggers.logger import logger_instance
-from jose import jwt
+import jwt
 import re
 from werkzeug.security import  check_password_hash
 from redis import Redis
