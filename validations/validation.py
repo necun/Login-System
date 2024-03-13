@@ -394,4 +394,4 @@ class Validations:
                 return jsonify(error_response), 404
         
 #object for Validations  class in validation.py
-Validations_obj=Validations()
+Validations_obj=Validations() 

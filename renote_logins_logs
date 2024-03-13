@@ -453,3 +453,61 @@
 2024-03-12 16:34:33,504,INFO,Database connection has closed in signin_db_operation
 2024-03-12 16:34:33,520,INFO,user created successfully in signup method
 >>>>>>> login-testing
+2024-03-13 12:30:31,852,INFO,Received sign-up request
+2024-03-13 12:30:31,857,ERROR,error log before log for testing
+2024-03-13 12:30:31,857,ERROR,invalid password Bad
+2024-03-13 12:35:58,625,INFO,Received sign-up request
+2024-03-13 12:35:58,630,ERROR,error log before log for testing
+2024-03-13 12:35:58,630,ERROR,invalid password Bad
+2024-03-13 12:36:17,645,INFO,Received sign-up request
+2024-03-13 12:36:17,647,WARNING,Polaraj@123
+2024-03-13 12:37:33,086,INFO,Received sign-up request
+2024-03-13 12:37:33,090,WARNING,Polaraj@123
+2024-03-13 12:39:33,490,INFO,Received sign-up request
+2024-03-13 12:39:33,493,WARNING,Polaraj@123
+2024-03-13 12:40:33,428,INFO,Received sign-up request
+2024-03-13 12:40:33,431,WARNING,Polaraj@123
+2024-03-13 12:40:33,432,ERROR,firstname and lastname are same in signup method
+2024-03-13 12:43:23,732,INFO,Received sign-up request
+2024-03-13 12:43:23,733,ERROR,error log before log for testing
+2024-03-13 12:43:23,733,ERROR,invalid password Polaraj
+2024-03-13 12:43:42,423,INFO,Received sign-up request
+2024-03-13 12:43:42,424,WARNING,Polaraj@123
+2024-03-13 12:43:42,424,ERROR,invalid phonenumber in signup method
+2024-03-13 12:43:50,538,INFO,Received sign-up request
+2024-03-13 12:43:50,540,WARNING,Polaraj@123
+2024-03-13 12:44:04,930,INFO,connection has made to database successfully
+2024-03-13 12:44:05,425,INFO,Sign-up operation started.
+2024-03-13 12:44:05,425,INFO,Received parameters: application_id=renote, client_id=necun, user_id=8641625653107278, username=polaraju, password=scrypt:32768:8:1$JAK1SU6j1H00em6y$f899aae6ea1a4e00dcb4630bb086922892b7e5e2c9cb6580efe3328a854ac30f554748f2df3a637f0765e553f037456fc1496acf93a87bb7e3309cd4df2342af, email=badri@gmail.com, First_Name=pola, Last_Name=raju, phone_number=79797979799, profile_pic= , status=0
+2024-03-13 12:44:05,900,INFO,user created successfully in signup_db_operation
+2024-03-13 12:44:07,025,INFO,Database connection has closed in signin_db_operation
+2024-03-13 12:44:07,035,INFO,user created successfully in signup method
+2024-03-13 12:46:45,913,INFO,Received sign-in request
+2024-03-13 12:46:45,913,INFO,Sign-in operation started.
+2024-03-13 12:46:45,913,INFO,Received parameters: username=polaraju, password=Polaraju@123
+2024-03-13 12:46:57,630,INFO,connection has made to database successfully
+2024-03-13 12:46:58,340,INFO,connected to redis successfully in signin_db_operation
+2024-03-13 12:46:58,465,INFO,Invalid username or password in signin_db_operation
+2024-03-13 12:46:59,569,INFO,Database connection has closed in signin_db_operation
+2024-03-13 12:48:23,419,INFO,Received forgot password request
+2024-03-13 12:48:34,859,INFO,connection has made to database successfully
+2024-03-13 12:48:35,976,INFO,Password reset link has been sent to your mail in get_user_by_email
+2024-03-13 12:48:37,087,INFO,Database connection has closed in signin_db_operation
+2024-03-13 12:48:49,799,INFO,Received reset password request
+2024-03-13 12:49:01,448,INFO,connection has made to database successfully
+2024-03-13 12:49:02,109,INFO,reset password html page opened successfully
+2024-03-13 12:49:03,260,INFO,Database connection has closed in signin_db_operation
+2024-03-13 12:49:11,880,INFO,Received reset password request
+2024-03-13 12:49:23,277,INFO,connection has made to database successfully
+2024-03-13 12:49:23,984,INFO,reset password html page opened successfully
+2024-03-13 12:49:25,134,INFO,Database connection has closed in signin_db_operation
+2024-03-13 12:49:36,491,INFO,Received update password request
+2024-03-13 12:49:36,494,ERROR,password missing in update_password method
+2024-03-13 12:49:36,494,ERROR,password are not matching error in update_password method
+2024-03-13 12:49:45,552,INFO,Received update password request
+2024-03-13 12:49:45,553,ERROR,password missing in update_password method
+2024-03-13 12:50:00,533,INFO,Received update password request
+2024-03-13 12:50:00,533,ERROR,password missing in update_password method
+2024-03-13 12:50:11,314,INFO,connection has made to database successfully
+2024-03-13 12:50:12,539,INFO,Password has been updated successfully in db_method_update_password
+2024-03-13 12:50:13,659,INFO,Database connection has closed in signin_db_operation
