@@ -1,4 +1,5 @@
 from flask import Flask, request ,jsonify,redirect , url_for
+from loggers.logger import logger_instance
 from werkzeug.utils import secure_filename
 from azure.storage.blob import BlobServiceClient
 import jwt
@@ -11,16 +12,31 @@ from database_renote import operations
 from methods.method import all_methods
 from utils import redis_config
 import datetime
-import logging
 from flask_mail import Mail , Message
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import smtplib
+# import logging
+
 
 
 all_methods_instance = all_methods()
 utils_instance=redis_config()
+# loggerObj= Logger()
+# logger=loggerObj.getLogger()
 
+
+
+
+
+# logger = logging.getLogger("my_logger")
+# logger.setLevel(logging.INFO)
+# log_formatter  = logging.Formatter("%(asctime)s,%(levelname)s,%(message)s")
+# file_handler = TimedRotatingFileHandler("renote_logins_logs", when='midnight', interval=1, backupCount=90)
+
+# file_handler.setFormatter(log_formatter)
+# file_handler.setLevel(logging.ERROR)
+# logger.addHandler(file_handler)
 
 
 app = Flask(__name__)
@@ -53,9 +69,10 @@ print("Connection String:", AZURE_STORAGE_CONNECTION_STRING)
 def token_required(f):
     @wraps(f)
     def decorated(*args, **kwargs):
-        print(request.headers)
+        logger_instance.info("Checking authorization token...")
         token = None
         if not request.headers.get('Authorization'):
+            logger_instance.error("Authorization header missing")
             error_response = {
                 "error": {
                     "status": "401",
@@ -68,9 +85,11 @@ def token_required(f):
                     "instance": "/v1/"  # Optional, include if relevant to your application
                 }
             }
+            logger_instance.error("Authorization header missing")
             return jsonify(error_response), 401
         if 'Authorization' in request.headers:
             token = request.headers['Authorization'].split(" ")[1]
+            logger_instance.info("Authorization header is present")
         if not token:
             error_response = {
                 "error": {
@@ -84,9 +103,10 @@ def token_required(f):
                     "instance": "/v1/"  # Optional, include if relevant to your application
                 }
             }
+            logger_instance.error("Token is not provided")
             return jsonify(error_response), 401
         try:
-            
+            logger_instance.info("Required token is passed ")
             data = jwt.decode(token, app.config['SECRET_KEY'], algorithms=["HS256"])
             token_user = data['username']# You can adjust this according to your payload
             token_email=data['email']
@@ -97,21 +117,23 @@ def token_required(f):
             
             redis_username = redis_client.hget(token, 'username')
             
-            if redis_username is None or redis_username.decode() != token_user or token_application_id != "renote" or token_client_id != "necun":
-                print(token_client_id)
-                error_response = {
-                    "error": {
-                        "status": "401",
-                        "message": "Token is invalid or expired!",
-                        "messageKey": "token-invalid",
-                        "details": "The token is invalid or has expired.",
-                        "type": "AuthenticationException",
-                        "code": 400402,
-                        "timeStamp": datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S +0000'),
-                        "instance": "/v1/"  # Optional, include if relevant to your application
+            if redis_username is None or redis_username.decode() != token_user:
+                logger_instance.error("Error in redis username or token for validation")
+                if token_application_id != "renote" or token_client_id != "necun":
+                    logger_instance.error("error in headers or wrongly passed headers")
+                    error_response = {
+                        "error": {
+                            "status": "401",
+                            "message": "Token is invalid or expired!",
+                            "messageKey": "token-invalid",
+                            "details": "The token is invalid or has expired.",
+                            "type": "AuthenticationException",
+                            "code": 400402,
+                            "timeStamp": datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S +0000'),
+                            "instance": "/v1/"  # Optional, include if relevant to your application
+                        }
                     }
-                }
-                return jsonify(error_response), 401
+                    return jsonify(error_response), 401
         except:
             error_response ={
                 "error": {
@@ -125,6 +147,7 @@ def token_required(f):
                     "instance": "/v1/"  # Optional, include if relevant to your application
                 }
             }
+            logger_instance.error("token is invalid")
             return jsonify(error_response), 401
         return f(redis_username,token_user,token_email,token_application_id,token_client_id,token,*args, **kwargs)
 
@@ -136,6 +159,7 @@ def generate_unique_user_id():
 
 @app.route('/users/signUp', methods=['POST'])
 def signup_main():
+    logger_instance.info("Received sign-up request")
     method_response=all_methods_instance.signup()
     if method_response is not None:
         return method_response
@@ -143,6 +167,7 @@ def signup_main():
 
 @app.route('/users/signIn', methods=['POST'])
 def signin_main():
+    logger_instance.info("Received sign-in request")
     method_response=all_methods_instance.signin(app)
     if method_response is not None:
         return method_response
@@ -150,7 +175,7 @@ def signin_main():
 @app.route('/uploadImages', methods=['POST'])
 @token_required
 def upload_image_main(redis_user,token_user, token_email, token_application_id, token_client_id, token):
-    
+    logger_instance.info("Received image upload request")
     method_response=all_methods_instance.upload_image(token_user)
     if method_response is not None:
         return method_response
@@ -168,6 +193,7 @@ def protected_route(token_user,token_email,token_application_id,token_client_id,
 
 @app.route('/users/forgotPassword', methods=['POST'] )
 def forgot_password_main():
+    logger_instance.info("Received forgot password request")
     method_response=all_methods_instance.forgot_password()
     if method_response is not None:
         return method_response
@@ -177,6 +203,7 @@ def forgot_password_main():
 
 @app.route('/users/resetPassword/<token>')
 def reset_password_main(token):
+    logger_instance.info("Received reset password request")
     method_response=all_methods_instance.reset_password(token)
     if method_response is not None:
         return method_response
@@ -184,6 +211,7 @@ def reset_password_main(token):
     
 @app.route('/users/updatePassword', methods=['POST'])
 def update_password_main():
+    logger_instance.info("Received update password request")
     method_response=all_methods_instance.update_password()
     if method_response is not None:
         return method_response
@@ -212,6 +240,7 @@ def welcome():
 
 @app.route("/send-email", methods=["POST"])
 def send_email():
+    logger_instance.info("Received send email request")
     try:
         to_email = request.form['to_email']
         subject = request.form.get('subject', 'Your Doc is Ready - Renote.ai')
@@ -231,6 +260,7 @@ def send_email():
 
         return jsonify({"message": f"Email sent successfully to {to_email}"})
     except Exception as e:
+        logger_instance.error(f"Error sending email: {str(e)}")
         return jsonify({"error": str(e)}), 500
     
 @app.route('/hey')

@@ -1,4 +1,5 @@
-from flask import Flask, request, jsonify, render_template
+from flask import request, jsonify, render_template
+from loggers.logger import logger_instance
 from werkzeug.security import generate_password_hash, check_password_hash
 import mysql.connector
 from mysql.connector import Error as MySQLError
@@ -11,7 +12,18 @@ from utils import redis_config
 from datetime import datetime as dt
 from methods.customExceptions import forgot_password_exception, reset_password_exception, signin_exception, signup_exception
 
+
 utils_instance = redis_config()
+# logger_object= Logger()
+# logger_instance=logger_object.getLogger()
+# logger = logging.getLogger("my_logger")
+# logger.setLevel(logging.INFO)
+# log_formatter  = logging.Formatter("%(asctime)s,%(levelname)s,%(message)s")
+# file_handler = TimedRotatingFileHandler("renote_logins_logs", when='midnight', interval=1, backupCount=90)
+# file_handler.setFormatter(log_formatter)
+# file_handler.setLevel(logging.ERROR)
+
+#ogger.addHandler(file_handler)
 
 class db_methods:
     def get_db_connection(self):
@@ -22,10 +34,13 @@ class db_methods:
             'database': 'renote-login-sql-db'
         }
         conn_pool = mysql.connector.pooling.MySQLConnectionPool(pool_name="renote-login-sql-db-pool", pool_size=5, **conn)
+        logger_instance.info("connection has made to database successfully")
         return conn_pool.get_connection()
 
     def signin_db_operation(self, username, password, app):
     # Check if username or password is missing
+        logger_instance.info("Sign-in operation started.")
+        logger_instance.info(f"Received parameters: username={username}, password={password}")
         if not username:
             error_response = {
                 "error": {
@@ -39,6 +54,7 @@ class db_methods:
                     "instance": "/v1/auth/"  # Optional, include if relevant to your application
                 }
             }
+            logger_instance.error("username is missing in signin_db_operation method")
             return jsonify(error_response), 400
 
         if not password:
@@ -54,6 +70,7 @@ class db_methods:
                         "instance": "/v1/auth/"  # Optional, include if relevant to your application
                     }
                 }
+            logger_instance.error("password is missing in signin_db_operation method")
             return jsonify(error_response), 400
         
         
@@ -78,6 +95,7 @@ class db_methods:
                         "instance": "/v1/auth/"  # Optional, include if relevant to your application
                     }
                 }
+                logger_instance.error("user not found in signin_db_operation method")
                 return jsonify(error_response), 404
 
             password = user_record[0]
@@ -85,23 +103,24 @@ class db_methods:
             phone_number = user_record[2]
             print(user_record)
 
-            application_id = request.headers['Application']
-            client_id = request.headers['Clientid']
+            self.application_id = request.headers['Application']
+            self.client_id = request.headers['Clientid']
 
             user_info = {
                 'username': username,
-                'Application': application_id,
-                'Clientid': client_id,
+                'Application': self.application_id,
+                'Clientid': self.client_id,
                 'email': email,
                 'phone_number': phone_number
             }
             print(user_info)
 
             redis_client = Redis(host='localhost', port=6379, db=0)
+            logger_instance.info("connected to redis successfully in signin_db_operation")
 
             if user_record and check_password_hash(user_record[0], user_password):
-                token = jwt.encode({'username': username, 'email': email, 'Application': application_id,
-                                    'Clientid': client_id, 'exp': dt.utcnow() + datetime.timedelta(minutes=30)},
+                token = jwt.encode({'username': username, 'email': email, 'Application': self.application_id,
+                                    'Clientid': self.client_id, 'exp': dt.utcnow() + datetime.timedelta(minutes=30)},
                                     app.config['SECRET_KEY'])
                 redis_client.hmset(token, user_info)
                 redis_client.expire(token, 1800)
@@ -115,6 +134,7 @@ class db_methods:
                             }
                             
                         }
+                logger_instance.info("user logged In successfully in signin_db_operation")
                 return jsonify(success_response), 200
             else:
                 error_response = {
@@ -129,11 +149,12 @@ class db_methods:
                         "instance": "/v1/auth/"  # Optional, include if relevant to your application
                     }
                 }
+                logger_instance.info("Invalid username or password in signin_db_operation")
                 return jsonify(error_response), 400
 
         except mysql.connector.Error as err:
             print("Database Error:", err)
-            code = signin_exception(err)  #############################
+            code = signin_exception(err)  
             error_response = {
                     "status": "500",
                     "code": code,
@@ -141,17 +162,22 @@ class db_methods:
                     "error": str(err),
                     "timestamp": datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%SZ')
                 }
+            logger_instance.critical("database error in signin_db_operation")
             return jsonify(error_response), 500
         finally:
             cursor.close()
             conn.close()
+            logger_instance.info("Database connection has closed in signin_db_operation")
     def signup_db_operation(self, application_id, client_id, user_id, username, password, email, First_Name,Last_Name, phone_number, profile_pic, status):
             conn = self.get_db_connection()
             cursor = conn.cursor()
+            logger_instance.info("Sign-up operation started.")
+            logger_instance.info(f"Received parameters: application_id={application_id}, client_id={client_id}, user_id={user_id}, username={username}, password={password}, email={email}, First_Name={First_Name}, Last_Name={Last_Name}, phone_number={phone_number}, profile_pic={profile_pic}, status={status}")
             try:
                 query = "INSERT INTO users (application_id,client_id,user_id,username,password,email,First_Name,Last_Name,phone_number,profile_pic,status) VALUES (%s,%s,%s,%s, %s, %s, %s, %s, %s, %s,%s)"
                 cursor.execute(query, (application_id, client_id, user_id, username, password, email, First_Name,Last_Name, phone_number, profile_pic, status))
                 conn.commit()
+                logger_instance.info("user created successfully in signup_db_operation")
                 
             except MySQLError as err:
                 if err.errno == errorcode.ER_DUP_ENTRY:
@@ -169,6 +195,7 @@ class db_methods:
                                 "instance": "/v1/auth/signup"  # Optional, include if relevant to your application
                             }
                         }
+                        logger_instance.error("email already exists in signup_db_operation")
                         return jsonify(error_response), 409
                     elif "username" in error_msg:
                         error_response = {
@@ -183,6 +210,7 @@ class db_methods:
                                 "instance": "/v1/auth/signup"  # Optional, include if relevant to your application
                             }
                         }
+                        logger_instance.error("username already exists in signup_db_operation")
                         return jsonify(error_response), 409
                     elif "phone_number" in error_msg:
                         error_response = {
@@ -197,6 +225,7 @@ class db_methods:
                                 "instance": "/v1/auth/signup"
                             }
                         }
+                        logger_instance.error("phone_number already exists in signup_db_operation")
                         return jsonify(error_response), 409
                     else:
                         error_response = {
@@ -211,6 +240,7 @@ class db_methods:
                                 "instance": "/v1/auth/signup"  # Optional, include if relevant to your application
                             }
                         }
+                        logger_instance.error("signup-duplicate-entry in signup_db_operation")
                         return jsonify(error_response), 409
                 else:
                     print("Database Error:", err)
@@ -222,10 +252,12 @@ class db_methods:
                     "error": str(err),
                     "timestamp": datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%SZ')
                 }
+                    logger_instance.error(f"Error during sign-up operation: {str(err)}")
                     return jsonify(error_response), 500
             finally:
                 cursor.close()
                 conn.close()
+                logger_instance.info("Database connection has closed in signin_db_operation")
 
     def get_user_by_email(self, email):
         conn = self.get_db_connection()
@@ -246,6 +278,7 @@ class db_methods:
                         "instance": "/v1/auth/"  # Optional, include if relevant to your application
                     }
                 }
+                logger_instance.error("User not found in get_user_by_email")
                 return jsonify(error_response), 404
             reset_token = secrets.token_hex(16)
             print(reset_token)
@@ -260,6 +293,7 @@ class db_methods:
                         },
                     "timeStamp": dt.utcnow().strftime('%Y-%m-%d %H:%M:%S +0000'),
             }
+            logger_instance.info("Password reset link has been sent to your mail in get_user_by_email")
             return jsonify(success_response), 200
 
         except mysql.connector.Error as err:
@@ -271,10 +305,12 @@ class db_methods:
                 "error": str(err),
                 "timestamp": datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%SZ')
             }
+            logger_instance.critical("database connection error in get_user_by_email")
             return jsonify(error_response), 500
         finally:
             cursor.close()
             conn.close()
+            logger_instance.info("Database connection has closed in signin_db_operation")
 
     def user_by_reset_token(self, token):
         conn = self.get_db_connection()
@@ -284,6 +320,7 @@ class db_methods:
             cursor.execute("SELECT user_id FROM users WHERE reset_token = %s", (token,))
             data=cursor.fetchone()
             if data is not None:
+                logger_instance.info("reset password html page opened successfully")
                 return render_template('reset_password.html', token=token)
             else:
                 error_response = {
@@ -298,6 +335,7 @@ class db_methods:
                         "instance": "/v1/auth/token"  # Optional, include if relevant to your application
                     }
                 }
+                logger_instance.error("Invalid or expired token in user_by_reset_token")
                 return jsonify(error_response), 400
 
         except mysql.connector.Error as err:
@@ -309,10 +347,12 @@ class db_methods:
                 "error": str(err),  # Convert the MySQL error to a string for the response
                 "timestamp": datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%SZ')
             }
+            logger_instance.critical("Database connection error in user_by_reset_token")
             return jsonify(error_response), 500
         finally:
             cursor.close()
             conn.close()
+            logger_instance.info("Database connection has closed in signin_db_operation")
 
     def db_method_update_password(self, token, new_password):
         conn = self.get_db_connection()
@@ -339,6 +379,7 @@ class db_methods:
                         "instance": "/v1/auth/update-password"  # Optional, include if relevant to your application
                     }
                 }
+                logger_instance.info("Password has been updated successfully in db_method_update_password")
                 return jsonify(success_response), 200
 
             else:
@@ -354,23 +395,28 @@ class db_methods:
                         "instance": "/v1/auth/token"  # Optional, include if relevant to your application
                     }
                 }
+                logger_instance.error("Invalid or expired token in db_method_update_password")
                 return jsonify(error_response), 400
 
         except mysql.connector.Error as err:
+            logger_instance.critical("database error in db_method_update_password")
             return jsonify({'status': '500', "code": "Add Error", 'message': 'Database error',
                             'error': str(err), 'timestamp': dt.utcnow().strftime('%Y-%m-%dT%H:%M:%SZ')}), 500
         finally:
             cursor.close()
             conn.close()
+            logger_instance.info("Database connection has closed in signin_db_operation")
 
     def uploading_image_url(self, username, image_url):
         conn = self.get_db_connection()
         cursor = conn.cursor(buffered=True)
+        logger_instance.info("Image upload operation started.")
+        logger_instance.info(f"Received parameters: username={username}, image_url={image_url}")
         try:
             query = "UPDATE users SET profile_pic=%s where username=%s"
             cursor.execute(query, (image_url, username,))
             conn.commit()
-            error_response = {
+            success_response = {
                 "error": {
                     "status": "200",
                     "message": "Image uploaded successfully",
@@ -383,7 +429,8 @@ class db_methods:
                     "url": image_url
                 }
             }
-            return jsonify(error_response), 200
+            logger_instance.info("Image uploaded successfully in uploading_image_url method")
+            return jsonify(success_response), 200
         except mysql.connector.Error as err:
             print("Error:", err)
             error_response = {
@@ -398,11 +445,13 @@ class db_methods:
                     "instance": "/v1/upload-image"  # Optional, include if relevant to your application
                 }
             }
+            logger_instance.critical(f"Error during image upload operation: {str(err)}")
             return jsonify(error_response), 500
 
         finally:
             cursor.close()
             conn.close()
+            logger_instance.info("Database connection has closed in signin_db_operation")
 
 
 def hello():
