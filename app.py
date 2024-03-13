@@ -11,10 +11,6 @@ import random
 from database_renote import operations
 from methods.method import all_methods
 from utils import redis_config
-<<<<<<< HEAD
-=======
-# from datetime import datetime 
->>>>>>> login-testing
 import datetime
 from flask_mail import Mail , Message
 from email.mime.multipart import MIMEMultipart
