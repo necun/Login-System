@@ -1,69 +1,133 @@
-2024-03-11 09:28:32,307,INFO,connection has made to database successfully
-2024-03-11 09:28:32,456,ERROR,username already exists in signup_db_operation
-2024-03-11 09:29:19,817,INFO,connection has made to database successfully
-2024-03-11 09:29:19,881,ERROR,username already exists in signup_db_operation
-2024-03-11 11:51:30,237,INFO,Received sign-up request
-2024-03-11 11:51:30,368,ERROR,firstname and lastname are same in signup method
-2024-03-11 11:51:34,573,INFO,Received sign-up request
-2024-03-11 11:51:34,825,INFO,connection has made to database successfully
-2024-03-11 11:51:34,826,INFO,Sign-up operation started.
-2024-03-11 11:51:34,826,INFO,Received parameters: application_id=renote, client_id=necun, user_id=1363697186616475, username=sai12cd3, password=scrypt:32768:8:1$kZam605TCn6iituN$b8cee70caf935a15938d2223585442e2631ba68c87d9ac65e7cd701b650e8f8cd88a6b6be1d0f7c40d67d70a51d0f7b8537c4ebdd9c2d3f9e9c17a9ad28804b5, email=sai@j.cem, First_Name=sai, Last_Name=sais, phone_number=7679874990, profile_pic= , status=0
-2024-03-11 11:51:34,828,ERROR,username already exists in signup_db_operation
-2024-03-11 11:51:34,836,INFO,Database connection has closed in signin_db_operation
-2024-03-11 11:51:43,301,INFO,Received sign-up request
-2024-03-11 11:51:43,484,INFO,connection has made to database successfully
-2024-03-11 11:51:43,484,INFO,Sign-up operation started.
-2024-03-11 11:51:43,485,INFO,Received parameters: application_id=renote, client_id=necun, user_id=6337748042736530, username=sai12c3, password=scrypt:32768:8:1$OlTn5TumWe7a4fCf$e5da6f2f7579d5004ed769f4497e70a86a308bad60eca725022dae8791206ce091855860efc5c9c260e2da9f8aa7576ada37cb8b0fd5487e18c9f6e8fb4484d0, email=sai@j.cem, First_Name=sai, Last_Name=sais, phone_number=7679874990, profile_pic= , status=0
-2024-03-11 11:51:43,486,ERROR,email already exists in signup_db_operation
-2024-03-11 11:51:43,499,INFO,Database connection has closed in signin_db_operation
-2024-03-11 11:51:49,338,INFO,Received sign-up request
-2024-03-11 11:51:49,507,INFO,connection has made to database successfully
-2024-03-11 11:51:49,507,INFO,Sign-up operation started.
-2024-03-11 11:51:49,507,INFO,Received parameters: application_id=renote, client_id=necun, user_id=7287364444217016, username=sai12c3, password=scrypt:32768:8:1$KyAc2EMSVvzlk97e$80e1ec2eab6c5a38db68e953ae5f1a1cc1b0744be97b35714cc501998c731eba259ca2b291d411bff53a88bcb5ba27e3cdbd8cbd9bbbef7a3c9013651381b2fa, email=sai@jv.cem, First_Name=sai, Last_Name=sais, phone_number=7679874990, profile_pic= , status=0
-2024-03-11 11:51:49,508,ERROR,phone_number already exists in signup_db_operation
-2024-03-11 11:51:49,521,INFO,Database connection has closed in signin_db_operation
-2024-03-11 11:51:55,178,INFO,Received sign-up request
-2024-03-11 11:51:55,351,INFO,connection has made to database successfully
-2024-03-11 11:51:55,352,INFO,Sign-up operation started.
-2024-03-11 11:51:55,352,INFO,Received parameters: application_id=renote, client_id=necun, user_id=2808287480855032, username=sai12c3, password=scrypt:32768:8:1$GYYfMxm2o589uymm$a9a23760f7ba05cb2b3b34915ec800fca3b6000b0923e83e30a58170c9e8b4193b5e56319304b997cead5174deef560088f1427d0e7abf007ca2e9b27644781b, email=sai@jv.cem, First_Name=sai, Last_Name=sais, phone_number=76798174990, profile_pic= , status=0
-2024-03-11 11:51:55,360,INFO,user created successfully in signup_db_operation
-2024-03-11 11:51:55,361,INFO,Database connection has closed in signin_db_operation
-2024-03-11 11:51:55,362,INFO,user created successfully in signup method
-2024-03-12 16:48:08,683,INFO,Received sign-up request
-2024-03-12 16:52:42,121,INFO,Received sign-up request
-2024-03-12 16:53:38,403,INFO,Received sign-up request
-2024-03-12 16:53:43,940,INFO,connection has made to database successfully
-2024-03-12 16:53:43,942,INFO,Sign-up operation started.
-2024-03-12 16:53:43,942,INFO,Received parameters: application_id=renote, client_id=necun, user_id=3664679898350722, username=bharadd, password=scrypt:32768:8:1$s8X3RARrf98kULa1$8a668217e4fd35b5d0d3d3c7352a81d471f7234965fcbd313b1623dd93ea4d1ffd626f23afca2060ed195e1a55b25daacd98e849e05e249e48187441cda0bb1f, email=bharadd@gmail.com, First_Name=bharadd, Last_Name=bharadwajj, phone_number=0070070071, profile_pic= , status=0
-2024-03-12 16:53:43,945,ERROR,username already exists in signup_db_operation
-2024-03-12 16:53:43,953,INFO,Database connection has closed in signin_db_operation
-2024-03-12 16:54:05,406,INFO,Received sign-up request
-2024-03-12 16:54:13,007,INFO,connection has made to database successfully
-2024-03-12 16:54:13,008,INFO,Sign-up operation started.
-2024-03-12 16:54:13,008,INFO,Received parameters: application_id=renote, client_id=necun, user_id=1985329683081539, username=annna, password=scrypt:32768:8:1$BrzFdC5ESvnT5ghV$8274b0243ce59e8b9f776ad6ff6ddb4e9d926e6f02a48603d994826bf8c929c1a9a357a0408e5eee376716ec11b4e0e455c289ae2ee4da171ae8f9e9906ab8df, email=bharadd@gmail.com, First_Name=bharadd, Last_Name=bharadwaa, phone_number=0070070071, profile_pic= , status=0
-2024-03-12 16:54:13,011,ERROR,email already exists in signup_db_operation
-2024-03-12 16:54:13,018,INFO,Database connection has closed in signin_db_operation
-2024-03-12 16:54:20,403,INFO,Received sign-up request
-2024-03-12 16:54:28,123,INFO,connection has made to database successfully
-2024-03-12 16:54:28,125,INFO,Sign-up operation started.
-2024-03-12 16:54:28,125,INFO,Received parameters: application_id=renote, client_id=necun, user_id=8174492943186970, username=annna, password=scrypt:32768:8:1$zDJ67vcMSMJK0zrV$10e534cdd8006b2f47883b2d3cd3055af1b89eedfccdeafce74945a0a39cbafaa4dafb679b4c63ae4c54331143f7c51d9fe07efa0dd9b44ce9611b0b3e7211d6, email=bharada@gmail.com, First_Name=bharadd, Last_Name=bharadwaa, phone_number=0070070071, profile_pic= , status=0
-2024-03-12 16:54:28,127,ERROR,phone_number already exists in signup_db_operation
-2024-03-12 16:54:28,135,INFO,Database connection has closed in signin_db_operation
-2024-03-12 16:54:56,467,INFO,Received sign-up request
-2024-03-12 16:55:04,220,INFO,connection has made to database successfully
-2024-03-12 16:55:04,221,INFO,Sign-up operation started.
-2024-03-12 16:55:04,221,INFO,Received parameters: application_id=renote, client_id=necun, user_id=9022081701592182, username=annna, password=scrypt:32768:8:1$NhiMZHNsrH6ys0tG$87f3473f92e0e9234a1764acd2a45412e5af281641c1049eb03f6770e076bf6ed228ad48213123451f47537874bf23384412e95a7b308b28c5c277cf0540cb8b, email=bharada@gmail.com, First_Name=bharadd, Last_Name=bharadwaa, phone_number=0070070078, profile_pic= , status=0
-2024-03-12 16:55:04,232,INFO,user created successfully in signup_db_operation
-2024-03-12 16:55:04,235,INFO,Database connection has closed in signin_db_operation
-2024-03-12 16:55:04,252,INFO,user created successfully in signup method
-2024-03-12 16:55:18,053,INFO,Received sign-up request
-2024-03-12 16:55:18,353,ERROR,firstname and lastname are same in signup method
-2024-03-12 16:57:08,052,INFO,Received sign-up request
-2024-03-12 16:57:08,347,ERROR,invalid phonenumber in signup method
-2024-03-12 16:57:16,907,INFO,Received sign-up request
-2024-03-12 16:57:24,581,INFO,connection has made to database successfully
-2024-03-12 16:57:24,583,INFO,Sign-up operation started.
-2024-03-12 16:57:24,583,INFO,Received parameters: application_id=renote, client_id=necun, user_id=1901629585946072, username=Prasad1, password=scrypt:32768:8:1$AVPUq94tkxyybKGN$e67a8ad9f3bdd0d90a2d09007885bcb38bc906c7f786064fc3722e16052ece08743f640d7683197f02c3e7d40e2898b118f36b07600aa2419f5dcb769b5e16c2, email=Prasad@gmail.com, First_Name=Prasad, Last_Name=Bhavani, phone_number=0070070083, profile_pic= , status=0
-2024-03-12 16:57:24,591,INFO,user created successfully in signup_db_operation
-2024-03-12 16:57:24,593,INFO,Database connection has closed in signin_db_operation
-2024-03-12 16:57:24,607,INFO,user created successfully in signup method
+2024-03-13 10:30:26,250,INFO,Received sign-up request
+2024-03-13 10:30:26,373,ERROR,firstname and lastname are same in signup method
+2024-03-13 10:30:34,674,INFO,Received sign-up request
+2024-03-13 10:30:34,801,ERROR,invalid phonenumber in signup method
+2024-03-13 10:30:54,491,INFO,Received sign-up request
+2024-03-13 10:30:57,594,INFO,connection has made to database successfully
+2024-03-13 10:30:57,594,INFO,Sign-up operation started.
+2024-03-13 10:30:57,594,INFO,Received parameters: application_id=renote, client_id=necun, user_id=5957653710809177, username=basha, password=scrypt:32768:8:1$5VHnoG9lLfSrL92u$3cfadf5483674fa8f440b4a0a6fcfd71a298acac0f80c8cf20af4a73fe673c79ea800849f1ecc5348e6dd0591c6ce866792ba1e43b83ce47e238e54613ae87e3, email=basha@gmail.com, First_Name=Sadik, Last_Name=basha, phone_number=0070070071, profile_pic= , status=0
+2024-03-13 10:30:57,606,ERROR,phone_number already exists in signup_db_operation
+2024-03-13 10:30:57,609,INFO,Database connection has closed in signin_db_operation
+2024-03-13 10:31:04,329,INFO,Received sign-up request
+2024-03-13 10:31:07,474,INFO,connection has made to database successfully
+2024-03-13 10:31:07,475,INFO,Sign-up operation started.
+2024-03-13 10:31:07,475,INFO,Received parameters: application_id=renote, client_id=necun, user_id=3877162371582800, username=basha, password=scrypt:32768:8:1$nSMy7fRhYUsTulQg$4125d423a6566218a4f791f39bb546b50ddd2f1cdf8979a74653336634e6435b2c4ca3f86235f91c0479d213488ddb1fa7e849ce4c0c73b153b29013b8c47776, email=basha@gmail.com, First_Name=Sadik, Last_Name=basha, phone_number=0070070075, profile_pic= , status=0
+2024-03-13 10:31:07,481,INFO,user created successfully in signup_db_operation
+2024-03-13 10:31:07,483,INFO,Database connection has closed in signin_db_operation
+2024-03-13 10:31:07,495,INFO,user created successfully in signup method
+2024-03-13 10:45:54,702,INFO,Received sign-up request
+2024-03-13 10:46:23,490,INFO,Received sign-up request
+2024-03-13 10:46:38,659,INFO,Received sign-up request
+2024-03-13 10:46:38,661,ERROR,error log before log for testing
+2024-03-13 10:46:38,661,ERROR,invalid password Bha
+2024-03-13 10:47:01,488,INFO,Received sign-up request
+2024-03-13 10:48:22,466,INFO,Received sign-up request
+2024-03-13 10:49:12,998,INFO,Received sign-up request
+2024-03-13 10:49:14,713,INFO,connection has made to database successfully
+2024-03-13 10:49:14,713,INFO,Sign-up operation started.
+2024-03-13 10:49:14,713,INFO,Received parameters: application_id=renote, client_id=necun, user_id=2773450683886240, username=basha, password=scrypt:32768:8:1$UmSMH5c8wyPivPsd$51ecc810b6159504e5893dbef83120f28691b585523f69e6449d2b6e30edfe278113227a521b147ae912f38024970dfa8aa6f8fff731fe3ff463525c7fdfa478, email=basha@gmail.com, First_Name=Sadik, Last_Name=basha, phone_number=0070070075, profile_pic= , status=0
+2024-03-13 10:49:14,714,ERROR,username already exists in signup_db_operation
+2024-03-13 10:49:14,719,INFO,Database connection has closed in signin_db_operation
+2024-03-13 10:50:06,832,INFO,Received sign-up request
+2024-03-13 10:50:06,833,ERROR,error log before log for testing
+2024-03-13 10:50:06,833,ERROR,invalid password bad
+2024-03-13 10:50:15,336,INFO,Received sign-up request
+2024-03-13 10:50:15,339,ERROR,error log before log for testing
+2024-03-13 10:50:15,339,ERROR,invalid password Bad
+2024-03-13 10:50:21,940,INFO,Received sign-up request
+2024-03-13 10:50:21,942,ERROR,error log before log for testing
+2024-03-13 10:50:21,942,ERROR,invalid password Badri@
+2024-03-13 10:50:29,146,INFO,Received sign-up request
+2024-03-13 10:50:31,774,INFO,connection has made to database successfully
+2024-03-13 10:50:31,774,INFO,Sign-up operation started.
+2024-03-13 10:50:31,774,INFO,Received parameters: application_id=renote, client_id=necun, user_id=6950039325905870, username=badrinath`, password=scrypt:32768:8:1$CBKVxwEXp1KpnC4S$3a6c666da2b9a83d670a8305fa1d521d1256b04317b973663cace718c60cc18dfbe0fdc5e23ee3b16ef98dff5d5417ec84473499d88cdfd8c0160af8164bad1c, email=badri@gmail.com, First_Name=badri, Last_Name=badrinath, phone_number=6969696969, profile_pic= , status=0
+2024-03-13 10:50:31,780,INFO,user created successfully in signup_db_operation
+2024-03-13 10:50:31,781,INFO,Database connection has closed in signin_db_operation
+2024-03-13 10:50:31,786,INFO,user created successfully in signup method
+2024-03-13 11:02:49,553,INFO,Received forgot password request
+2024-03-13 11:02:51,988,INFO,connection has made to database successfully
+2024-03-13 11:02:52,016,INFO,Password reset link has been sent to your mail in get_user_by_email
+2024-03-13 11:02:52,016,INFO,Database connection has closed in signin_db_operation
+2024-03-13 11:03:09,519,INFO,Received reset password request
+2024-03-13 11:03:12,203,INFO,connection has made to database successfully
+2024-03-13 11:03:12,204,INFO,reset password html page opened successfully
+2024-03-13 11:03:12,209,INFO,Database connection has closed in signin_db_operation
+2024-03-13 11:05:44,184,INFO,Received reset password request
+2024-03-13 11:05:46,946,INFO,connection has made to database successfully
+2024-03-13 11:05:46,948,INFO,reset password html page opened successfully
+2024-03-13 11:05:46,948,INFO,Database connection has closed in signin_db_operation
+2024-03-13 11:06:13,139,INFO,Received update password request
+2024-03-13 11:06:13,139,ERROR,password missing in update_password method
+2024-03-13 11:06:13,139,ERROR,password are not matching error in update_password method
+2024-03-13 11:06:28,559,INFO,Received update password request
+2024-03-13 11:06:28,559,ERROR,password missing in update_password method
+2024-03-13 11:06:31,128,INFO,connection has made to database successfully
+2024-03-13 11:06:31,242,INFO,Password has been updated successfully in db_method_update_password
+2024-03-13 11:06:31,243,INFO,Database connection has closed in signin_db_operation
+2024-03-13 11:06:41,828,INFO,Received update password request
+2024-03-13 11:06:41,829,ERROR,password missing in update_password method
+2024-03-13 11:06:41,829,ERROR,password are not matching error in update_password method
+2024-03-13 11:11:00,163,INFO,Received update password request
+2024-03-13 11:11:00,164,ERROR,password missing in update_password method
+2024-03-13 11:11:00,164,ERROR,password are not matching error in update_password method
+2024-03-13 11:11:26,313,INFO,Received update password request
+2024-03-13 11:11:26,314,ERROR,password missing in update_password method
+2024-03-13 11:11:48,253,INFO,Received update password request
+2024-03-13 11:11:48,254,ERROR,password missing in update_password method
+2024-03-13 11:13:24,435,INFO,Received update password request
+2024-03-13 11:13:24,436,ERROR,password missing in update_password method
+2024-03-13 11:13:24,437,ERROR,password are not matching error in update_password method
+2024-03-13 11:13:47,701,INFO,Received update password request
+2024-03-13 11:13:47,702,ERROR,password missing in update_password method
+2024-03-13 11:13:55,104,INFO,connection has made to database successfully
+2024-03-13 11:13:55,108,ERROR,Invalid or expired token in db_method_update_password
+2024-03-13 11:13:55,111,INFO,Database connection has closed in signin_db_operation
+2024-03-13 11:14:06,962,INFO,Received reset password request
+2024-03-13 11:14:14,074,INFO,connection has made to database successfully
+2024-03-13 11:14:14,077,ERROR,Invalid or expired token in user_by_reset_token
+2024-03-13 11:14:14,079,INFO,Database connection has closed in signin_db_operation
+2024-03-13 11:14:19,483,INFO,Received forgot password request
+2024-03-13 11:14:26,980,INFO,connection has made to database successfully
+2024-03-13 11:14:26,994,INFO,Password reset link has been sent to your mail in get_user_by_email
+2024-03-13 11:14:26,998,INFO,Database connection has closed in signin_db_operation
+2024-03-13 11:14:47,447,INFO,Received reset password request
+2024-03-13 11:14:54,864,INFO,connection has made to database successfully
+2024-03-13 11:14:54,867,INFO,reset password html page opened successfully
+2024-03-13 11:14:54,876,INFO,Database connection has closed in signin_db_operation
+2024-03-13 11:15:03,648,INFO,Received update password request
+2024-03-13 11:15:03,649,ERROR,password missing in update_password method
+2024-03-13 11:15:11,054,INFO,connection has made to database successfully
+2024-03-13 11:15:11,373,INFO,Password has been updated successfully in db_method_update_password
+2024-03-13 11:15:11,377,INFO,Database connection has closed in signin_db_operation
+2024-03-13 11:18:54,048,INFO,Received update password request
+2024-03-13 11:18:54,049,ERROR,password missing in update_password method
+2024-03-13 11:19:01,369,INFO,Received update password request
+2024-03-13 11:19:01,370,ERROR,password missing in update_password method
+2024-03-13 11:19:01,370,ERROR,password are not matching error in update_password method
+2024-03-13 11:19:15,033,INFO,Received update password request
+2024-03-13 11:19:15,037,ERROR,password missing in update_password method
+2024-03-13 11:19:22,462,INFO,connection has made to database successfully
+2024-03-13 11:19:22,464,ERROR,Invalid or expired token in db_method_update_password
+2024-03-13 11:19:22,465,INFO,Database connection has closed in signin_db_operation
+2024-03-13 11:19:35,443,INFO,Received forgot password request
+2024-03-13 11:19:42,735,INFO,connection has made to database successfully
+2024-03-13 11:19:42,743,INFO,Password reset link has been sent to your mail in get_user_by_email
+2024-03-13 11:19:42,746,INFO,Database connection has closed in signin_db_operation
+2024-03-13 11:19:59,998,INFO,Received reset password request
+2024-03-13 11:20:07,357,INFO,connection has made to database successfully
+2024-03-13 11:20:07,360,INFO,reset password html page opened successfully
+2024-03-13 11:20:07,370,INFO,Database connection has closed in signin_db_operation
+2024-03-13 11:20:14,318,INFO,Received update password request
+2024-03-13 11:20:14,318,ERROR,password missing in update_password method
+2024-03-13 11:20:14,319,ERROR,password are not matching error in update_password method
+2024-03-13 11:20:30,251,INFO,Received update password request
+2024-03-13 11:20:30,252,ERROR,password missing in update_password method
+2024-03-13 11:20:42,444,INFO,Received update password request
+2024-03-13 11:20:42,445,ERROR,password missing in update_password method
+2024-03-13 11:20:53,820,INFO,Received update password request
+2024-03-13 11:20:53,821,ERROR,password missing in update_password method
+2024-03-13 11:21:05,949,INFO,Received update password request
+2024-03-13 11:21:05,950,ERROR,password missing in update_password method
+2024-03-13 11:21:13,349,INFO,connection has made to database successfully
+2024-03-13 11:21:13,656,INFO,Password has been updated successfully in db_method_update_password
+2024-03-13 11:21:13,658,INFO,Database connection has closed in signin_db_operation

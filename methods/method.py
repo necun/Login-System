@@ -51,7 +51,7 @@ class all_methods:
     def validate_lastname(self,Last_Name):
         fullname_pattern=r'^[a-z A-Z]+$'
         return re.match(fullname_pattern,Last_Name)
-    def password_strength_validation(self,password):
+    def password_strength_validation(password):
         
         password_validation_pattern = r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+{}|:<>?~-]).{8,}$'
         return bool(re.match(password_validation_pattern, password))
@@ -103,6 +103,26 @@ class all_methods:
         print("Headers Received:", request.headers)
         required_fields = ['First_Name','Last_Name', 'username', 'password', 'email', 'phone_number']
         missing_fields = [field for field in required_fields if field not in data or not data[field]]
+        
+        raw_password = data.get('password')
+        if all_methods.password_strength_validation(raw_password) == False:
+            error_response = {
+                "error": {
+                    "status": "400",
+                    "message": "Invalid password",
+                    "messageKey": "invalid-password-txt",
+                    "details": "The password provided is not strong enough.",
+                    "type": "ValidationException",
+                    "code": 400107,
+                    "timeStamp": datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S +0000'),
+                    "instance": "/v1/"
+                }
+            }
+            logger_instance.error("error log before log for testing")
+            logger_instance.error(f"invalid password {raw_password}")
+            return jsonify(error_response), 400
+            
+        
         
 
         if missing_fields:
@@ -216,22 +236,22 @@ class all_methods:
             }
             logger_instance.error("invalid firstname in signup method")
             return jsonify(error_response), 400
-        if not self.password_strength_validation(password):
-            print("not working")
-            error_response = {
-                "error": {
-                    "status": "400",
-                    "message": "Password must contain a Uppercase,Lowercase,Number and a special character",
-                    "messageKey": "password-strength",
-                    "details": "The password provided is not strong enough. ",
-                    "type": "ValidationException",
-                    "code": 400107,
-                    "timeStamp": datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S +0000'),
-                    "instance": "/v1/"  # Optional, include if relevant to your application
-                }
-            }
-            logger_instance.error("Password strength exception in signup method")
-            return jsonify(error_response), 400
+        # if not self.password_strength_validation(password):
+        #     print("not working")
+        #     error_response = {
+        #         "error": {
+        #             "status": "400",
+        #             "message": "Password must contain a Uppercase,Lowercase,Number and a special character",
+        #             "messageKey": "password-strength",
+        #             "details": "The password provided is not strong enough. ",
+        #             "type": "ValidationException",
+        #             "code": 400107,
+        #             "timeStamp": datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S +0000'),
+        #             "instance": "/v1/"  # Optional, include if relevant to your application
+        #         }
+        #     }
+        #     logger_instance.error("Password strength exception in signup method")
+        #     return jsonify(error_response), 400
 
 
         response=db_instance.signup_db_operation(self.application_id, self.client_id, user_id, username,  password, email , First_Name,Last_Name, phone_number , profile_pic, 0)
@@ -390,9 +410,37 @@ class all_methods:
         confirm_password=request.form.get('confirm_password')
         if not new_password or confirm_password:
             logger_instance.error("password missing in update_password method")
-            if new_password != confirm_password:
-                logger_instance.error("password are not matching error in update_password method")
-                return jsonify({'message':'passwords do not match'}), 400
+        if new_password != confirm_password:
+            logger_instance.error("password are not matching error in update_password method")
+            error_response = {
+                "error": {
+                    "status": "400",
+                    "message": "Passwords do not match",
+                    "messageKey": "passwords-do-not-match",
+                    "details": "The passwords provided do not match.",
+                    "type": "ValidationException",
+                    "code": 400402,
+                    "timeStamp": datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S +0000'),
+                    "instance": "/v1/"  # Optional, include if relevant to your application
+                }
+            }
+            return jsonify(error_response), 400
+        
+        raw_password = new_password
+        if all_methods.password_strength_validation(raw_password) == False:
+            error_response = {
+                "error": {
+                    "status": "400",
+                    "message": "Password too weak",
+                    "messageKey": "password-too-weak",
+                    "details": "The password provided is too weak.",
+                    "type": "ValidationException",
+                    "code": 400403,
+                    "timeStamp": datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S +0000'),
+                    "instance": "/v1/"  # Optional, include if relevant to your application
+                }
+            }
+            return jsonify(error_response), 400
                 
         
         response=db_instance.db_method_update_password(token,new_password)
