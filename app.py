@@ -1,7 +1,6 @@
 from flask import Flask, request ,jsonify,redirect , url_for
 from loggers.logger import logger_instance
 import jwt
-import os
 import secrets
 from functools import wraps
 from redis import Redis
@@ -21,8 +20,6 @@ all_methods_instance = all_methods()
 #object for redis_config class in utils.py
 utils_instance=redis_config()
 
-#object for Validations class in validation.py
-#Validations_obj=Validations()
 
 app = Flask(__name__)
 
@@ -55,22 +52,7 @@ def token_required(f):
     def decorated(*args, **kwargs):
         logger_instance.info("Checking authorization token...")
         token = None
-        # if not request.headers.get('Authorization'):
-        #     logger_instance.error("Authorization header missing")
-        #     error_response = {
-        #         "error": {
-        #             "status": "401",
-        #             "message": "Invalid Headers",
-        #             "messageKey": "invalid-headers",
-        #             "details": "The request did not include headers or included an invalid header.",
-        #             "type": "AuthenticationException",
-        #             "code": 401404,
-        #             "timeStamp": datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S +0000'),
-        #             "instance": "/v1/"  # Optional, include if relevant to your application
-        #         }
-        #     }
-        #     logger_instance.error("Authorization header missing")
-        #     return jsonify(error_response), 401
+        
         method_response1=Validations_obj.validateHeaders_Authorization()
         if method_response1 is not None:
             return method_response1
@@ -79,21 +61,7 @@ def token_required(f):
         if 'Authorization' in request.headers:
             token = request.headers['Authorization'].split(" ")[1]
             logger_instance.info("Authorization header is present")
-        # if not token:
-        #     error_response = {
-        #         "error": {
-        #             "status": "401",
-        #             "message": "Token is missing",
-        #             "messageKey": "token-missing",
-        #             "details": "The request did not include a token or included an invalid token.",
-        #             "type": "AuthenticationException",
-        #             "code": 401405,
-        #             "timeStamp": datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S +0000'),
-        #             "instance": "/v1/"  # Optional, include if relevant to your application
-        #         }
-        #     }
-        #     logger_instance.error("Token is not provided")
-        #     return jsonify(error_response), 401
+        
         
         method_response2=Validations_obj.tokenMissing(token)
         if method_response2 is not None:
@@ -108,24 +76,6 @@ def token_required(f):
             token_client_id=data['Clientid']
             
             redis_username = redis_client.hget(token, 'username')
-            
-            # if redis_username is None or redis_username.decode() != token_user:
-            #     logger_instance.error("Error in redis username or token for validation")
-            #     if token_application_id != "renote" or token_client_id != "necun":
-            #         logger_instance.error("error in headers or wrongly passed headers")
-            #         error_response = {
-            #             "error": {
-            #                 "status": "401",
-            #                 "message": "Token is invalid or expired!",
-            #                 "messageKey": "token-invalid",
-            #                 "details": "The token is invalid or has expired.",
-            #                 "type": "AuthenticationException",
-            #                 "code": 400402,
-            #                 "timeStamp": datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S +0000'),
-            #                 "instance": "/v1/"  # Optional, include if relevant to your application
-            #             }
-            #         }
-            #         return jsonify(error_response), 401
                 
             method_response3=Validations_obj.redisCheck_headersCheck(redis_username,token_user,token_client_id,token_application_id)
             if method_response3 is not None:
